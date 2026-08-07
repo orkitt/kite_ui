@@ -1,6 +1,1 @@
-enum ConflictStrategy {
-  ask,
-  skip,
-  overwrite,
-  fail,
-}
+enum ConflictStrategy { ask, skip, overwrite, fail }

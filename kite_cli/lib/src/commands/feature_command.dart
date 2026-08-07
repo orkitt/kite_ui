@@ -12,9 +12,9 @@ final class FeatureCommand extends Command<int> {
     ProjectDetector projectDetector = const ProjectDetector(),
     FeatureGenerator generator = const FeatureGenerator(),
     KiteLogger logger = const KiteLogger(),
-  })  : _projectDetector = projectDetector,
-        _generator = generator,
-        _logger = logger {
+  }) : _projectDetector = projectDetector,
+       _generator = generator,
+       _logger = logger {
     addProjectPathOption(argParser);
     addGenerationOptions(argParser);
     argParser
@@ -30,11 +30,7 @@ final class FeatureCommand extends Command<int> {
         negatable: false,
         help: 'Alias for --architecture clean.',
       )
-      ..addFlag(
-        'mvc',
-        negatable: false,
-        help: 'Alias for --architecture mvc.',
-      )
+      ..addFlag('mvc', negatable: false, help: 'Alias for --architecture mvc.')
       ..addFlag(
         'route',
         negatable: false,
@@ -64,10 +60,7 @@ final class FeatureCommand extends Command<int> {
   Future<int> run() async {
     final results = argResults!;
     if (results.rest.length != 1) {
-      throw UsageException(
-        'Provide exactly one feature name.',
-        usage,
-      );
+      throw UsageException('Provide exactly one feature name.', usage);
     }
 
     final cleanFlag = results.flag('clean');

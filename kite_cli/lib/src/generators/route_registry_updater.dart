@@ -45,10 +45,10 @@ final class RouteRegistryUpdater {
       'clean' => const <String>['presentation', 'routes'],
       'mvc' => const <String>['routes'],
       _ => throw ArgumentError.value(
-          architecture,
-          'architecture',
-          'Unsupported route architecture.',
-        ),
+        architecture,
+        'architecture',
+        'Unsupported route architecture.',
+      ),
     };
     final featureRoutePath = p.posix.joinAll(<String>[
       _portable(featureDirectory),
@@ -117,12 +117,13 @@ final class RouteRegistryUpdater {
 
     final bodyStart = start + startMarker.length;
     final currentBody = content.substring(bodyStart, end);
-    final lines = currentBody
-        .split('\n')
-        .map((item) => item.trimRight())
-        .where((item) => item.trim().isNotEmpty)
-        .toSet()
-      ..add(line);
+    final lines =
+        currentBody
+            .split('\n')
+            .map((item) => item.trimRight())
+            .where((item) => item.trim().isNotEmpty)
+            .toSet()
+          ..add(line);
     final sorted = lines.toList()..sort();
     final replacement = '\n${sorted.join('\n')}\n';
     return content.replaceRange(bodyStart, end, replacement);

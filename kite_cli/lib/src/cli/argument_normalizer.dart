@@ -26,13 +26,11 @@ List<String> normalizeArguments(List<String> arguments) {
     return <String>['component', ...arguments.skip(1)];
   }
 
-  final widgetEquals = RegExp(r'^--(?:widget|component)=(.+)$').firstMatch(first);
+  final widgetEquals = RegExp(
+    r'^--(?:widget|component)=(.+)$',
+  ).firstMatch(first);
   if (widgetEquals != null) {
-    return <String>[
-      'component',
-      widgetEquals.group(1)!,
-      ...arguments.skip(1),
-    ];
+    return <String>['component', widgetEquals.group(1)!, ...arguments.skip(1)];
   }
 
   if (first == '--state') {
@@ -43,26 +41,16 @@ List<String> normalizeArguments(List<String> arguments) {
     r'^--state:([a-z][a-z0-9_-]*)$',
   ).firstMatch(first);
   if (stateShorthand != null) {
-    return <String>[
-      'state',
-      stateShorthand.group(1)!,
-      ...arguments.skip(1),
-    ];
+    return <String>['state', stateShorthand.group(1)!, ...arguments.skip(1)];
   }
 
   if (first == '--api') {
     return <String>['api', ...arguments.skip(1)];
   }
 
-  final apiShorthand = RegExp(
-    r'^--api:([a-z][a-z0-9_-]*)$',
-  ).firstMatch(first);
+  final apiShorthand = RegExp(r'^--api:([a-z][a-z0-9_-]*)$').firstMatch(first);
   if (apiShorthand != null) {
-    return <String>[
-      'api',
-      apiShorthand.group(1)!,
-      ...arguments.skip(1),
-    ];
+    return <String>['api', apiShorthand.group(1)!, ...arguments.skip(1)];
   }
 
   if (first == 'feat') {

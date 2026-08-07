@@ -1,9 +1,4 @@
-enum GeneratedFileStatus {
-  created,
-  updated,
-  unchanged,
-  skipped,
-}
+enum GeneratedFileStatus { created, updated, unchanged, skipped }
 
 final class GeneratedFileResult {
   const GeneratedFileResult({

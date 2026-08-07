@@ -12,9 +12,9 @@ final class StateCommand extends Command<int> {
     ProjectDetector projectDetector = const ProjectDetector(),
     PresetGenerator generator = const PresetGenerator(),
     KiteLogger logger = const KiteLogger(),
-  })  : _projectDetector = projectDetector,
-        _generator = generator,
-        _logger = logger {
+  }) : _projectDetector = projectDetector,
+       _generator = generator,
+       _logger = logger {
     addProjectPathOption(argParser);
     addGenerationOptions(argParser);
   }
@@ -33,7 +33,10 @@ final class StateCommand extends Command<int> {
   Future<int> run() async {
     final results = argResults!;
     if (results.rest.length != 1) {
-      throw UsageException('Provide a state preset. Available: riverpod.', usage);
+      throw UsageException(
+        'Provide a state preset. Available: riverpod.',
+        usage,
+      );
     }
 
     final preset = results.rest.single.toLowerCase();

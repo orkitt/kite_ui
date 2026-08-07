@@ -30,8 +30,7 @@ final class NameConverter {
 
   String get kebabCase => words.join('-');
 
-  String get camelCase =>
-      words.first + words.skip(1).map(_capitalize).join();
+  String get camelCase => words.first + words.skip(1).map(_capitalize).join();
 
   String get pascalCase => words.map(_capitalize).join();
 

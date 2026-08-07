@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:kite/kite.dart';
+import 'package:kite_cli/kite_cli.dart';
 
 Future<void> main(List<String> arguments) async {
   final runner = KiteCommandRunner();

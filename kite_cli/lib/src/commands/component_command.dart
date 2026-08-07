@@ -12,9 +12,9 @@ final class ComponentCommand extends Command<int> {
     ProjectDetector projectDetector = const ProjectDetector(),
     PresetGenerator generator = const PresetGenerator(),
     KiteLogger logger = const KiteLogger(),
-  })  : _projectDetector = projectDetector,
-        _generator = generator,
-        _logger = logger {
+  }) : _projectDetector = projectDetector,
+       _generator = generator,
+       _logger = logger {
     addProjectPathOption(argParser);
     addGenerationOptions(argParser);
   }

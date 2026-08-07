@@ -1,4 +1,4 @@
-import 'package:kite/kite.dart';
+import 'package:kite_cli/kite_cli.dart';
 import 'package:test/test.dart';
 
 void main() {

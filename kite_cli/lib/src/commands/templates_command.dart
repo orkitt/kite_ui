@@ -8,8 +8,8 @@ final class TemplatesCommand extends Command<int> {
   TemplatesCommand({
     TemplateStore templateStore = const TemplateStore(),
     KiteLogger logger = const KiteLogger(),
-  })  : _templateStore = templateStore,
-        _logger = logger {
+  }) : _templateStore = templateStore,
+       _logger = logger {
     argParser.addFlag(
       'all',
       negatable: false,

@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:kite/src/generation/conflict_strategy.dart';
-import 'package:kite/src/generation/file_writer.dart';
-import 'package:kite/src/generation/generation_plan.dart';
-import 'package:kite/src/templates/template_manifest.dart';
+import 'package:kite_cli/src/generation/conflict_strategy.dart';
+import 'package:kite_cli/src/generation/file_writer.dart';
+import 'package:kite_cli/src/generation/generation_plan.dart';
+import 'package:kite_cli/src/templates/template_manifest.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -43,9 +43,6 @@ void main() {
     );
 
     expect(File('${root.path}/new.dart').existsSync(), isFalse);
-    expect(
-      await File('${root.path}/existing.dart').readAsString(),
-      'manual',
-    );
+    expect(await File('${root.path}/existing.dart').readAsString(), 'manual');
   });
 }

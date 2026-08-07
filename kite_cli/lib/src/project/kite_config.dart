@@ -41,34 +41,35 @@ final class KiteConfig {
 
     return KiteConfig(
       sourceDirectory: _string(project['source_directory'], 'lib'),
-      featureDirectory:
-          _string(architecture['feature_directory'], 'lib/features'),
+      featureDirectory: _string(
+        architecture['feature_directory'],
+        'lib/features',
+      ),
       architecture: _string(architecture['type'], 'clean'),
       router: _string(routing['type'], 'go_router'),
       stateManagement: _string(stateManagement['type'], 'riverpod'),
-      formatAfterGeneration:
-          _boolean(generation['format_after_generation'], true),
-      installDependencies:
-          _boolean(generation['install_dependencies'], true),
+      formatAfterGeneration: _boolean(
+        generation['format_after_generation'],
+        true,
+      ),
+      installDependencies: _boolean(generation['install_dependencies'], true),
     );
   }
 
   Map<String, Object?> toTemplateValues() => <String, Object?>{
-        'sourceDirectory': sourceDirectory,
-        'featureDirectory': featureDirectory,
-        'architecture': architecture,
-        'router': router,
-        'stateManagement': stateManagement,
-      };
+    'sourceDirectory': sourceDirectory,
+    'featureDirectory': featureDirectory,
+    'architecture': architecture,
+    'router': router,
+    'stateManagement': stateManagement,
+  };
 
   static Map<Object?, Object?> _map(Object? value) {
     return value is YamlMap ? value : const <Object?, Object?>{};
   }
 
   static String _string(Object? value, String fallback) {
-    return value is String && value.trim().isNotEmpty
-        ? value.trim()
-        : fallback;
+    return value is String && value.trim().isNotEmpty ? value.trim() : fallback;
   }
 
   static bool _boolean(Object? value, bool fallback) {

@@ -1,14 +1,12 @@
 import 'dart:io';
 
-import 'package:kite/src/generators/route_registry_updater.dart';
-import 'package:kite/src/naming/name_converter.dart';
+import 'package:kite_cli/src/generators/route_registry_updater.dart';
+import 'package:kite_cli/src/naming/name_converter.dart';
 import 'package:test/test.dart';
 
 void main() {
   Future<File> createRegistry(Directory root) async {
-    final registry = File(
-      '${root.path}/lib/app/router/generated_routes.dart',
-    );
+    final registry = File('${root.path}/lib/app/router/generated_routes.dart');
     await registry.parent.create(recursive: true);
     await registry.writeAsString('''
 import 'package:go_router/go_router.dart';
@@ -52,9 +50,9 @@ final List<RouteBase> generatedRoutes = <RouteBase>[
       1,
     );
     expect(
-      RegExp(RegExp.escape('  ...userProfileRoutes,'))
-          .allMatches(output)
-          .length,
+      RegExp(
+        RegExp.escape('  ...userProfileRoutes,'),
+      ).allMatches(output).length,
       1,
     );
   });
@@ -75,7 +73,9 @@ final List<RouteBase> generatedRoutes = <RouteBase>[
     final output = await registry.readAsString();
     expect(
       output,
-      contains("import '../../features/dashboard/routes/dashboard_routes.dart';"),
+      contains(
+        "import '../../features/dashboard/routes/dashboard_routes.dart';",
+      ),
     );
   });
 }

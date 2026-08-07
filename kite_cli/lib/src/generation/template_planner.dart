@@ -7,9 +7,7 @@ import '../templates/template_store.dart';
 import 'generation_plan.dart';
 
 final class TemplatePlanner {
-  const TemplatePlanner({
-    this.renderer = const TemplateRenderer(),
-  });
+  const TemplatePlanner({this.renderer = const TemplateRenderer()});
 
   final TemplateRenderer renderer;
 

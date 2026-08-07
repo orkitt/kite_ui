@@ -11,11 +11,10 @@ final class DartFormatter {
   final KiteLogger logger;
 
   Future<void> format(String projectPath) async {
-    final result = await processRunner.run(
-      'dart',
-      const <String>['format', 'lib'],
-      workingDirectory: projectPath,
-    );
+    final result = await processRunner.run('dart', const <String>[
+      'format',
+      'lib',
+    ], workingDirectory: projectPath);
 
     if (result.exitCode != 0) {
       logger.warning('dart format failed; generated files were kept.');

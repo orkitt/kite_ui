@@ -19,10 +19,7 @@ final class DependencyInstaller {
   }) {
     return installPackages(
       projectPath: projectPath,
-      dependencies: <String>{
-        ...manifest.dependencies,
-        ...extraDependencies,
-      },
+      dependencies: <String>{...manifest.dependencies, ...extraDependencies},
       devDependencies: <String>{
         ...manifest.devDependencies,
         ...extraDevDependencies,
@@ -40,20 +37,21 @@ final class DependencyInstaller {
 
     if (runtimePackages.isNotEmpty) {
       logger.info('Installing Flutter dependencies...');
-      await processRunner.runInherited(
-        'flutter',
-        <String>['pub', 'add', ...runtimePackages],
-        workingDirectory: projectPath,
-      );
+      await processRunner.runInherited('flutter', <String>[
+        'pub',
+        'add',
+        ...runtimePackages,
+      ], workingDirectory: projectPath);
     }
 
     if (developmentPackages.isNotEmpty) {
       logger.info('Installing development dependencies...');
-      await processRunner.runInherited(
-        'flutter',
-        <String>['pub', 'add', '--dev', ...developmentPackages],
-        workingDirectory: projectPath,
-      );
+      await processRunner.runInherited('flutter', <String>[
+        'pub',
+        'add',
+        '--dev',
+        ...developmentPackages,
+      ], workingDirectory: projectPath);
     }
   }
 }

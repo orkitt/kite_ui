@@ -17,12 +17,7 @@ final class GenerationConflictException implements Exception {
   String toString() => message;
 }
 
-enum _WriteAction {
-  create,
-  update,
-  unchanged,
-  skip,
-}
+enum _WriteAction { create, update, unchanged, skip }
 
 final class _ResolvedFile {
   const _ResolvedFile(this.file, this.action);
@@ -32,9 +27,7 @@ final class _ResolvedFile {
 }
 
 final class FileWriter {
-  const FileWriter({
-    this.logger = const KiteLogger(),
-  });
+  const FileWriter({this.logger = const KiteLogger()});
 
   final KiteLogger logger;
 

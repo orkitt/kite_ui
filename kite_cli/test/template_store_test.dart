@@ -1,4 +1,4 @@
-import 'package:kite/src/templates/template_store.dart';
+import 'package:kite_cli/src/templates/template_store.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -19,9 +19,10 @@ void main() {
     const store = TemplateStore();
     final templates = await store.resolve('api.dio');
 
-    expect(
-      templates.map((item) => item.manifest.id),
-      const <String>['api.core', 'state.riverpod', 'api.dio'],
-    );
+    expect(templates.map((item) => item.manifest.id), const <String>[
+      'api.core',
+      'state.riverpod',
+      'api.dio',
+    ]);
   });
 }

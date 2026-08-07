@@ -1,18 +1,15 @@
 import 'dart:io';
 
-import 'package:kite/src/generation/conflict_strategy.dart';
-import 'package:kite/src/generation/file_writer.dart';
-import 'package:kite/src/generation/generation_result.dart';
-import 'package:kite/src/generation/template_planner.dart';
-import 'package:kite/src/templates/template_store.dart';
+import 'package:kite_cli/src/generation/conflict_strategy.dart';
+import 'package:kite_cli/src/generation/file_writer.dart';
+import 'package:kite_cli/src/generation/generation_result.dart';
+import 'package:kite_cli/src/generation/template_planner.dart';
+import 'package:kite_cli/src/templates/template_store.dart';
 import 'package:test/test.dart';
 
 void main() {
   final variables = <String, Object?>{
-    'project': <String, Object?>{
-      'name': 'sample_app',
-      'package': 'sample_app',
-    },
+    'project': <String, Object?>{'name': 'sample_app', 'package': 'sample_app'},
     'feature': <String, Object?>{
       'raw': 'dashboard',
       'snake': 'dashboard',

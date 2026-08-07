@@ -72,8 +72,9 @@ final class TemplateFileDefinition {
       template: json['template'] as String,
       target: json['target'] as String,
       condition: json['condition'] as String?,
-      upgradePolicy:
-          TemplateUpgradePolicy.parse(json['upgradePolicy'] as String?),
+      upgradePolicy: TemplateUpgradePolicy.parse(
+        json['upgradePolicy'] as String?,
+      ),
     );
   }
 }

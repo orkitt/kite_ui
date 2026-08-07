@@ -1,4 +1,4 @@
-import 'package:kite/kite.dart';
+import 'package:kite_cli/kite_cli.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -13,10 +13,7 @@ void main() {
 
   test('renders nested tokens', () {
     expect(
-      renderer.render(
-        '{{feature.pascal}} -> {{feature.snake}}',
-        values,
-      ),
+      renderer.render('{{feature.pascal}} -> {{feature.snake}}', values),
       'UserProfile -> user_profile',
     );
   });
