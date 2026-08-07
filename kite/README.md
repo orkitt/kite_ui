@@ -1,198 +1,82 @@
-# Kite 🪁
+<!--
+This README describes the package. If you publish this package to pub.dev,
+this README's contents appear on the landing page for your package.
 
-<p align="center">
-A lightweight and fast <b>Flutter CLI</b> for creating projects, installing dependencies, and scaffolding clean architecture.
-</p>
+For information about how to write a good package README, see the guide for
+[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
 
-<p align="center">
+For general information about developing packages, see the Dart guide for
+[creating packages](https://dart.dev/guides/libraries/create-packages)
+and the Flutter guide for
+[developing packages and plugins](https://flutter.dev/to/develop-packages).
+-->
 
-![Pub Version](https://img.shields.io/pub/v/kite)
-![Dart](https://img.shields.io/badge/Dart-CLI-blue)
-![Flutter](https://img.shields.io/badge/Flutter-Developer%20Tool-02569B)
-![License](https://img.shields.io/badge/License-MIT-green)
+TODO: Put a short description of the package here that helps potential users
+know whether this package might be useful for them.
 
-</p>
+## Features
 
----
+TODO: List what your package can do. Maybe include images, gifs, or videos.
 
-## 🚀 Overview
+## Getting started
 
-**Kite** is a developer-friendly **Flutter CLI tool** that simplifies common project setup tasks.
+TODO: List prerequisites and provide or point to information on how to
+start using the package.
 
-It helps Flutter developers quickly **bootstrap projects**, **install dependencies**, and **generate boilerplate code** using simple commands.
+## Usage
 
-Instead of manually configuring folders, dependencies, and structure, Kite automates the workflow so you can focus on building features.
+TODO: Include short and useful examples for package users. Add longer examples
+to `/example` folder.
 
----
-
-## ✨ Features
-
-* 🚀 Quickly **create Flutter projects**
-* 📦 Automatically **install dependencies**
-* 🧪 Install **dev dependencies** with one command
-* 🧱 Generate **clean architecture structure**
-* ⚡ Fast and minimal **CLI workflow**
-* 🧩 Generate **features, models, routes, and widgets**
-* 🎯 Designed for **productivity and clean code**
-
-Keywords: **flutter cli, scaffold, generator, boilerplate**
-
----
-
-## 📦 Installation
-
-Activate globally from pub.dev:
-
-```bash
-dart pub global activate kite
+```dart
+kite/
+└── lib/
+    ├── kite.dart
+    │
+    └── src/
+        ├── design/
+        │   ├── colors/
+        │   ├── typography/
+        │   ├── dimensions/
+        │   ├── shapes/
+        │   └── theme/
+        │
+        ├── components/
+        │   ├── button/
+        │   ├── input/
+        │   ├── card/
+        │   ├── dialog/
+        │   ├── sheet/
+        │   ├── tabs/
+        │   └── ...
+        │
+        ├── responsive/
+        │   ├── breakpoints.dart
+        │   ├── responsive.dart
+        │   ├── responsive_value.dart
+        │   ├── responsive_builder.dart
+        │   └── responsive_extensions.dart
+        │
+        ├── extensions/
+        │   ├── context_extensions.dart
+        │   ├── iterable_extensions.dart
+        │   ├── string_extensions.dart
+        │   └── datetime_extensions.dart
+        │
+        ├── utils/
+        │   ├── debouncer.dart
+        │   ├── validators.dart
+        │   ├── formatter.dart
+        │   └── result.dart
+        │
+        └── foundation/
+            ├── typedefs.dart
+            ├── enums.dart
+            └── primitives.dart
 ```
 
-Then run:
+## Additional information
 
-```bash
-kite
-```
-
----
-
-## 📌 Usage
-
-### Create a Flutter Project
-
-```bash
-kite create my_app --org com.example
-```
-
-Create a project with **Riverpod architecture**:
-
-```bash
-kite create my_app --riverpod
-```
-
----
-
-### Generate Components
-
-Generate project components using simple commands.
-
-Create a feature:
-
-```bash
-kite feature auth --clean
-```
-
-Create a model:
-
-```bash
-kite model user
-```
-
-Create a route:
-
-```bash
-kite route login
-```
-
-Create a reusable widget:
-
-```bash
-kite widget primary_button
-```
-
----
-
-### Run the App
-
-```bash
-kite run
-```
-
----
-
-### Build the App
-
-```bash
-kite build
-```
-
----
-
-### Install Dev Dependencies
-
-```bash
-kite generate
-```
-
-This installs common development tools like:
-
-* `build_runner`
-* `json_serializable`
-* `freezed`
-* other dev utilities
-
----
-
-## ⚡ Example Workflow
-
-```bash
-kite create shop_app --riverpod
-cd shop_app
-
-kite feature auth
-kite model user
-kite route login
-kite widget primary_button
-
-kite run
-```
-
----
-
-## 🎯 Goal
-
-Kite aims to improve the **Flutter developer experience** by providing a fast and minimal CLI that automates repetitive setup tasks.
-
-The goal is to make Flutter development **cleaner, faster, and more productive**.
-
----
-
-## 🪁 Why Kite?
-
-Flutter projects often require repetitive setup steps such as:
-
-* creating folder structures
-* installing dependencies
-* generating boilerplate
-* organizing features
-
-**Kite automates these tasks**, allowing developers to start building features immediately.
-
----
-
-## 📚 Future Plans
-
-* More architecture generators
-* Additional CLI commands
-* Advanced project templates
-* Custom scaffolding support
-
----
-
-## ❤️ Contributing
-
-Contributions, issues, and feature requests are welcome.
-
----
-
-## 📄 License
-
-MIT License
-
-> Part of the Orkitt Flutter developer tools ecosystem.
----
-
-<p align="center">
-
-<b>Kite — Flutter projects that take off instantly.</b> 🪁
-</p>
-
+TODO: Tell users more about the package: where to find more information, how to
+contribute to the package, how to file issues, what response they can expect
+from the package authors, and more.

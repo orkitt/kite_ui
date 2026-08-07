@@ -1,18 +1,17 @@
-# Kite example
+# example
 
-This application demonstrates:
+A new Flutter project.
 
-- six `StatefulShellRoute` branches
-- compact bottom navigation with a More sheet
-- tablet rail
-- desktop collapsed and expanded sidebars
-- settings route master-detail navigation
-- chat that grows from one to three columns
-- card-to-table responsive representation
+## Getting Started
 
-Run:
+This project is a starting point for a Flutter application.
 
-```bash
-flutter pub get
-flutter run -d chrome
-```
+A few resources to get you started if this is your first Flutter project:
+
+- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
+- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

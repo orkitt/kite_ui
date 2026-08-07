@@ -1,3 +1,10 @@
+## 0.1.0
+
+* Fixed bundled template registry resolution after global installation.
+* Improved CLI logging for clearer generation progress and error messages.
+* Improved template loading reliability for `dart pub global activate kite_cli`.
+
+
 ## 0.0.1
 
 - Added `kite init`.

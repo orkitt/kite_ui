@@ -17,7 +17,7 @@ final class KiteCommandRunner extends CommandRunner<int> {
   KiteCommandRunner({KiteLogger logger = const KiteLogger()})
     : _logger = logger,
       super(
-        'kite',
+        'kite cli',
         'Initialize professional Flutter foundations and generate '
             'features, components, state, and API infrastructure.',
       ) {
@@ -43,7 +43,7 @@ final class KiteCommandRunner extends CommandRunner<int> {
     final normalized = normalizeArguments(arguments);
 
     if (normalized.contains('--version') || normalized.contains('-v')) {
-      _logger.info('kite $kiteCliVersion');
+      _logger.info('kite_cli $kiteCliVersion');
       return ExitCodes.success;
     }
 

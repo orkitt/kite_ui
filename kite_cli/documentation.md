@@ -1,291 +1,1241 @@
-# Kite 0.2.0 — Technical Documentation
+# Kite CLI 🪁
 
-## 1. Purpose
+**Kite CLI** is a Flutter project scaffolding and developer tooling CLI focused on creating clean, maintainable, and production-ready Flutter foundations.
 
-Kite initializes Flutter project foundations and generates architecture, shared UI, state, and networking code from versioned templates.
+Instead of repeatedly creating architecture folders, providers, API infrastructure, shared components, routing setup, and common boilerplate by hand, Kite generates a consistent starting point while leaving your actual business logic under your control.
 
-Supported commands:
+```bash
+dart pub global activate kite_cli
+```
+
+Once installed, the executable is simply:
+
+```bash
+kite
+```
+
+---
+
+## Why Kite?
+
+Starting a Flutter project is easy.
+
+Keeping its architecture consistent as the project grows is harder.
+
+Kite helps standardize common Flutter development tasks such as:
+
+* Initializing a maintainable project foundation
+* Generating Feature-First Clean Architecture modules
+* Generating lightweight MVC features
+* Adding reusable shared UI components
+* Setting up modern Riverpod infrastructure
+* Creating a production-ready Dio networking layer
+* Managing reusable templates and their dependencies
+* Safely upgrading generated files
+
+Kite intentionally generates **structure and infrastructure**, not imaginary business logic.
+
+You remain responsible for your APIs, repository operations, entities, use cases, and application-specific behavior.
+
+---
+
+# Features
+
+### Feature generators
+
+* Feature-First Clean Architecture
+* MVC architecture
+* Optional GoRouter route registration
+* Optional JSON serialization setup
+
+### Flutter infrastructure
+
+* Manual Riverpod `Notifier` / `AsyncNotifier`
+* Dio API client
+* Bearer token interceptor
+* API exception mapping
+* Request cancellation
+* Typed response decoding
+* Shared loading, error, and empty states
+
+### Reusable components
+
+* Kite Button
+* Kite Card
+* Kite Avatar
+* Dependency-aware component generation
+
+### Generator system
+
+* Versioned JSON template manifests
+* Readable `.tmpl` source templates
+* Recursive template dependencies
+* Dependency deduplication
+* Conflict detection
+* Checksums
+* Dry-run support
+* Safe upgrades
+* Automatic dependency installation
+* Automatic Dart formatting
+
+---
+
+# Installation
+
+Install Kite CLI globally from pub.dev:
+
+```bash
+dart pub global activate kite_cli
+```
+
+Verify the installation:
+
+```bash
+kite --version
+```
+
+You should see something similar to:
+
+```text
+Kite CLI 0.x.x
+```
+
+View available commands:
+
+```bash
+kite --help
+```
+
+View registered templates:
+
+```bash
+kite templates
+```
+
+---
+
+## Command not found?
+
+If Dart's global executable directory is not in your `PATH`, add it.
+
+### macOS / Linux
+
+```bash
+export PATH="$PATH:$HOME/.pub-cache/bin"
+```
+
+For Zsh:
+
+```bash
+echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+Then verify:
+
+```bash
+which kite
+```
+
+---
+
+# Quick Start
+
+Create a Flutter application:
+
+```bash
+flutter create my_app
+cd my_app
+```
+
+Initialize Kite:
 
 ```bash
 kite init
-kite --feat:clean dashboard
-kite --feat:mvc dashboard
-kite --widget button
-kite --widget "[button,card,avater]"
-kite --state riverpod
-kite --api:dio
 ```
 
-Canonical equivalents:
+Generate your first feature:
 
 ```bash
-kite feature dashboard --architecture clean
-kite feature dashboard --architecture mvc
-kite component button card avatar
-kite state riverpod
-kite api dio
+kite --feat:clean dashboard
 ```
 
-## 2. Package architecture
+Add a shared component:
 
-```text
-bin/kite.dart
-lib/
-├── kite.dart
-└── src/
-    ├── cli/
-    ├── commands/
-    ├── generation/
-    ├── generators/
-    ├── logging/
-    ├── naming/
-    ├── process/
-    ├── project/
-    └── templates/
+```bash
+kite --widget button
 ```
 
-Responsibilities:
+Add Riverpod infrastructure:
 
-- `cli`: top-level runner and shorthand normalization.
-- `commands`: argument validation and project detection.
-- `generators`: orchestration for projects, features, and presets.
-- `generation`: plans, conflict resolution, checksums, and project manifests.
-- `templates`: registry, manifests, dependency resolution, rendering, and template files.
-- `process`: dependency installation and Dart formatting.
-
-## 3. Command normalization
-
-The CLI normalizes shorthand before passing arguments to `CommandRunner`:
-
-```text
---feat:mvc dashboard       -> feature dashboard --architecture mvc
---widget button            -> component button
---state riverpod           -> state riverpod
---api:dio                  -> api dio
+```bash
+kite --state riverpod
 ```
 
-The feature shorthand is architecture-generic. Adding a registered `feature.mvvm` template and allowing `mvvm` in `FeatureCommand` enables `--feat:mvvm` without another parser branch.
+Add Dio networking:
 
-## 4. Template registry
-
-`lib/src/templates/registry.json` stores template metadata:
-
-```json
-{
-  "id": "component.button",
-  "name": "Kite Button",
-  "type": "component",
-  "version": "1.0.0",
-  "manifest": "components/button/manifest.json"
-}
-```
-
-Internal dependency templates use:
-
-```json
-{
-  "id": "component.foundation",
-  "internal": true
-}
-```
-
-They are hidden from `kite templates` and shown by `kite templates --all`.
-
-## 5. Manifest schema
-
-A manifest controls files, dependencies, recursive template requirements, conditions, and upgrade behavior:
-
-```json
-{
-  "schemaVersion": 2,
-  "id": "component.button",
-  "version": "1.0.0",
-  "requires": ["component.foundation"],
-  "dependencies": [],
-  "devDependencies": [],
-  "files": [
-    {
-      "template": "files/kite_button.dart.tmpl",
-      "target": "{{config.sourceDirectory}}/shared/components/kite_button.dart",
-      "upgradePolicy": "replace"
-    }
-  ]
-}
-```
-
-### `requires`
-
-`TemplateStore.resolve()` performs depth-first dependency resolution:
-
-1. Detect circular dependencies.
-2. Load dependencies first.
-3. Deduplicate templates.
-4. Return the root template last.
-
-`TemplatePlanner.buildResolved()` then renders the complete dependency bundle, deduplicates identical targets, and fails if two templates produce different content for the same path.
-
-## 6. Preset generator
-
-`PresetGenerator` powers widgets, Riverpod, and Dio.
-
-For multiple widget selections it:
-
-1. Resolves every root template.
-2. Builds one plan per root.
-3. Merges files by target path.
-4. Detects content conflicts before writing.
-5. Writes all files transactionally.
-6. Records each root template in `.kite/manifest.json`.
-7. Merges and installs package dependencies once.
-8. Formats the project once.
-
-This is why selecting button, card, and avatar creates only one `kite_component_size.dart`.
-
-## 7. MVC feature
-
-`feature.mvc` requires `state.riverpod` and generates:
-
-```text
-features/<name>/
-├── controllers/<name>_controller.dart
-├── models/<name>_model.dart
-├── providers/<name>_providers.dart
-├── routes/<name>_routes.dart       # optional
-└── views/
-    ├── screens/<name>_screen.dart
-    └── widgets/<name>_content.dart
-```
-
-The controller extends manual Riverpod `Notifier<Model>`. The provider is declared manually with `NotifierProvider`.
-
-`--json` switches the model template to `json_annotation` / `json_serializable`. `--route` generates the route and registers the MVC path in Kite's route registry.
-
-## 8. Component templates
-
-### Foundation
-
-`component.foundation` generates `kite_component_size.dart`. This is a genuinely reusable shared design token used across components.
-
-### Button
-
-`KiteButton` includes:
-
-- filled, tonal, outlined, and text variants
-- small, medium, and large sizes
-- loading state
-- leading and trailing widgets
-- full-width mode
-- tooltip and semantics
-- theme-driven Material 3 styling
-
-### Card
-
-`KiteCard` includes consistent sizing, optional interaction, selection appearance, semantics, and theme-aware colors.
-
-### Avatar
-
-`KiteAvatar` supports remote images, loading feedback, image-error fallback, initials, custom children, interaction, semantics, and adaptive sizing.
-
-## 9. Riverpod preset
-
-`state.riverpod` generates:
-
-- `AppProviderObserver` using Riverpod 3 observer context APIs
-- `AsyncNotifierGuard<T>` for standardized loading/error/data mutations
-- `buildProviderScope()` with debug observation, overrides, observers, and Riverpod retry behavior
-
-No Riverpod annotations or generated providers are used.
-
-## 10. Dio preset
-
-`api.dio` requires `api.core` and `state.riverpod`.
-
-### Framework-independent files
-
-- `ApiConfig`
-- `ApiException`
-- `AuthTokenStore`
-- developer-owned `ApiEndpoints`
-
-### Dio files
-
-- `BearerTokenInterceptor` extends `QueuedInterceptor`
-- `mapDioException()` maps every Dio exception category
-- `DioApiClient` supports typed decoding, query parameters, headers, payloads, cancellation, progress callbacks, GET/POST, and raw Dio access
-- Riverpod providers expose config, token storage, interceptors, and the client
-
-`apiConfigProvider` intentionally throws until overridden. This prevents shipping with an accidental placeholder base URL.
-
-## 11. Generated-file safety
-
-Kite creates `.kite/manifest.json` with:
-
-- generation ID
-- root template ID and version
-- rendering variables
-- generated file paths
-- file checksums
-- upgrade policies
-
-Conflict resolution happens for the complete plan before any file is written.
-
-Strategies:
-
-```text
-ask       default interactive behavior
-skip      --skip-existing
-overwrite --force
-fail      programmatic/CI usage
-```
-
-Upgrade logic rebuilds the root template together with its current dependencies. Modified files are preserved unless `--force` is used.
-
-## 12. Adding a component
-
-Example: `badge`.
-
-Create:
-
-```text
-lib/src/templates/components/badge/
-├── manifest.json
-└── files/kite_badge.dart.tmpl
-```
-
-Manifest:
-
-```json
-{
-  "schemaVersion": 2,
-  "id": "component.badge",
-  "version": "1.0.0",
-  "requires": ["component.foundation"],
-  "dependencies": [],
-  "devDependencies": [],
-  "files": [
-    {
-      "template": "files/kite_badge.dart.tmpl",
-      "target": "{{config.sourceDirectory}}/shared/components/kite_badge.dart",
-      "upgradePolicy": "replace"
-    }
-  ]
-}
+```bash
+kite --api:dio
 ```
 
 Then:
 
-1. Register `component.badge` in `registry.json`.
-2. Add `badge` to `ComponentCommand._supported`.
-3. Add generation tests.
-4. Run `python3 tool/validate_templates.py`.
+```bash
+flutter pub get
+flutter analyze
+```
 
-## 13. Adding another state or API preset
+---
 
-Use a root template ID such as `state.bloc` or `api.http`. Register it, create its manifest/files, and allow the preset in the associated command. Shared contracts should be placed in an internal template and referenced through `requires`.
+# Initialize a Flutter Project
 
-## 14. Validation
+Run Kite inside an existing Flutter application:
 
-Run:
+```bash
+kite init
+```
+
+Kite initializes the common application foundation required by generated features.
+
+Typical generated structure:
+
+```text
+lib/
+├── app/
+│   ├── router/
+│   └── theme/
+│
+├── core/
+│   ├── errors/
+│   ├── result/
+│   └── state/
+│
+├── features/
+│
+├── shared/
+│   ├── components/
+│   └── widgets/
+│
+└── main.dart
+```
+
+Kite also creates project configuration files such as:
+
+```text
+kite.yaml
+.kite/
+└── manifest.json
+```
+
+The `.kite` manifest tracks generated templates and managed files so future upgrades can be handled safely.
+
+---
+
+## Init options
+
+Preview changes without writing files:
+
+```bash
+kite init --dry-run
+```
+
+Overwrite existing generated files:
+
+```bash
+kite init --force
+```
+
+Skip existing files:
+
+```bash
+kite init --skip-existing
+```
+
+Skip automatic dependency installation:
+
+```bash
+kite init --no-dependencies
+```
+
+Skip automatic formatting:
+
+```bash
+kite init --no-format
+```
+
+Target another Flutter project:
+
+```bash
+kite init --path ./apps/mobile
+```
+
+---
+
+# Clean Architecture
+
+Generate a Feature-First Clean Architecture module:
+
+```bash
+kite --feat:clean dashboard
+```
+
+Canonical command:
+
+```bash
+kite feature dashboard --architecture clean
+```
+
+Generated structure:
+
+```text
+lib/features/dashboard/
+├── data/
+│   ├── dtos/
+│   │   └── dashboard_dto.dart
+│   │
+│   ├── repositories/
+│   │   └── dashboard_repository_impl.dart
+│   │
+│   └── sources/
+│       └── dashboard_remote_source.dart
+│
+├── domain/
+│   ├── entities/
+│   │   └── dashboard_entity.dart
+│   │
+│   ├── repositories/
+│   │   └── dashboard_repository.dart
+│   │
+│   └── usecases/
+│       └── get_dashboard_use_case.dart
+│
+└── presentation/
+    ├── providers/
+    │   └── dashboard_providers.dart
+    │
+    ├── screens/
+    │   └── dashboard_screen.dart
+    │
+    └── widgets/
+        └── dashboard_content.dart
+```
+
+The generated architecture follows three clear boundaries:
+
+### Domain
+
+Contains application business contracts and entities.
+
+```text
+domain/
+├── entities/
+├── repositories/
+└── usecases/
+```
+
+The domain layer should remain independent of Flutter, Dio, Riverpod, and other frameworks.
+
+### Data
+
+Contains external data access and repository implementations.
+
+```text
+data/
+├── dtos/
+├── repositories/
+└── sources/
+```
+
+### Presentation
+
+Contains Flutter-specific UI and state management.
+
+```text
+presentation/
+├── providers/
+├── screens/
+└── widgets/
+```
+
+Kite intentionally leaves repository and source contracts without fake API operations.
+
+You define the actual behavior required by your feature.
+
+---
+
+# MVC Architecture
+
+For smaller features or applications where full Clean Architecture would be unnecessary, Kite also provides an MVC generator.
+
+```bash
+kite --feat:mvc dashboard
+```
+
+Canonical forms:
+
+```bash
+kite feature dashboard --architecture mvc
+```
+
+or:
+
+```bash
+kite feature dashboard --mvc
+```
+
+Generated structure:
+
+```text
+lib/features/dashboard/
+├── controllers/
+│   └── dashboard_controller.dart
+│
+├── models/
+│   └── dashboard_model.dart
+│
+├── providers/
+│   └── dashboard_providers.dart
+│
+└── views/
+    ├── screens/
+    │   └── dashboard_screen.dart
+    │
+    └── widgets/
+        └── dashboard_content.dart
+```
+
+---
+
+# Route Generation
+
+Generate a feature and automatically add its GoRouter route:
+
+```bash
+kite --feat:clean dashboard --route
+```
+
+or:
+
+```bash
+kite --feat:mvc dashboard --route
+```
+
+Kite generates the feature route and registers it with the Kite-managed route registry.
+
+This keeps generated routing code separate from application-owned routing code.
+
+---
+
+# JSON Serialization
+
+Generate a JSON-ready DTO or model:
+
+```bash
+kite --feat:clean dashboard --json
+```
+
+For MVC:
+
+```bash
+kite --feat:mvc dashboard --json
+```
+
+Kite adds the required serialization dependencies:
+
+```text
+json_annotation
+json_serializable
+build_runner
+```
+
+After adding actual fields to the generated model or DTO, run:
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+Kite uses JSON code generation for serialization only.
+
+Riverpod code generation is not required.
+
+---
+
+# Reusable Components
+
+Kite can generate common reusable components inside your shared UI layer.
+
+## Button
+
+```bash
+kite --widget button
+```
+
+## Multiple components
+
+```bash
+kite --widget "[button,card,avatar]"
+```
+
+The commonly mistyped:
+
+```bash
+kite --widget "[button,card,avater]"
+```
+
+is also accepted and normalized to `avatar`.
+
+Canonical forms:
+
+```bash
+kite component button
+kite component button card avatar
+kite widget button card avatar
+kite g widget button card avatar
+```
+
+Generated structure:
+
+```text
+lib/shared/components/
+├── kite_component_size.dart
+├── kite_button.dart
+├── kite_card.dart
+└── kite_avatar.dart
+```
+
+---
+
+## Component dependencies
+
+Components can depend on shared internal templates.
+
+For example:
+
+```text
+component.button
+component.card
+component.avatar
+        ↓
+component.foundation
+```
+
+The shared foundation might generate:
+
+```text
+kite_component_size.dart
+```
+
+even when multiple components require it.
+
+Kite resolves the dependency once and avoids generating duplicate files.
+
+This keeps reusable components independent while still allowing them to share common infrastructure.
+
+---
+
+# Riverpod Infrastructure
+
+Generate the production Riverpod foundation:
+
+```bash
+kite --state riverpod
+```
+
+Canonical command:
+
+```bash
+kite state riverpod
+```
+
+Generated structure:
+
+```text
+lib/core/state/
+├── app_provider_observer.dart
+├── async_notifier_guard.dart
+└── riverpod_bootstrap.dart
+```
+
+The generated setup uses modern manually declared Riverpod APIs including:
+
+```text
+Provider
+Notifier
+NotifierProvider
+AsyncNotifier
+AsyncNotifierProvider
+AsyncValue
+```
+
+Kite does **not** require:
+
+```text
+riverpod_generator
+@riverpod
+```
+
+for state management.
+
+This keeps generated state infrastructure explicit and easy to understand.
+
+---
+
+# Dio API Client
+
+Generate Kite's Dio networking foundation:
+
+```bash
+kite --api:dio
+```
+
+Canonical forms:
+
+```bash
+kite api dio
+```
+
+or:
+
+```bash
+kite --api dio
+```
+
+Generated structure:
+
+```text
+lib/core/network/
+├── api_config.dart
+├── api_endpoints.dart
+├── api_exception.dart
+├── auth_token_store.dart
+│
+└── dio/
+    ├── bearer_token_interceptor.dart
+    ├── dio_api_client.dart
+    ├── dio_exception_mapper.dart
+    └── dio_providers.dart
+```
+
+The generated networking layer includes:
+
+* Dio client configuration
+* Typed decoding
+* Bearer-token support
+* API exception mapping
+* Riverpod providers
+* Request cancellation
+* Upload/download progress callbacks
+* Timeouts
+* Debug-only HTTP logging
+* Automatic client disposal
+
+---
+
+## Configure the API
+
+Override the generated configuration during application bootstrap:
+
+```dart
+buildProviderScope(
+  overrides: <Override>[
+    apiConfigProvider.overrideWithValue(
+      const ApiConfig(
+        baseUrl: 'https://api.example.com',
+      ),
+    ),
+  ],
+  child: const App(),
+);
+```
+
+Read the API client:
+
+```dart
+final client = ref.read(dioApiClientProvider);
+```
+
+Example typed request:
+
+```dart
+final profile = await client.get<ProfileDto>(
+  path: '/profile',
+  decoder: (data) {
+    return ProfileDto.fromJson(
+      Map<String, Object?>.from(
+        data! as Map<Object?, Object?>,
+      ),
+    );
+  },
+);
+```
+
+---
+
+# Template Dependency System
+
+Kite templates can depend on other templates.
+
+Example:
+
+```json
+{
+  "id": "api.dio",
+  "requires": [
+    "api.core",
+    "state.riverpod"
+  ]
+}
+```
+
+When you run:
+
+```bash
+kite --api:dio
+```
+
+Kite resolves:
+
+```text
+api.dio
+├── api.core
+└── state.riverpod
+```
+
+before generating the requested API template.
+
+The dependency system:
+
+* Resolves dependencies recursively
+* Generates dependencies before the root template
+* Detects circular dependencies
+* Deduplicates identical generated targets
+* Rejects conflicting generated targets
+* Combines Dart/Flutter package dependencies
+* Tracks generated files in the Kite manifest
+
+---
+
+# Safe File Generation
+
+Kite is designed to avoid silently destroying application code.
+
+Available conflict strategies include:
+
+```bash
+kite init --dry-run
+kite init --skip-existing
+kite init --force
+```
+
+When an existing file conflicts with generated output, Kite can:
+
+```text
+overwrite
+overwrite all
+skip
+quit
+```
+
+Managed generated files are also recorded with checksums.
+
+This allows Kite to determine whether a generated file has been manually modified before attempting future upgrades.
+
+---
+
+# Inspect Your Project
+
+Run Kite's project diagnostics:
+
+```bash
+kite doctor
+```
+
+Use it to verify:
+
+* Flutter project structure
+* Kite configuration
+* Managed manifest
+* Template availability
+* Generator environment
+
+---
+
+# Available Templates
+
+List public templates:
+
+```bash
+kite templates
+```
+
+Show every registered template, including internal dependency templates:
+
+```bash
+kite templates --all
+```
+
+Example categories may include:
+
+```text
+project.clean
+
+feature.clean
+feature.mvc
+
+component.button
+component.card
+component.avatar
+
+state.riverpod
+
+api.core
+api.dio
+```
+
+---
+
+# Upgrade Generated Foundations
+
+Preview an upgrade:
+
+```bash
+kite upgrade --dry-run
+```
+
+Apply an upgrade:
+
+```bash
+kite upgrade
+```
+
+Kite uses its generated-file manifest and stored checksums to determine whether files can be safely replaced.
+
+Developer-owned files can use a preservation policy.
+
+For example:
+
+```text
+api_endpoints.dart
+```
+
+may be preserved because applications are expected to customize it.
+
+---
+
+# Kite Configuration
+
+Kite can store project-specific generation settings inside:
+
+```text
+kite.yaml
+```
+
+Example:
+
+```yaml
+schema_version: 1
+
+project:
+  source_directory: lib
+
+architecture:
+  type: clean
+  feature_directory: lib/features
+
+state_management:
+  type: riverpod
+  code_generation: false
+
+routing:
+  type: go_router
+  auto_register_features: true
+
+serialization:
+  type: json_serializable
+
+generation:
+  format_after_generation: true
+  install_dependencies: true
+  conflict_strategy: ask
+```
+
+This keeps generator behavior predictable across the entire team.
+
+---
+
+# Adding a New Kite Template
+
+Kite's template system is designed to be extensible.
+
+### 1. Create the template directory
+
+Add a folder under:
+
+```text
+lib/src/templates/
+```
+
+For example:
+
+```text
+lib/src/templates/features/mvvm/
+```
+
+### 2. Add a manifest
+
+```text
+manifest.json
+```
+
+The manifest defines:
+
+* Template ID
+* Version
+* Generated targets
+* Template source files
+* Dependencies
+* Conditions
+* Upgrade policies
+
+### 3. Add template sources
+
+Use readable:
+
+```text
+*.dart.tmpl
+```
+
+files instead of embedding Dart source inside JSON.
+
+### 4. Register the template
+
+Add it to:
+
+```text
+lib/src/templates/registry.json
+```
+
+### 5. Add dependencies when required
+
+```json
+{
+  "requires": [
+    "state.riverpod"
+  ]
+}
+```
+
+### 6. Map the CLI command
+
+Expose the template through an appropriate command or shorthand.
+
+### 7. Validate
+
+```bash
+dart test
+python3 tool/validate_templates.py
+```
+
+See `documentation.md` for the internal generator architecture and template authoring guide.
+
+---
+
+# CLI Reference
+
+## Project
+
+```bash
+kite init
+kite doctor
+kite upgrade
+```
+
+## Features
+
+```bash
+kite --feat:clean dashboard
+kite --feat:mvc dashboard
+
+kite feature dashboard --architecture clean
+kite feature dashboard --architecture mvc
+```
+
+## Feature options
+
+```bash
+--route
+--json
+--dry-run
+--force
+--skip-existing
+```
+
+## Components
+
+```bash
+kite --widget button
+kite --widget "[button,card,avatar]"
+
+kite component button card avatar
+```
+
+## State
+
+```bash
+kite --state riverpod
+kite state riverpod
+```
+
+## Networking
+
+```bash
+kite --api:dio
+kite api dio
+```
+
+## Templates
+
+```bash
+kite templates
+kite templates --all
+```
+
+## General
+
+```bash
+kite --version
+kite --help
+```
+
+---
+
+# Local Development
+
+Clone the Kite CLI repository:
+
+```bash
+git clone https://github.com/orkitt/kite.git
+cd kite
+```
+
+Install dependencies:
+
+```bash
+dart pub get
+```
+
+Activate the local package:
+
+```bash
+dart pub global deactivate kite_cli
+dart pub global activate --source path .
+```
+
+Verify:
+
+```bash
+kite --version
+kite templates
+```
+
+---
+
+# Development Checks
+
+Before publishing:
+
+```bash
+dart pub get
+
+dart format --set-exit-if-changed .
+
+dart analyze
+
+dart test
+
+python3 tool/validate_templates.py
+
+dart pub publish --dry-run
+```
+
+For template-based CLIs, always verify the publish dry run contains:
+
+```text
+lib/src/templates/registry.json
+lib/src/templates/**/manifest.json
+lib/src/templates/**/*.tmpl
+```
+
+The templates must be included in the published package for globally activated installations to work.
+
+---
+
+# Testing Kite Against a Flutter Project
+
+Create a disposable Flutter application:
+
+```bash
+flutter create kite_test_app
+cd kite_test_app
+```
+
+Initialize Kite:
+
+```bash
+kite init
+```
+
+Test the generators:
+
+```bash
+kite --feat:clean dashboard
+kite --feat:mvc profile
+kite --widget "[button,card,avatar]"
+kite --state riverpod
+kite --api:dio
+```
+
+Then validate the generated application:
+
+```bash
+flutter pub get
+dart format .
+flutter analyze
+flutter test
+```
+
+---
+
+# Package vs Executable
+
+The pub.dev package is:
+
+```text
+kite_cli
+```
+
+The globally installed executable is:
+
+```text
+kite
+```
+
+Therefore installation uses:
+
+```bash
+dart pub global activate kite_cli
+```
+
+but commands use:
+
+```bash
+kite init
+kite --feat:clean dashboard
+```
+
+Dart package resource imports inside the CLI should use:
+
+```text
+package:kite_cli/...
+```
+
+not:
+
+```text
+package:kite/...
+```
+
+This distinction is especially important for bundled template resolution.
+
+---
+
+# Kite Ecosystem
+
+The Kite ecosystem is intentionally split by responsibility.
+
+```text
+kite
+└── Flutter UI, theme, responsive utilities,
+    reusable components, extensions and developer helpers
+
+kite_cli
+└── Project initialization, feature generation,
+    component generation, Riverpod setup,
+    Dio setup and template tooling
+```
+
+The CLI executable remains:
+
+```text
+kite
+```
+
+This keeps Flutter runtime dependencies separate from command-line generator dependencies.
+
+---
+
+# Documentation Website
+
+Kite includes a branded documentation website under:
+
+```text
+website/
+```
+
+Run it locally:
+
+```bash
+cd website
+npm run dev
+```
+
+Validate and build:
+
+```bash
+npm test
+```
+
+The production static site is generated into:
+
+```text
+website/dist/
+```
+
+The included GitHub Pages workflow can publish the documentation automatically.
+
+---
+
+# Philosophy
+
+Kite follows a few simple principles:
+
+**Generate structure, not assumptions.**
+
+Kite should not invent repository methods, API endpoints, business entities, or application behavior.
+
+**Prefer explicit code.**
+
+Generated code should remain readable and understandable without hidden generators or excessive abstractions.
+
+**Keep architecture scalable.**
+
+Small projects can use MVC while larger applications can use Feature-First Clean Architecture.
+
+**Protect developer-owned code.**
+
+Generation and upgrades should avoid overwriting manually modified files unexpectedly.
+
+**Make common Flutter infrastructure repeatable.**
+
+Architecture, routing, state management, networking, and shared components should be easy to establish consistently across projects.
+
+---
+
+# Contributing
+
+Contributions, bug reports, new templates, and generator improvements are welcome.
+
+Before submitting changes:
 
 ```bash
 dart format .
@@ -294,4 +1244,19 @@ dart test
 python3 tool/validate_templates.py
 ```
 
-The static validator checks registry/manifest JSON, ID/version consistency, dependency existence, cycles, source files, conditions, token rendering, safe paths, bundle conflicts, and generated relative imports.
+When adding a new generator, include tests for:
+
+* Argument normalization
+* Template resolution
+* Generated file structure
+* Dependency resolution
+* Conflict handling
+* Generated imports
+
+---
+
+# License
+
+Kite CLI is available under the **MIT License**.
+
+Part of the **Orkitt developer tools ecosystem**.

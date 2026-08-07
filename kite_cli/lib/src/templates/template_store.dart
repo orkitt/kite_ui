@@ -88,7 +88,7 @@ final class TemplateStore {
 
   Future<Directory> _root() async {
     final uri = await Isolate.resolvePackageUri(
-      Uri.parse('package:kite/src/templates/registry.json'),
+      Uri.parse('package:kite_cli/src/templates/registry.json'),
     );
 
     if (uri == null || uri.scheme != 'file') {
