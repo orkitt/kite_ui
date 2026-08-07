@@ -1,0 +1,9 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../controllers/{{feature.snake}}_controller.dart';
+import '../models/{{feature.snake}}_model.dart';
+
+final {{feature.camel}}ControllerProvider =
+    NotifierProvider<{{feature.pascal}}Controller, {{feature.pascal}}Model>(
+  {{feature.pascal}}Controller.new,
+);

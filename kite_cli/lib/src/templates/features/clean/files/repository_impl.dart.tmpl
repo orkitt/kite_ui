@@ -1,0 +1,11 @@
+import '../../domain/repositories/{{feature.snake}}_repository.dart';
+import '../sources/{{feature.snake}}_remote_source.dart';
+
+final class {{feature.pascal}}RepositoryImpl
+    implements {{feature.pascal}}Repository {
+  const {{feature.pascal}}RepositoryImpl({
+    required this.remoteSource,
+  });
+
+  final {{feature.pascal}}RemoteSource remoteSource;
+}

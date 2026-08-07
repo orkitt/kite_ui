@@ -1,0 +1,19 @@
+import 'package:json_annotation/json_annotation.dart';
+
+import '../../domain/entities/{{feature.snake}}_entity.dart';
+
+part '{{feature.snake}}_dto.g.dart';
+
+@JsonSerializable()
+final class {{feature.pascal}}Dto {
+  const {{feature.pascal}}Dto();
+
+  factory {{feature.pascal}}Dto.fromJson(Map<String, Object?> json) =>
+      _${{feature.pascal}}DtoFromJson(json);
+
+  Map<String, Object?> toJson() => _${{feature.pascal}}DtoToJson(this);
+
+  {{feature.pascal}}Entity toDomain() {
+    return const {{feature.pascal}}Entity();
+  }
+}

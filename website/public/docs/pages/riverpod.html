@@ -1,0 +1,48 @@
+<div class="page-kicker">Foundations</div>
+<h1>Riverpod state foundation</h1>
+<p class="page-lead">Add production-oriented Riverpod bootstrap and state helpers using manual providers and modern <code>Notifier</code>/<code>AsyncNotifier</code> APIs—without Riverpod code generation.</p>
+
+<h2>Generate the preset</h2>
+<pre><code class="language-bash">kite --state riverpod</code></pre>
+<p>Canonical form:</p>
+<pre><code class="language-bash">kite state riverpod</code></pre>
+
+<h2>Generated output</h2>
+<div class="file-tree">lib/core/state/
+├── app_provider_observer.dart
+├── async_notifier_guard.dart
+└── riverpod_bootstrap.dart</div>
+
+<h2>Included responsibilities</h2>
+<div class="feature-grid">
+  <article class="feature-card"><span class="feature-icon">O</span><h3>Provider observation</h3><p>Structured debug visibility into provider additions, updates, failures, and disposal.</p></article>
+  <article class="feature-card"><span class="feature-icon">G</span><h3>Async guard</h3><p>Standardized loading, data, and error transitions for production async mutations.</p></article>
+  <article class="feature-card"><span class="feature-icon">B</span><h3>Bootstrap</h3><p>One function to configure <code>ProviderScope</code>, overrides, observers, and retry behavior.</p></article>
+  <article class="feature-card"><span class="feature-icon">M</span><h3>Manual providers</h3><p>No annotations, no <code>riverpod_generator</code>, and no generated state-management source.</p></article>
+</div>
+
+<h2>Bootstrap the application</h2>
+<pre><code class="language-dart">void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(
+    buildProviderScope(
+      child: const App(),
+    ),
+  );
+}</code></pre>
+
+<h2>Use async guard behavior</h2>
+<pre><code class="language-dart">final class ProfileController extends AsyncNotifier&lt;Profile&gt;
+    with AsyncNotifierGuard&lt;Profile&gt; {
+  @override
+  Future&lt;Profile&gt; build() {
+    return repository.fetchProfile();
+  }
+
+  Future&lt;void&gt; refreshProfile() async {
+    await guard(() =&gt; repository.fetchProfile());
+  }
+}</code></pre>
+
+<div class="callout success"><span class="callout-icon">✓</span><div><strong>Automatically included when required</strong><p>Feature and API templates can depend on <code>state.riverpod</code>. Kite resolves that requirement before generating the requested root template.</p></div></div>

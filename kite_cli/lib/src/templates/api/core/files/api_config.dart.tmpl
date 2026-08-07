@@ -1,0 +1,15 @@
+final class ApiConfig {
+  const ApiConfig({
+    required this.baseUrl,
+    this.connectTimeout = const Duration(seconds: 15),
+    this.receiveTimeout = const Duration(seconds: 20),
+    this.sendTimeout = const Duration(seconds: 20),
+    this.headers = const <String, Object?>{},
+  });
+
+  final String baseUrl;
+  final Duration connectTimeout;
+  final Duration receiveTimeout;
+  final Duration sendTimeout;
+  final Map<String, Object?> headers;
+}

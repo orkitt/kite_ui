@@ -1,0 +1,9 @@
+import '../repositories/{{feature.snake}}_repository.dart';
+
+final class Get{{feature.pascal}}UseCase {
+  const Get{{feature.pascal}}UseCase({
+    required this.repository,
+  });
+
+  final {{feature.pascal}}Repository repository;
+}

@@ -1,0 +1,21 @@
+{
+  "site": "Kite Documentation",
+  "version": "0.2.0",
+  "validation": {
+    "manifestPages": 18,
+    "uniqueRoutes": 18,
+    "nodeSyntaxChecks": "passed",
+    "contentValidation": "passed",
+    "productionBuild": "passed",
+    "searchIndex": "generated",
+    "requiredAssets": "present"
+  },
+  "commands": [
+    "node --check public/app.js",
+    "node --check scripts/build.mjs",
+    "node --check scripts/validate.mjs",
+    "node --check scripts/serve.mjs",
+    "npm test"
+  ],
+  "note": "Chromium screenshot rendering was unavailable in this container because its headless process could not connect to the container D-Bus environment. Static build, syntax, routes, content, and asset validation passed."
+}

@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "registrySchemaVersion": 2,
+  "templateCount": 10,
+  "validatedScenarios": {
+    "project.clean": 21,
+    "feature.clean": 13,
+    "feature.mvc": 9,
+    "component.button": 2,
+    "component.card": 2,
+    "component.avatar": 2,
+    "state.riverpod": 3,
+    "api.dio": 11
+  },
+  "checks": [
+    "registry and manifest JSON parsing",
+    "descriptor and manifest ID/version consistency",
+    "template dependency existence and cycle detection",
+    "template source existence",
+    "condition evaluation and token rendering",
+    "safe target paths",
+    "dependency bundle target conflict detection",
+    "generated relative import resolution"
+  ]
+}

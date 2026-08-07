@@ -1,0 +1,64 @@
+<div class="page-kicker">Feature architecture</div>
+<h1>MVC</h1>
+<p class="page-lead">Use Kite's feature-first MVC template for modules that benefit from a direct model, Riverpod controller, provider, and view structure without the additional data/domain boundaries of Clean Architecture.</p>
+
+<h2>Generate MVC</h2>
+<pre><code class="language-bash">kite --feat:mvc dashboard</code></pre>
+<p>Canonical forms:</p>
+<pre><code class="language-bash">kite feature dashboard --architecture mvc
+kite feature dashboard --mvc</code></pre>
+
+<h2>Generated structure</h2>
+<div class="file-tree">lib/features/dashboard/
+├── controllers/
+│   └── dashboard_controller.dart
+├── models/
+│   └── dashboard_model.dart
+├── providers/
+│   └── dashboard_providers.dart
+└── views/
+    ├── screens/
+    │   └── dashboard_screen.dart
+    └── widgets/
+        └── dashboard_content.dart</div>
+
+<h2>Responsibilities</h2>
+<div class="table-wrap"><table><thead><tr><th>Folder</th><th>Responsibility</th></tr></thead><tbody>
+<tr><td><code>models/</code></td><td>Immutable feature state or serialized feature data.</td></tr>
+<tr><td><code>controllers/</code></td><td>Manual Riverpod <code>Notifier</code> logic and state transitions.</td></tr>
+<tr><td><code>providers/</code></td><td>Manually declared providers that expose controllers and dependencies.</td></tr>
+<tr><td><code>views/</code></td><td>Screens and feature-owned UI components.</td></tr>
+</tbody></table></div>
+
+<h2>Controller and provider</h2>
+<pre><code class="language-dart">final class DashboardController extends Notifier&lt;DashboardModel&gt; {
+  @override
+  DashboardModel build() {
+    return const DashboardModel();
+  }
+}
+
+final dashboardControllerProvider =
+    NotifierProvider&lt;DashboardController, DashboardModel&gt;(
+  DashboardController.new,
+);</code></pre>
+
+<h2>Routing and serialization</h2>
+<pre><code class="language-bash"># Generate and register a GoRouter route
+kite --feat:mvc dashboard --route
+
+# Use json_annotation/json_serializable for the model
+kite --feat:mvc dashboard --json
+
+# Combine both
+kite feature dashboard --architecture mvc --route --json</code></pre>
+
+<h2>When MVC fits</h2>
+<ul>
+  <li>The feature has straightforward local or presentation-focused state.</li>
+  <li>The domain does not need reusable business contracts.</li>
+  <li>The team wants clear view/controller boundaries with less ceremony.</li>
+  <li>The feature can evolve into a richer architecture later if complexity grows.</li>
+</ul>
+
+<div class="callout warning"><span class="callout-icon">!</span><div><strong>Architecture should follow complexity</strong><p>Use MVC because it fits the feature—not because every module must share the same folder count. Kite supports both styles so teams can make deliberate decisions.</p></div></div>

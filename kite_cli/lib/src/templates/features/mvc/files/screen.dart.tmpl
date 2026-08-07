@@ -1,0 +1,16 @@
+import 'package:flutter/material.dart';
+
+import '../widgets/{{feature.snake}}_content.dart';
+
+class {{feature.pascal}}Screen extends StatelessWidget {
+  const {{feature.pascal}}Screen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: SafeArea(
+        child: {{feature.pascal}}Content(),
+      ),
+    );
+  }
+}

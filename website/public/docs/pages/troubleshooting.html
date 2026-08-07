@@ -1,0 +1,53 @@
+<div class="page-kicker">Reference</div>
+<h1>Troubleshooting</h1>
+<p class="page-lead">Use these checks when activation, project detection, dependency generation, or existing-file protection does not behave as expected.</p>
+
+<h2><code>kite: command not found</code></h2>
+<pre><code class="language-bash">echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> ~/.zshrc
+source ~/.zshrc
+which kite
+kite --version</code></pre>
+<p>Alternative:</p>
+<pre><code class="language-bash">dart pub global run kite:kite --version</code></pre>
+
+<h2>Downloading packages and rebuilding every run</h2>
+<p>This commonly appears while Kite is activated from a local path and its package source has changed. Re-run local activation after validating the package:</p>
+<pre><code class="language-bash">cd /path/to/kite
+dart pub get
+dart analyze
+dart test
+
+dart pub global deactivate kite
+dart pub global activate --source path .</code></pre>
+
+<h2>Existing shared file prompt during feature generation</h2>
+<p>A feature template may require Riverpod or another shared foundation. If those files already exist and must be preserved:</p>
+<pre><code class="language-bash">kite --feat:clean settings --skip-existing</code></pre>
+<p>Do not select overwrite-all or use <code>--force</code> unless you intentionally want to replace the existing foundation.</p>
+
+<h2>Generation cancelled by the user</h2>
+<p>This message means Kite encountered an existing-file conflict and the interactive response quit the complete generation plan. No partial write should be treated as successful. Preview and choose a conflict strategy:</p>
+<pre><code class="language-bash">kite --feat:clean settings --dry-run
+kite --feat:clean settings --skip-existing</code></pre>
+
+<h2>Not a Flutter project</h2>
+<p>Run the command inside a project containing <code>pubspec.yaml</code>, or provide a path:</p>
+<pre><code class="language-bash">kite doctor --path /path/to/flutter_app
+kite init --path /path/to/flutter_app</code></pre>
+
+<h2>JSON part file is missing</h2>
+<p>After adding actual fields to a generated JSON model or DTO:</p>
+<pre><code class="language-bash">flutter pub get
+dart run build_runner build --delete-conflicting-outputs</code></pre>
+
+<h2>Generated imports fail</h2>
+<pre><code class="language-bash">dart format .
+flutter pub get
+flutter analyze</code></pre>
+<p>When developing Kite itself, also run:</p>
+<pre><code class="language-bash">python3 tool/validate_templates.py</code></pre>
+
+<h2>Reset local activation</h2>
+<pre><code class="language-bash">dart pub global deactivate kite
+dart pub cache repair
+dart pub global activate --source path /absolute/path/to/kite</code></pre>

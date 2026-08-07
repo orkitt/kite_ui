@@ -1,0 +1,118 @@
+import 'package:flutter/material.dart';
+
+import 'kite_component_size.dart';
+
+enum KiteButtonVariant {
+  filled,
+  tonal,
+  outlined,
+  text,
+}
+
+class KiteButton extends StatelessWidget {
+  const KiteButton({
+    super.key,
+    required this.onPressed,
+    required this.child,
+    this.leading,
+    this.trailing,
+    this.variant = KiteButtonVariant.filled,
+    this.size = KiteComponentSize.medium,
+    this.isLoading = false,
+    this.fullWidth = false,
+    this.tooltip,
+    this.style,
+  });
+
+  final VoidCallback? onPressed;
+  final Widget child;
+  final Widget? leading;
+  final Widget? trailing;
+  final KiteButtonVariant variant;
+  final KiteComponentSize size;
+  final bool isLoading;
+  final bool fullWidth;
+  final String? tooltip;
+  final ButtonStyle? style;
+
+  @override
+  Widget build(BuildContext context) {
+    final effectiveOnPressed = isLoading ? null : onPressed;
+    final buttonStyle = ButtonStyle(
+      minimumSize: WidgetStatePropertyAll<Size>(
+        Size(0, size.controlHeight),
+      ),
+      padding: WidgetStatePropertyAll<EdgeInsetsGeometry>(size.buttonPadding),
+      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    ).merge(style);
+
+    final content = AnimatedSwitcher(
+      duration: const Duration(milliseconds: 180),
+      child: isLoading
+          ? SizedBox.square(
+              key: const ValueKey<String>('kite-button-loader'),
+              dimension: size.iconSize,
+              child: const CircularProgressIndicator(strokeWidth: 2),
+            )
+          : Row(
+              key: const ValueKey<String>('kite-button-content'),
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                if (leading != null) ...<Widget>[
+                  IconTheme(
+                    data: IconThemeData(size: size.iconSize),
+                    child: leading!,
+                  ),
+                  const SizedBox(width: 8),
+                ],
+                Flexible(child: child),
+                if (trailing != null) ...<Widget>[
+                  const SizedBox(width: 8),
+                  IconTheme(
+                    data: IconThemeData(size: size.iconSize),
+                    child: trailing!,
+                  ),
+                ],
+              ],
+            ),
+    );
+
+    Widget button = switch (variant) {
+      KiteButtonVariant.filled => FilledButton(
+          onPressed: effectiveOnPressed,
+          style: buttonStyle,
+          child: content,
+        ),
+      KiteButtonVariant.tonal => FilledButton.tonal(
+          onPressed: effectiveOnPressed,
+          style: buttonStyle,
+          child: content,
+        ),
+      KiteButtonVariant.outlined => OutlinedButton(
+          onPressed: effectiveOnPressed,
+          style: buttonStyle,
+          child: content,
+        ),
+      KiteButtonVariant.text => TextButton(
+          onPressed: effectiveOnPressed,
+          style: buttonStyle,
+          child: content,
+        ),
+    };
+
+    if (fullWidth) {
+      button = SizedBox(width: double.infinity, child: button);
+    }
+    final tooltipMessage = tooltip?.trim();
+    if (tooltipMessage != null && tooltipMessage.isNotEmpty) {
+      button = Tooltip(message: tooltipMessage, child: button);
+    }
+
+    return Semantics(
+      button: true,
+      enabled: effectiveOnPressed != null,
+      child: button,
+    );
+  }
+}

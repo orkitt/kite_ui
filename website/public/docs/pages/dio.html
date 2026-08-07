@@ -1,0 +1,61 @@
+<div class="page-kicker">Foundations</div>
+<h1>Dio API client</h1>
+<p class="page-lead">Generate typed HTTP helpers, API configuration, bearer-token interception, Dio exception mapping, cancellation support, and Riverpod provider wiring.</p>
+
+<h2>Generate the preset</h2>
+<pre><code class="language-bash">kite --api:dio</code></pre>
+<p>Canonical forms:</p>
+<pre><code class="language-bash">kite api dio
+kite --api dio</code></pre>
+
+<h2>Generated structure</h2>
+<div class="file-tree">lib/core/network/
+├── api_config.dart
+├── api_endpoints.dart
+├── api_exception.dart
+├── auth_token_store.dart
+└── dio/
+    ├── bearer_token_interceptor.dart
+    ├── dio_api_client.dart
+    ├── dio_exception_mapper.dart
+    └── dio_providers.dart</div>
+
+<h2>Automatic requirements</h2>
+<p>The Dio template declares shared dependencies:</p>
+<pre><code class="language-json">{
+  "id": "api.dio",
+  "requires": ["api.core", "state.riverpod"]
+}</code></pre>
+<p>Kite adds the shared API contracts and Riverpod foundation before the Dio-specific files, while deduplicating targets already present in the same generation plan.</p>
+
+<h2>Configure the base URL</h2>
+<pre><code class="language-dart">buildProviderScope(
+  overrides: &lt;Override&gt;[
+    apiConfigProvider.overrideWithValue(
+      const ApiConfig(
+        baseUrl: 'https://api.example.com',
+      ),
+    ),
+  ],
+  child: const App(),
+);</code></pre>
+
+<h2>Make a typed request</h2>
+<pre><code class="language-dart">final client = ref.read(dioApiClientProvider);
+
+final profile = await client.get&lt;ProfileDto&gt;(
+  path: ApiEndpoints.profile,
+  decoder: (data) =&gt; ProfileDto.fromJson(
+    Map&lt;String, Object?&gt;.from(
+      data! as Map&lt;Object?, Object?&gt;,
+    ),
+  ),
+);</code></pre>
+
+<h2>Token integration</h2>
+<p>Implement the generated <code>AuthTokenStore</code> contract using your secure-storage or authentication module. The bearer interceptor reads the current token and attaches it to outgoing requests without coupling the network foundation to a specific auth implementation.</p>
+
+<h2>Failure handling</h2>
+<p>Dio failures are mapped into an application-owned <code>ApiException</code> representation, covering cancellation, timeouts, connectivity, invalid responses, and unknown failures. This prevents presentation layers from depending directly on Dio exception types.</p>
+
+<div class="callout warning"><span class="callout-icon">!</span><div><strong>Base URL is intentionally required</strong><p>The generated config provider should be overridden by the application. Failing early is safer than silently shipping a placeholder endpoint.</p></div></div>

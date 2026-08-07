@@ -1,0 +1,10 @@
+import 'package:go_router/go_router.dart';
+
+import '../views/screens/{{feature.snake}}_screen.dart';
+
+final List<RouteBase> {{feature.camel}}Routes = <RouteBase>[
+  GoRoute(
+    path: '/{{feature.kebab}}',
+    builder: (context, state) => const {{feature.pascal}}Screen(),
+  ),
+];

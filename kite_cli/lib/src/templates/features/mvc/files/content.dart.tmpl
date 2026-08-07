@@ -1,0 +1,20 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../providers/{{feature.snake}}_providers.dart';
+
+class {{feature.pascal}}Content extends ConsumerWidget {
+  const {{feature.pascal}}Content({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _ = ref.watch({{feature.camel}}ControllerProvider);
+
+    return Center(
+      child: Text(
+        '{{feature.pascal}}',
+        style: Theme.of(context).textTheme.headlineSmall,
+      ),
+    );
+  }
+}

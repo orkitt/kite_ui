@@ -1,0 +1,11 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#07111F"/>
+  <circle cx="1020" cy="80" r="360" fill="#4E8DF6" fill-opacity="0.13"/>
+  <circle cx="160" cy="610" r="320" fill="#40D7C4" fill-opacity="0.10"/>
+  <path d="M211 154L355 291L211 401L67 291L211 154Z" fill="url(#g)"/>
+  <path d="M211 401C240 420 232 453 205 463C179 473 177 495 194 510" stroke="url(#g)" stroke-width="16" stroke-linecap="round"/>
+  <defs><linearGradient id="g" x1="70" y1="150" x2="350" y2="460"><stop stop-color="#40D7C4"/><stop offset=".5" stop-color="#4E8DF6"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs>
+  <text x="440" y="250" fill="white" font-size="92" font-family="Inter, Arial, sans-serif" font-weight="750">Kite</text>
+  <text x="440" y="330" fill="#B6C6DB" font-size="36" font-family="Inter, Arial, sans-serif">Professional Flutter scaffolding CLI</text>
+  <text x="440" y="405" fill="#6FE3D1" font-size="29" font-family="ui-monospace, monospace">kite --feat:clean dashboard</text>
+</svg>

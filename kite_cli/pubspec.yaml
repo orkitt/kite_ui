@@ -1,0 +1,29 @@
+name: kite
+description: A professional Flutter CLI for app foundations, clean and MVC features, reusable components, Riverpod, and Dio scaffolding.
+version: 0.2.0
+homepage: https://orkitt.dev
+repository: https://github.com/orkitt/kite
+issue_tracker: https://github.com/orkitt/kite/issues
+
+environment:
+  sdk: ">=3.8.0 <4.0.0"
+
+topics:
+  - cli
+  - flutter
+  - scaffolding
+  - clean-architecture
+  - code-generator
+
+dependencies:
+  args: ^2.7.0
+  crypto: ^3.0.7
+  path: ^1.9.1
+  yaml: ^3.1.3
+
+dev_dependencies:
+  lints: ^6.1.0
+  test: ^1.31.2
+
+executables:
+  kite: kite

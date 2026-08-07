@@ -1,0 +1,69 @@
+<div class="page-kicker">Feature architecture</div>
+<h1>Clean Architecture</h1>
+<p class="page-lead">Generate a feature-first module that separates external data access, business contracts, and presentation code while leaving application-specific operations for your team to define.</p>
+
+<h2>Generate a feature</h2>
+<pre><code class="language-bash">kite --feat:clean dashboard</code></pre>
+<p>Canonical forms:</p>
+<pre><code class="language-bash">kite feature dashboard --architecture clean
+kite feature dashboard --clean</code></pre>
+
+<h2>Generated structure</h2>
+<div class="file-tree">lib/features/dashboard/
+├── data/
+│   ├── dtos/
+│   │   └── dashboard_dto.dart
+│   ├── repositories/
+│   │   └── dashboard_repository_impl.dart
+│   └── sources/
+│       └── dashboard_remote_source.dart
+├── domain/
+│   ├── entities/
+│   │   └── dashboard_entity.dart
+│   ├── repositories/
+│   │   └── dashboard_repository.dart
+│   └── usecases/
+│       └── get_dashboard_use_case.dart
+└── presentation/
+    ├── providers/
+    │   └── dashboard_providers.dart
+    ├── screens/
+    │   └── dashboard_screen.dart
+    └── widgets/
+        └── dashboard_content.dart</div>
+
+<h2>Layer boundaries</h2>
+<div class="feature-grid">
+  <article class="feature-card"><span class="feature-icon">D</span><h3>Domain</h3><p>Immutable entities, repository contracts, and use cases. No UI, networking, database, or framework dependencies.</p></article>
+  <article class="feature-card"><span class="feature-icon">A</span><h3>Data</h3><p>Remote or local sources, DTOs, serialization, repository implementations, and DTO-to-domain mapping.</p></article>
+  <article class="feature-card"><span class="feature-icon">P</span><h3>Presentation</h3><p>Manual Riverpod providers, controllers or notifiers, screens, and reusable feature-owned widgets.</p></article>
+  <article class="feature-card"><span class="feature-icon">✓</span><h3>Compile-safe placeholders</h3><p>Contracts are intentionally minimal. Kite does not assume endpoints, parameters, or business methods.</p></article>
+</div>
+
+<h2>Add routing</h2>
+<pre><code class="language-bash">kite --feat:clean dashboard --route</code></pre>
+<p>Kite creates a feature route file and updates its managed route registry. Handwritten router composition remains separate from Kite-owned generated route entries.</p>
+
+<h2>Add JSON serialization</h2>
+<pre><code class="language-bash">kite --feat:clean dashboard --json</code></pre>
+<p>The DTO uses <code>json_annotation</code> and a generated part file. After adding real fields:</p>
+<pre><code class="language-bash">dart run build_runner build --delete-conflicting-outputs</code></pre>
+
+<h2>Example provider flow</h2>
+<pre><code class="language-dart">final dashboardRemoteSourceProvider = Provider&lt;DashboardRemoteSource&gt;(
+  (ref) =&gt; const DashboardRemoteSourceImpl(),
+);
+
+final dashboardRepositoryProvider = Provider&lt;DashboardRepository&gt;(
+  (ref) =&gt; DashboardRepositoryImpl(
+    remoteSource: ref.watch(dashboardRemoteSourceProvider),
+  ),
+);
+
+final getDashboardUseCaseProvider = Provider&lt;GetDashboardUseCase&gt;(
+  (ref) =&gt; GetDashboardUseCase(
+    repository: ref.watch(dashboardRepositoryProvider),
+  ),
+);</code></pre>
+
+<div class="callout"><span class="callout-icon">i</span><div><strong>Why the interfaces are empty</strong><p>Feature generation cannot know whether your dashboard loads one endpoint, combines multiple repositories, streams data, or has no remote source at all. Empty contracts give you the correct boundaries without inventing the wrong API.</p></div></div>

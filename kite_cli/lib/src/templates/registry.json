@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 2,
+  "templates": [
+    {
+      "id": "project.clean",
+      "name": "Clean Flutter Project",
+      "type": "project",
+      "version": "1.1.0",
+      "manifest": "project/clean/manifest.json"
+    },
+    {
+      "id": "feature.clean",
+      "name": "Clean Architecture Feature",
+      "type": "feature",
+      "version": "1.1.0",
+      "manifest": "features/clean/manifest.json"
+    },
+    {
+      "id": "feature.mvc",
+      "name": "MVC Architecture Feature",
+      "type": "feature",
+      "version": "1.0.0",
+      "manifest": "features/mvc/manifest.json"
+    },
+    {
+      "id": "component.button",
+      "name": "Kite Button",
+      "type": "component",
+      "version": "1.0.0",
+      "manifest": "components/button/manifest.json"
+    },
+    {
+      "id": "component.card",
+      "name": "Kite Card",
+      "type": "component",
+      "version": "1.0.0",
+      "manifest": "components/card/manifest.json"
+    },
+    {
+      "id": "component.avatar",
+      "name": "Kite Avatar",
+      "type": "component",
+      "version": "1.0.0",
+      "manifest": "components/avatar/manifest.json"
+    },
+    {
+      "id": "state.riverpod",
+      "name": "Production Riverpod Foundation",
+      "type": "state",
+      "version": "1.0.0",
+      "manifest": "state/riverpod/manifest.json"
+    },
+    {
+      "id": "api.dio",
+      "name": "Production Dio API Client",
+      "type": "api",
+      "version": "1.0.0",
+      "manifest": "api/dio/manifest.json"
+    },
+    {
+      "id": "component.foundation",
+      "name": "Shared Component Foundation",
+      "type": "internal",
+      "version": "1.0.0",
+      "manifest": "components/foundation/manifest.json",
+      "internal": true
+    },
+    {
+      "id": "api.core",
+      "name": "Shared API Contracts",
+      "type": "internal",
+      "version": "1.0.0",
+      "manifest": "api/core/manifest.json",
+      "internal": true
+    }
+  ]
+}

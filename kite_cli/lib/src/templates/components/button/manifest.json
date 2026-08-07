@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 2,
+  "id": "component.button",
+  "version": "1.0.0",
+  "description": "Theme-aware Material 3 button with variants, loading, icons, sizing, and accessibility.",
+  "requires": [
+    "component.foundation"
+  ],
+  "dependencies": [],
+  "devDependencies": [],
+  "files": [
+    {
+      "template": "files/kite_button.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/shared/components/kite_button.dart",
+      "upgradePolicy": "replace"
+    }
+  ]
+}

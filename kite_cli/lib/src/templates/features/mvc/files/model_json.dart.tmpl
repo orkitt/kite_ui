@@ -1,0 +1,13 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part '{{feature.snake}}_model.g.dart';
+
+@JsonSerializable()
+final class {{feature.pascal}}Model {
+  const {{feature.pascal}}Model();
+
+  factory {{feature.pascal}}Model.fromJson(Map<String, Object?> json) =>
+      _${{feature.pascal}}ModelFromJson(json);
+
+  Map<String, Object?> toJson() => _${{feature.pascal}}ModelToJson(this);
+}

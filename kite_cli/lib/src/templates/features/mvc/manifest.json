@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 2,
+  "id": "feature.mvc",
+  "version": "1.0.0",
+  "description": "Feature-first MVC with a model, Riverpod controller, providers, views, and optional routes.",
+  "requires": [
+    "state.riverpod"
+  ],
+  "dependencies": [],
+  "devDependencies": [],
+  "files": [
+    {
+      "template": "files/model.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/models/{{feature.snake}}_model.dart",
+      "condition": "!includeJson",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/model_json.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/models/{{feature.snake}}_model.dart",
+      "condition": "includeJson",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/controller.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/controllers/{{feature.snake}}_controller.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/providers.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/providers/{{feature.snake}}_providers.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/screen.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/views/screens/{{feature.snake}}_screen.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/content.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/views/widgets/{{feature.snake}}_content.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/routes.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/routes/{{feature.snake}}_routes.dart",
+      "condition": "includeRoute",
+      "upgradePolicy": "replace"
+    }
+  ]
+}

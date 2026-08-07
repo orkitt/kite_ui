@@ -1,0 +1,9 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../models/{{feature.snake}}_model.dart';
+
+final class {{feature.pascal}}Controller
+    extends Notifier<{{feature.pascal}}Model> {
+  @override
+  {{feature.pascal}}Model build() => const {{feature.pascal}}Model();
+}

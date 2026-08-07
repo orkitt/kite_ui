@@ -1,0 +1,42 @@
+import 'package:flutter/widgets.dart';
+
+enum KiteComponentSize {
+  small,
+  medium,
+  large,
+}
+
+extension KiteComponentSizeValues on KiteComponentSize {
+  double get controlHeight => switch (this) {
+        KiteComponentSize.small => 36,
+        KiteComponentSize.medium => 44,
+        KiteComponentSize.large => 52,
+      };
+
+  double get iconSize => switch (this) {
+        KiteComponentSize.small => 16,
+        KiteComponentSize.medium => 20,
+        KiteComponentSize.large => 24,
+      };
+
+  double get avatarDiameter => switch (this) {
+        KiteComponentSize.small => 32,
+        KiteComponentSize.medium => 44,
+        KiteComponentSize.large => 56,
+      };
+
+  EdgeInsetsGeometry get buttonPadding => switch (this) {
+        KiteComponentSize.small =>
+          const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        KiteComponentSize.medium =>
+          const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+        KiteComponentSize.large =>
+          const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+      };
+
+  EdgeInsetsGeometry get cardPadding => switch (this) {
+        KiteComponentSize.small => const EdgeInsets.all(12),
+        KiteComponentSize.medium => const EdgeInsets.all(16),
+        KiteComponentSize.large => const EdgeInsets.all(20),
+      };
+}

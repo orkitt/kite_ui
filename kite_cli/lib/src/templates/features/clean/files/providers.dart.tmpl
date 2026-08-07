@@ -1,0 +1,25 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../data/repositories/{{feature.snake}}_repository_impl.dart';
+import '../../data/sources/{{feature.snake}}_remote_source.dart';
+import '../../domain/repositories/{{feature.snake}}_repository.dart';
+import '../../domain/usecases/get_{{feature.snake}}_use_case.dart';
+
+final {{feature.camel}}RemoteSourceProvider =
+    Provider<{{feature.pascal}}RemoteSource>((ref) {
+  return const {{feature.pascal}}RemoteSourceImpl();
+});
+
+final {{feature.camel}}RepositoryProvider =
+    Provider<{{feature.pascal}}Repository>((ref) {
+  return {{feature.pascal}}RepositoryImpl(
+    remoteSource: ref.watch({{feature.camel}}RemoteSourceProvider),
+  );
+});
+
+final get{{feature.pascal}}UseCaseProvider =
+    Provider<Get{{feature.pascal}}UseCase>((ref) {
+  return Get{{feature.pascal}}UseCase(
+    repository: ref.watch({{feature.camel}}RepositoryProvider),
+  );
+});

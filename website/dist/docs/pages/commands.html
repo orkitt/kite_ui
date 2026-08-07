@@ -1,0 +1,53 @@
+<div class="page-kicker">Reference</div>
+<h1>CLI reference</h1>
+<p class="page-lead">Canonical subcommands are best for scripts and team documentation. Shorthand aliases remain available for fast interactive use.</p>
+
+<h2>Core commands</h2>
+<div class="command-list">
+  <div class="command-row"><code>kite init</code><p>Initialize a Flutter project foundation.</p></div>
+  <div class="command-row"><code>kite feature &lt;name&gt;</code><p>Generate a feature using a supported architecture.</p></div>
+  <div class="command-row"><code>kite component &lt;names...&gt;</code><p>Generate one or more reusable shared components.</p></div>
+  <div class="command-row"><code>kite state riverpod</code><p>Generate the Riverpod production foundation.</p></div>
+  <div class="command-row"><code>kite api dio</code><p>Generate the Dio API foundation and requirements.</p></div>
+  <div class="command-row"><code>kite doctor</code><p>Validate the local Dart, Flutter, project, and template environment.</p></div>
+  <div class="command-row"><code>kite templates</code><p>List public templates. Add <code>--all</code> for internal requirements.</p></div>
+  <div class="command-row"><code>kite upgrade</code><p>Upgrade Kite-managed generations with conflict protection.</p></div>
+</div>
+
+<h2>Shorthand forms</h2>
+<div class="table-wrap"><table><thead><tr><th>Shorthand</th><th>Canonical form</th></tr></thead><tbody>
+<tr><td><code>kite --feat:clean dashboard</code></td><td><code>kite feature dashboard --architecture clean</code></td></tr>
+<tr><td><code>kite --feat:mvc profile</code></td><td><code>kite feature profile --architecture mvc</code></td></tr>
+<tr><td><code>kite --widget button</code></td><td><code>kite component button</code></td></tr>
+<tr><td><code>kite --widget "[button,card,avatar]"</code></td><td><code>kite component button card avatar</code></td></tr>
+<tr><td><code>kite --state riverpod</code></td><td><code>kite state riverpod</code></td></tr>
+<tr><td><code>kite --api:dio</code></td><td><code>kite api dio</code></td></tr>
+</tbody></table></div>
+
+<h2>Shared generation flags</h2>
+<div class="table-wrap"><table><thead><tr><th>Flag</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>--path &lt;directory&gt;</code></td><td>Target another Flutter project.</td></tr>
+<tr><td><code>--dry-run</code></td><td>Preview planned files and dependencies.</td></tr>
+<tr><td><code>--force</code></td><td>Overwrite conflicts.</td></tr>
+<tr><td><code>--skip-existing</code></td><td>Preserve existing target files.</td></tr>
+<tr><td><code>--no-dependencies</code></td><td>Do not install package requirements.</td></tr>
+<tr><td><code>--no-format</code></td><td>Do not run Dart formatting.</td></tr>
+</tbody></table></div>
+
+<h2>Feature-only flags</h2>
+<div class="table-wrap"><table><thead><tr><th>Flag</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>--architecture clean|mvc</code></td><td>Select the feature template.</td></tr>
+<tr><td><code>--clean</code></td><td>Alias for clean architecture.</td></tr>
+<tr><td><code>--mvc</code></td><td>Alias for MVC architecture.</td></tr>
+<tr><td><code>--route</code></td><td>Generate and register a feature route.</td></tr>
+<tr><td><code>--json</code></td><td>Use JSON serialization templates and add build dependencies.</td></tr>
+</tbody></table></div>
+
+<h2>Examples</h2>
+<pre><code class="language-bash">kite init --dry-run
+kite feature attendance --clean --route --json
+kite feature settings --mvc --route
+kite component button card avatar --skip-existing
+kite state riverpod --path ./apps/admin
+kite api dio --no-format
+kite upgrade --dry-run</code></pre>

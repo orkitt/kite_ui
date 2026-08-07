@@ -1,0 +1,178 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+
+import '../api_config.dart';
+import '../api_exception.dart';
+import '../auth_token_store.dart';
+import 'bearer_token_interceptor.dart';
+import 'dio_exception_mapper.dart';
+
+typedef ApiDecoder<T> = T Function(Object? data);
+
+final class DioApiClient {
+  DioApiClient({
+    required ApiConfig config,
+    AuthTokenStore? tokenStore,
+    Iterable<Interceptor> interceptors = const <Interceptor>[],
+    bool enableLogging = kDebugMode,
+    Dio? dio,
+  }) : _dio = dio ??
+            Dio(
+              BaseOptions(
+                baseUrl: config.baseUrl,
+                connectTimeout: config.connectTimeout,
+                receiveTimeout: config.receiveTimeout,
+                sendTimeout: config.sendTimeout,
+                headers: config.headers,
+                responseType: ResponseType.json,
+              ),
+            ) {
+    if (tokenStore != null) {
+      _dio.interceptors.add(BearerTokenInterceptor(tokenStore));
+    }
+    _dio.interceptors.addAll(interceptors);
+    if (enableLogging) {
+      _dio.interceptors.add(
+        LogInterceptor(
+          requestBody: false,
+          responseBody: false,
+          logPrint: (value) => debugPrint(value.toString()),
+        ),
+      );
+    }
+  }
+
+  final Dio _dio;
+
+  Dio get raw => _dio;
+
+  Future<T> request<T>({
+    required String path,
+    required ApiDecoder<T> decoder,
+    String method = 'GET',
+    Map<String, Object?>? queryParameters,
+    Map<String, Object?>? headers,
+    Object? data,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    try {
+      final response = await _dio.request<Object?>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: Options(method: method, headers: headers),
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return decoder(response.data);
+    } on DioException catch (error) {
+      throw mapDioException(error);
+    } on ApiException {
+      rethrow;
+    } on Object catch (error) {
+      throw ApiException(
+        message: 'Unable to decode the server response.',
+        cause: error,
+      );
+    }
+  }
+
+  Future<T> get<T>({
+    required String path,
+    required ApiDecoder<T> decoder,
+    Map<String, Object?>? queryParameters,
+    Map<String, Object?>? headers,
+    CancelToken? cancelToken,
+  }) {
+    return request<T>(
+      path: path,
+      decoder: decoder,
+      queryParameters: queryParameters,
+      headers: headers,
+      cancelToken: cancelToken,
+    );
+  }
+
+  Future<T> post<T>({
+    required String path,
+    required ApiDecoder<T> decoder,
+    Object? data,
+    Map<String, Object?>? queryParameters,
+    Map<String, Object?>? headers,
+    CancelToken? cancelToken,
+  }) {
+    return request<T>(
+      path: path,
+      method: 'POST',
+      decoder: decoder,
+      data: data,
+      queryParameters: queryParameters,
+      headers: headers,
+      cancelToken: cancelToken,
+    );
+  }
+
+  Future<T> put<T>({
+    required String path,
+    required ApiDecoder<T> decoder,
+    Object? data,
+    Map<String, Object?>? queryParameters,
+    Map<String, Object?>? headers,
+    CancelToken? cancelToken,
+  }) {
+    return request<T>(
+      path: path,
+      method: 'PUT',
+      decoder: decoder,
+      data: data,
+      queryParameters: queryParameters,
+      headers: headers,
+      cancelToken: cancelToken,
+    );
+  }
+
+  Future<T> patch<T>({
+    required String path,
+    required ApiDecoder<T> decoder,
+    Object? data,
+    Map<String, Object?>? queryParameters,
+    Map<String, Object?>? headers,
+    CancelToken? cancelToken,
+  }) {
+    return request<T>(
+      path: path,
+      method: 'PATCH',
+      decoder: decoder,
+      data: data,
+      queryParameters: queryParameters,
+      headers: headers,
+      cancelToken: cancelToken,
+    );
+  }
+
+  Future<T> delete<T>({
+    required String path,
+    required ApiDecoder<T> decoder,
+    Object? data,
+    Map<String, Object?>? queryParameters,
+    Map<String, Object?>? headers,
+    CancelToken? cancelToken,
+  }) {
+    return request<T>(
+      path: path,
+      method: 'DELETE',
+      decoder: decoder,
+      data: data,
+      queryParameters: queryParameters,
+      headers: headers,
+      cancelToken: cancelToken,
+    );
+  }
+
+  void close({bool force = false}) {
+    _dio.close(force: force);
+  }
+}

@@ -1,0 +1,30 @@
+<div class="page-kicker">Reference</div>
+<h1>Frequently asked questions</h1>
+<p class="page-lead">Common decisions and expectations when adopting Kite in a Flutter codebase.</p>
+
+<h2>Is Kite a runtime framework?</h2>
+<p>No. Kite is a development-time CLI. It generates ordinary Dart and Flutter source into your project. Your application does not need to call Kite at runtime.</p>
+
+<h2>Does Kite own the generated code?</h2>
+<p>Your team owns it. Kite tracks generated paths and checksums to support safe upgrades, but the files remain normal source that you can edit and review.</p>
+
+<h2>Why are generated repository interfaces empty?</h2>
+<p>Kite cannot know your real business operations. Empty compile-safe contracts create the architecture boundary without inventing methods, endpoint names, or parameters that may be incorrect.</p>
+
+<h2>Does Riverpod use code generation?</h2>
+<p>No. Kite's Riverpod templates use manually declared <code>Provider</code>, <code>NotifierProvider</code>, and <code>AsyncNotifierProvider</code> patterns.</p>
+
+<h2>Can one project use Clean Architecture and MVC?</h2>
+<p>Yes. Architecture can be selected per feature. A complex transactional feature may use clean layers while a small local settings feature uses MVC.</p>
+
+<h2>Why do templates have <code>requires</code>?</h2>
+<p>Reusable foundations should not be copied into every root template. Requirements let Dio reuse API contracts and Riverpod, while components share one sizing foundation.</p>
+
+<h2>Can Kite generate more components?</h2>
+<p>Yes. Add a component registry entry, manifest, template file, supported command value, and tests. See <a href="#/guides/extending-kite">Extending Kite</a>.</p>
+
+<h2>Should I use <code>--force</code>?</h2>
+<p>Only when intentionally replacing existing files with current template output. Prefer <code>--dry-run</code> first and <code>--skip-existing</code> when preserving existing foundations.</p>
+
+<h2>How do I update generated foundations?</h2>
+<p>Use <code>kite upgrade --dry-run</code> to review changes, then <code>kite upgrade</code>. Modified files should be reviewed instead of replaced silently.</p>

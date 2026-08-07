@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 2,
+  "id": "feature.clean",
+  "version": "1.1.0",
+  "description": "Feature-first clean architecture with empty contracts and manual Riverpod providers.",
+  "dependencies": [],
+  "devDependencies": [],
+  "files": [
+    {
+      "template": "files/entity.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/domain/entities/{{feature.snake}}_entity.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/repository.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/domain/repositories/{{feature.snake}}_repository.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/use_case.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/domain/usecases/get_{{feature.snake}}_use_case.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/dto.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/data/dtos/{{feature.snake}}_dto.dart",
+      "condition": "!includeJson",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/dto_json.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/data/dtos/{{feature.snake}}_dto.dart",
+      "condition": "includeJson",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/remote_source.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/data/sources/{{feature.snake}}_remote_source.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/repository_impl.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/data/repositories/{{feature.snake}}_repository_impl.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/providers.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/presentation/providers/{{feature.snake}}_providers.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/screen.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/presentation/screens/{{feature.snake}}_screen.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/content.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/presentation/widgets/{{feature.snake}}_content.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/routes.dart.tmpl",
+      "target": "{{config.featureDirectory}}/{{feature.snake}}/presentation/routes/{{feature.snake}}_routes.dart",
+      "condition": "includeRoute",
+      "upgradePolicy": "replace"
+    }
+  ],
+  "requires": [
+    "state.riverpod"
+  ]
+}

@@ -1,0 +1,30 @@
+<div class="page-kicker">Reference</div>
+<h1>Changelog</h1>
+<p class="page-lead">Kite 0.2.0 expands the CLI from project and clean-feature scaffolding into a composable generator for architectures, components, state, and networking.</p>
+
+<h2>0.2.0</h2>
+<div class="page-meta"><span class="meta-chip">Feature-first MVC</span><span class="meta-chip">Template requirements</span><span class="meta-chip">Components</span><span class="meta-chip">Riverpod</span><span class="meta-chip">Dio</span></div>
+<ul>
+  <li>Added <code>feature.mvc</code> with models, manual Riverpod controllers, providers, views, routes, and optional JSON serialization.</li>
+  <li>Added <code>component.button</code>, <code>component.card</code>, and <code>component.avatar</code>.</li>
+  <li>Added the internal <code>component.foundation</code> dependency template.</li>
+  <li>Added production Riverpod bootstrap, provider observation, and async notifier guard templates.</li>
+  <li>Added API contracts and a Dio client with token interception, typed decoding, exception mapping, cancellation, and providers.</li>
+  <li>Added recursive <code>requires</code> resolution with cycle detection and target deduplication.</li>
+  <li>Added shorthand normalization for <code>--feat:mvc</code>, <code>--widget</code>, <code>--state</code>, and <code>--api:dio</code>.</li>
+  <li>Added generation tests and static template validation scenarios.</li>
+</ul>
+
+<h2>Command highlights</h2>
+<pre><code class="language-bash">kite --feat:mvc dashboard
+kite --widget "[button,card,avatar]"
+kite --state riverpod
+kite --api:dio</code></pre>
+
+<h2>Documentation website edition</h2>
+<ul>
+  <li>Added a branded, responsive documentation site with dark and light themes.</li>
+  <li>Added sidebar navigation, generated page table of contents, command palette, full-text search, copyable examples, and mobile navigation.</li>
+  <li>Added dependency-free Node build, validation, and local server scripts.</li>
+  <li>Added GitHub Pages deployment workflow.</li>
+</ul>

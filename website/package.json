@@ -1,0 +1,17 @@
+{
+  "name": "kite-documentation",
+  "private": true,
+  "version": "0.2.0",
+  "description": "Branded static documentation website for the Kite Flutter scaffolding CLI.",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/build.mjs && node scripts/serve.mjs dist",
+    "preview": "node scripts/serve.mjs dist",
+    "validate": "node scripts/validate.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "npm run validate && npm run build"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

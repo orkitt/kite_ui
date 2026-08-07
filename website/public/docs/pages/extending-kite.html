@@ -1,0 +1,58 @@
+<div class="page-kicker">Project guide</div>
+<h1>Extending Kite</h1>
+<p class="page-lead">Add new generators by composing registry entries, manifests, template source, supported command values, and generation tests. Shared contracts belong in internal dependency templates.</p>
+
+<h2>Add a component</h2>
+<p>Example: <code>badge</code>.</p>
+<div class="file-tree">lib/src/templates/components/badge/
+├── manifest.json
+└── files/
+    └── kite_badge.dart.tmpl</div>
+
+<h3>Manifest</h3>
+<pre><code class="language-json">{
+  "schemaVersion": 2,
+  "id": "component.badge",
+  "version": "1.0.0",
+  "requires": ["component.foundation"],
+  "dependencies": [],
+  "devDependencies": [],
+  "files": [
+    {
+      "template": "files/kite_badge.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/shared/components/kite_badge.dart",
+      "upgradePolicy": "replace"
+    }
+  ]
+}</code></pre>
+
+<h3>Register and allow it</h3>
+<ol>
+  <li>Add <code>component.badge</code> to <code>registry.json</code>.</li>
+  <li>Add <code>badge</code> to <code>ComponentCommand._supported</code>.</li>
+  <li>Add generation and conflict tests.</li>
+  <li>Run the template validator.</li>
+</ol>
+
+<h2>Add another architecture</h2>
+<p>Use an ID such as <code>feature.mvvm</code>, create <code>features/mvvm/manifest.json</code>, add the template files, register the descriptor, and allow <code>mvvm</code> in the feature command.</p>
+<p>The generic shorthand normalizer can then translate:</p>
+<pre><code class="language-bash">kite --feat:mvvm dashboard</code></pre>
+<p>into:</p>
+<pre><code class="language-bash">kite feature dashboard --architecture mvvm</code></pre>
+
+<h2>Add state or API presets</h2>
+<div class="card-grid">
+  <article class="doc-card"><h3><code>state.bloc</code></h3><p>Create a public state preset and move reusable state contracts into internal templates where multiple presets need them.</p></article>
+  <article class="doc-card"><h3><code>api.http</code></h3><p>Reuse <code>api.core</code> contracts while generating an alternative client implementation and provider wiring.</p></article>
+</div>
+
+<h2>Design rules for templates</h2>
+<ul>
+  <li>Generate compile-safe source.</li>
+  <li>Do not invent business operations.</li>
+  <li>Keep internal dependencies reusable and focused.</li>
+  <li>Use theme values instead of hardcoded UI colors.</li>
+  <li>Prefer manual Riverpod providers unless a template explicitly targets another state system.</li>
+  <li>Test multi-template bundles for target collisions.</li>
+</ul>

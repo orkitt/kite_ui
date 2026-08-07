@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 2,
+  "id": "api.dio",
+  "version": "1.0.0",
+  "description": "Typed Dio client with token interception, exception mapping, Riverpod providers, cancellation, and safe debug logging.",
+  "requires": [
+    "api.core",
+    "state.riverpod"
+  ],
+  "dependencies": [
+    "dio"
+  ],
+  "devDependencies": [],
+  "files": [
+    {
+      "template": "files/bearer_token_interceptor.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/network/dio/bearer_token_interceptor.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/dio_exception_mapper.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/network/dio/dio_exception_mapper.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/dio_api_client.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/network/dio/dio_api_client.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/dio_providers.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/network/dio/dio_providers.dart",
+      "upgradePolicy": "replace"
+    }
+  ]
+}

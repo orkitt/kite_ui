@@ -1,0 +1,46 @@
+<div class="page-kicker">Foundations</div>
+<h1>Shared components</h1>
+<p class="page-lead">Generate reusable, theme-aware Material 3 components in <code>lib/shared/components</code>. Component manifests declare shared dependencies, so support files are created once.</p>
+
+<h2>Generate one component</h2>
+<pre><code class="language-bash">kite --widget button</code></pre>
+
+<h2>Generate a bundle</h2>
+<pre><code class="language-bash">kite --widget "[button,card,avatar]"</code></pre>
+<p>Canonical forms:</p>
+<pre><code class="language-bash">kite component button card avatar
+kite widget button card avatar
+kite g widget button card avatar</code></pre>
+
+<div class="callout"><span class="callout-icon">i</span><div><strong>Shell-safe list syntax</strong><p>Quote the bracketed list so your shell does not interpret <code>[ ]</code>. The misspelling <code>avater</code> is accepted and normalized to <code>avatar</code>.</p></div></div>
+
+<h2>Generated output</h2>
+<div class="file-tree">lib/shared/components/
+├── kite_component_size.dart
+├── kite_button.dart
+├── kite_card.dart
+└── kite_avatar.dart</div>
+
+<h2>Available components</h2>
+<div class="feature-grid">
+  <article class="feature-card"><span class="feature-icon">B</span><h3>KiteButton</h3><p>Filled, tonal, outlined, and text variants; sizes; loading; icons; full width; tooltip; and semantic labels.</p></article>
+  <article class="feature-card"><span class="feature-icon">C</span><h3>KiteCard</h3><p>Consistent shape and spacing, optional interaction, selection treatment, semantics, and theme-driven surfaces.</p></article>
+  <article class="feature-card"><span class="feature-icon">A</span><h3>KiteAvatar</h3><p>Remote images, loading and error fallbacks, initials, custom child content, interaction, and adaptive sizing.</p></article>
+  <article class="feature-card"><span class="feature-icon">S</span><h3>Component foundation</h3><p>A shared sizing contract required by all components and generated only once through template dependencies.</p></article>
+</div>
+
+<h2>Dependency-aware generation</h2>
+<p>Each component manifest can declare:</p>
+<pre><code class="language-json">{
+  "id": "component.button",
+  "requires": ["component.foundation"]
+}</code></pre>
+<p>When button, card, and avatar are requested together, Kite resolves all requirements, deduplicates identical targets, and writes one transactional generation plan.</p>
+
+<h2>Example usage</h2>
+<pre><code class="language-dart">KiteButton(
+  label: 'Save changes',
+  isLoading: state.isSaving,
+  leading: const Icon(Icons.save_outlined),
+  onPressed: state.isSaving ? null : controller.save,
+)</code></pre>

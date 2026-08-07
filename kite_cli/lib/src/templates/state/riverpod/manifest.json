@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 2,
+  "id": "state.riverpod",
+  "version": "1.0.0",
+  "description": "Manual Riverpod production setup with provider observation, bootstrap wiring, and guarded AsyncNotifier mutations.",
+  "requires": [],
+  "dependencies": [
+    "flutter_riverpod"
+  ],
+  "devDependencies": [],
+  "files": [
+    {
+      "template": "files/app_provider_observer.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/state/app_provider_observer.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/async_notifier_guard.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/state/async_notifier_guard.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/riverpod_bootstrap.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/state/riverpod_bootstrap.dart",
+      "upgradePolicy": "replace"
+    }
+  ]
+}

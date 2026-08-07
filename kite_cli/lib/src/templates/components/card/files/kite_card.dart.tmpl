@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+
+import 'kite_component_size.dart';
+
+class KiteCard extends StatelessWidget {
+  const KiteCard({
+    super.key,
+    required this.child,
+    this.onTap,
+    this.size = KiteComponentSize.medium,
+    this.padding,
+    this.margin,
+    this.selected = false,
+    this.semanticLabel,
+  });
+
+  final Widget child;
+  final VoidCallback? onTap;
+  final KiteComponentSize size;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
+  final bool selected;
+  final String? semanticLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final card = Card(
+      margin: margin,
+      color: selected ? colorScheme.secondaryContainer : null,
+      clipBehavior: Clip.antiAlias,
+      child: onTap == null
+          ? Padding(
+              padding: padding ?? size.cardPadding,
+              child: child,
+            )
+          : InkWell(
+              onTap: onTap,
+              child: Padding(
+                padding: padding ?? size.cardPadding,
+                child: child,
+              ),
+            ),
+    );
+
+    return Semantics(
+      label: semanticLabel,
+      button: onTap != null,
+      selected: selected,
+      child: card,
+    );
+  }
+}

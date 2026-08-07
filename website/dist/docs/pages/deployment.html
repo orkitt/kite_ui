@@ -1,0 +1,33 @@
+<div class="page-kicker">Project guide</div>
+<h1>Deploy this website</h1>
+<p class="page-lead">The Kite documentation site is a dependency-free static application. Its Node scripts validate content, build a search index, copy public assets, and serve the result locally.</p>
+
+<h2>Run locally</h2>
+<pre><code class="language-bash">cd website
+npm run dev</code></pre>
+<p>Open the local address printed by the server. The site uses hash-based documentation routes, so it works from a repository subdirectory without server rewrites.</p>
+
+<h2>Validate and build</h2>
+<pre><code class="language-bash">npm run validate
+npm run build
+npm test</code></pre>
+<p>The production output is written to:</p>
+<pre><code class="language-bash">website/dist/</code></pre>
+
+<h2>GitHub Pages</h2>
+<p>The included workflow builds <code>website/dist</code> and deploys it with GitHub Pages.</p>
+<div class="steps">
+  <section class="step"><h3>Push the repository</h3><p>Commit the <code>website</code> directory and <code>.github/workflows/docs.yml</code>.</p></section>
+  <section class="step"><h3>Enable GitHub Actions as the Pages source</h3><p>Open repository Settings → Pages, then select GitHub Actions under Build and deployment.</p></section>
+  <section class="step"><h3>Push to main</h3><p>The documentation workflow validates, builds, uploads, and deploys the static artifact.</p></section>
+</div>
+
+<h2>Customize branding</h2>
+<div class="table-wrap"><table><thead><tr><th>File</th><th>Use</th></tr></thead><tbody>
+<tr><td><code>public/assets/kite-mark.svg</code></td><td>Primary Kite logo used in the top bar and footer.</td></tr>
+<tr><td><code>public/assets/favicon.svg</code></td><td>Browser icon.</td></tr>
+<tr><td><code>public/assets/og-card.svg</code></td><td>Social sharing artwork.</td></tr>
+<tr><td><code>public/styles.css</code></td><td>Design tokens, layout, typography, components, responsive behavior, and themes.</td></tr>
+<tr><td><code>public/docs/manifest.json</code></td><td>Sidebar groups, routes, metadata, and search keywords.</td></tr>
+<tr><td><code>public/docs/pages/*.html</code></td><td>Independent documentation page content.</td></tr>
+</tbody></table></div>

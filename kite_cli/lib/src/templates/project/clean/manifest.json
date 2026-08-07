@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 2,
+  "id": "project.clean",
+  "version": "1.1.0",
+  "description": "Material 3, Riverpod, GoRouter, shared states, failures, and project configuration.",
+  "dependencies": [
+    "go_router"
+  ],
+  "devDependencies": [],
+  "files": [
+    {
+      "template": "files/main.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/main.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/app/app.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/bootstrap.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/app/bootstrap.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_router.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/app/router/app_router.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_routes.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/app/router/app_routes.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/generated_routes.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/app/router/generated_routes.dart",
+      "upgradePolicy": "preserve"
+    },
+    {
+      "template": "files/app_theme.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/app/theme/app_theme.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_color_schemes.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/app/theme/app_color_schemes.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_typography.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/app/theme/app_typography.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_exception.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/errors/app_exception.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_failure.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/errors/app_failure.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/result.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/result/result.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_loading_view.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/shared/widgets/app_loading_view.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_error_view.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/shared/widgets/app_error_view.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_empty_view.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/shared/widgets/app_empty_view.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_startup_view.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/shared/widgets/app_startup_view.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/gitkeep.tmpl",
+      "target": "{{config.featureDirectory}}/.gitkeep",
+      "upgradePolicy": "preserve"
+    },
+    {
+      "template": "files/kite.yaml.tmpl",
+      "target": "kite.yaml",
+      "upgradePolicy": "preserve"
+    }
+  ],
+  "requires": [
+    "state.riverpod"
+  ]
+}

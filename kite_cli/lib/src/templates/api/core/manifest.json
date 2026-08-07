@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 2,
+  "id": "api.core",
+  "version": "1.0.0",
+  "description": "Framework-independent API configuration, exception, token, and endpoint contracts.",
+  "requires": [],
+  "dependencies": [],
+  "devDependencies": [],
+  "files": [
+    {
+      "template": "files/api_config.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/network/api_config.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/api_exception.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/network/api_exception.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/auth_token_store.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/network/auth_token_store.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/api_endpoints.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/network/api_endpoints.dart",
+      "upgradePolicy": "preserve"
+    }
+  ]
+}

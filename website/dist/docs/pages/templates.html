@@ -1,0 +1,63 @@
+<div class="page-kicker">Project guide</div>
+<h1>Template system</h1>
+<p class="page-lead">Kite stores metadata in JSON manifests and generated Dart source in readable <code>.tmpl</code> files. This separation keeps templates versionable, testable, and easy to extend.</p>
+
+<h2>Template registry</h2>
+<p><code>lib/src/templates/registry.json</code> lists every public and internal template:</p>
+<pre><code class="language-json">{
+  "id": "feature.mvc",
+  "name": "MVC Architecture Feature",
+  "type": "feature",
+  "version": "1.0.0",
+  "manifest": "features/mvc/manifest.json"
+}</code></pre>
+<p>List public templates:</p>
+<pre><code class="language-bash">kite templates</code></pre>
+<p>Include internal dependency templates:</p>
+<pre><code class="language-bash">kite templates --all</code></pre>
+
+<h2>Manifest anatomy</h2>
+<pre><code class="language-json">{
+  "schemaVersion": 2,
+  "id": "component.button",
+  "version": "1.0.0",
+  "requires": ["component.foundation"],
+  "dependencies": [],
+  "devDependencies": [],
+  "files": [
+    {
+      "template": "files/kite_button.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/shared/components/kite_button.dart",
+      "upgradePolicy": "replace"
+    }
+  ]
+}</code></pre>
+
+<h2>Recursive requirements</h2>
+<p><code>requires</code> composes templates without duplicating generation logic:</p>
+<ol>
+  <li>Load the requested root template.</li>
+  <li>Resolve its requirements depth-first.</li>
+  <li>Detect circular dependencies.</li>
+  <li>Render dependency templates before the root.</li>
+  <li>Deduplicate identical target paths.</li>
+  <li>Reject different content targeting the same path.</li>
+  <li>Merge package dependencies and format once.</li>
+</ol>
+
+<h2>Template variables</h2>
+<div class="table-wrap"><table><thead><tr><th>Token</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>{{feature.raw}}</code></td><td><code>user-profile</code></td></tr>
+<tr><td><code>{{feature.snake}}</code></td><td><code>user_profile</code></td></tr>
+<tr><td><code>{{feature.camel}}</code></td><td><code>userProfile</code></td></tr>
+<tr><td><code>{{feature.pascal}}</code></td><td><code>UserProfile</code></td></tr>
+<tr><td><code>{{feature.kebab}}</code></td><td><code>user-profile</code></td></tr>
+<tr><td><code>{{config.sourceDirectory}}</code></td><td><code>lib</code></td></tr>
+</tbody></table></div>
+
+<h2>Validation</h2>
+<pre><code class="language-bash">dart format .
+dart analyze
+dart test
+python3 tool/validate_templates.py</code></pre>
+<p>The static validator checks registry consistency, manifest IDs and versions, requirements, cycles, source files, conditions, token rendering, safe paths, bundle conflicts, and generated relative imports.</p>

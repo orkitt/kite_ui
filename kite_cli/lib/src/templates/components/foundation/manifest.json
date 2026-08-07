@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 2,
+  "id": "component.foundation",
+  "version": "1.0.0",
+  "description": "Shared sizing tokens used by Kite reusable components.",
+  "requires": [],
+  "dependencies": [],
+  "devDependencies": [],
+  "files": [
+    {
+      "template": "files/kite_component_size.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/shared/components/kite_component_size.dart",
+      "upgradePolicy": "replace"
+    }
+  ]
+}

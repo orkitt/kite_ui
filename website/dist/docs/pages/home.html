@@ -1,0 +1,54 @@
+<section class="hero">
+  <div class="hero-badge"><span></span> Flutter foundations that stay understandable</div>
+  <h1>Let your Flutter architecture <span class="gradient-text">take flight.</span></h1>
+  <p class="hero-copy">Kite initializes professional Flutter foundations and generates feature architecture, shared components, state infrastructure, and API clients—without hiding your application behind a generator.</p>
+  <div class="hero-actions">
+    <a class="button-link primary" href="#/getting-started/quick-start">Start building →</a>
+    <a class="button-link" href="#/reference/commands">Explore commands</a>
+  </div>
+</section>
+
+<div class="terminal" aria-label="Kite command example">
+  <div class="terminal-bar"><span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-title">your_flutter_app — zsh</span></div>
+  <div class="terminal-body">
+    <div class="terminal-line"><span class="terminal-prompt">❯</span> <span class="terminal-command">kite init</span></div>
+    <div class="terminal-line"><span class="terminal-success">✓</span> Project foundation generated</div>
+    <div class="terminal-line"><span class="terminal-prompt">❯</span> <span class="terminal-command">kite --feat:clean dashboard --route</span></div>
+    <div class="terminal-line"><span class="terminal-success">✓</span> Generated clean feature <span class="terminal-muted">dashboard</span></div>
+    <div class="terminal-line"><span class="terminal-prompt">❯</span> <span class="terminal-command">kite --api:dio</span></div>
+    <div class="terminal-line"><span class="terminal-success">✓</span> Dio API foundation ready</div>
+  </div>
+</div>
+
+<h2>What Kite solves</h2>
+<p>Starting a Flutter project often means repeating the same setup: theme files, routers, error contracts, provider wiring, feature folders, API clients, and reusable UI. Kite turns those decisions into readable, versioned templates while keeping the generated code inside your project and under your control.</p>
+
+<div class="feature-grid">
+  <article class="feature-card"><span class="feature-icon">01</span><h3>Project foundations</h3><p>Material 3 themes, routing, shared states, core errors, results, Riverpod bootstrap, and project configuration.</p></article>
+  <article class="feature-card"><span class="feature-icon">02</span><h3>Feature architecture</h3><p>Generate feature-first Clean Architecture or MVC modules with compile-safe contracts and no invented business logic.</p></article>
+  <article class="feature-card"><span class="feature-icon">03</span><h3>Reusable foundations</h3><p>Add theme-aware buttons, cards, avatars, Riverpod infrastructure, and a production Dio client when the project needs them.</p></article>
+  <article class="feature-card"><span class="feature-icon">04</span><h3>Safe evolution</h3><p>Preview plans, detect conflicts, track generated checksums, preserve edits, and upgrade templates intentionally.</p></article>
+</div>
+
+<h2>One CLI, focused generators</h2>
+<div class="command-list">
+  <div class="command-row"><code>kite init</code><p>Initialize an existing Flutter project with Kite's shared app foundation.</p></div>
+  <div class="command-row"><code>kite --feat:clean dashboard</code><p>Create a feature-first Clean Architecture module.</p></div>
+  <div class="command-row"><code>kite --feat:mvc profile</code><p>Create a feature-first MVC module using manual Riverpod providers.</p></div>
+  <div class="command-row"><code>kite --widget "[button,card,avatar]"</code><p>Add reusable Material 3 components and their shared support files.</p></div>
+  <div class="command-row"><code>kite --state riverpod</code><p>Add production Riverpod bootstrap and async state helpers.</p></div>
+  <div class="command-row"><code>kite --api:dio</code><p>Add typed networking, token interception, exception mapping, and providers.</p></div>
+</div>
+
+<h2>Generated code remains your code</h2>
+<p>Kite is deliberately not a runtime framework. It writes ordinary Dart and Flutter source that your team can read, review, refactor, and own. Template metadata is stored separately from template source, so architecture presets can evolve without turning Dart code into escaped JSON.</p>
+
+<div class="callout success"><span class="callout-icon">✓</span><div><strong>Designed for professional ownership</strong><p>Kite generates starting points and infrastructure—not fake API methods, business rules, or domain operations that your application never requested.</p></div></div>
+
+<h2>Choose your next step</h2>
+<div class="card-grid">
+  <a class="doc-card" href="#/getting-started/installation"><span class="card-arrow">→</span><h3>Install Kite</h3><p>Activate the CLI from pub.dev or a local source checkout.</p></a>
+  <a class="doc-card" href="#/getting-started/quick-start"><span class="card-arrow">→</span><h3>Run the quick start</h3><p>Create a test app and generate your first complete foundation.</p></a>
+  <a class="doc-card" href="#/features/clean-architecture"><span class="card-arrow">→</span><h3>Explore Clean Architecture</h3><p>See the generated layers, contracts, DTOs, and providers.</p></a>
+  <a class="doc-card" href="#/guides/templates"><span class="card-arrow">→</span><h3>Understand templates</h3><p>Learn how manifests, requirements, conditions, and upgrades work.</p></a>
+</div>

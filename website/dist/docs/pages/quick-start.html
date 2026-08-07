@@ -1,0 +1,58 @@
+<div class="page-kicker">Getting started</div>
+<h1>Quick start</h1>
+<p class="page-lead">Create a disposable Flutter app, initialize Kite, generate two architecture styles, and verify the complete output.</p>
+
+<div class="steps">
+  <section class="step"><h3>Create a Flutter project</h3><p>Use a separate project for your first test so you can inspect every generated file safely.</p></section>
+  <section class="step"><h3>Preview project initialization</h3><p>Use <code>--dry-run</code> to see the generation plan before writing anything.</p></section>
+  <section class="step"><h3>Generate foundations and features</h3><p>Add Clean Architecture, MVC, reusable components, Riverpod, and Dio as needed.</p></section>
+  <section class="step"><h3>Analyze the result</h3><p>Install dependencies, format source, run analysis, and launch the app.</p></section>
+</div>
+
+<h2>Complete smoke test</h2>
+<pre><code class="language-bash">cd ~/Desktop
+flutter create kite_test_app
+cd kite_test_app
+
+kite init --dry-run
+kite init
+
+kite --feat:clean dashboard --route
+kite --feat:mvc profile --route
+kite --widget "[button,card,avatar]"
+kite --state riverpod
+kite --api:dio
+
+flutter pub get
+dart format .
+flutter analyze
+flutter test
+flutter run</code></pre>
+
+<h2>What you should see</h2>
+<div class="file-tree">lib/
+├── app/
+│   ├── router/
+│   └── theme/
+├── core/
+│   ├── errors/
+│   ├── network/
+│   ├── result/
+│   └── state/
+├── features/
+│   ├── dashboard/
+│   └── profile/
+├── shared/
+│   ├── components/
+│   └── widgets/
+└── main.dart</div>
+
+<h2>Use canonical commands when scripting</h2>
+<p>Shorthand is convenient at the terminal. Canonical subcommands are clearer in team documentation and automation:</p>
+<pre><code class="language-bash">kite feature dashboard --architecture clean --route
+kite feature profile --architecture mvc --route
+kite component button card avatar
+kite state riverpod
+kite api dio</code></pre>
+
+<div class="callout warning"><span class="callout-icon">!</span><div><strong>JSON generation requires one extra command</strong><p>After adding real fields to a model or DTO generated with <code>--json</code>, run <code>dart run build_runner build --delete-conflicting-outputs</code>.</p></div></div>

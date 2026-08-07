@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 2,
+  "id": "component.card",
+  "version": "1.0.0",
+  "description": "Theme-aware Material 3 card with consistent padding, selection, interaction, and semantics.",
+  "requires": [
+    "component.foundation"
+  ],
+  "dependencies": [],
+  "devDependencies": [],
+  "files": [
+    {
+      "template": "files/kite_card.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/shared/components/kite_card.dart",
+      "upgradePolicy": "replace"
+    }
+  ]
+}

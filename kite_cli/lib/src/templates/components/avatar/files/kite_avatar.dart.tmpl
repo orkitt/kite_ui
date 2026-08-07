@@ -1,0 +1,122 @@
+import 'package:flutter/material.dart';
+
+import 'kite_component_size.dart';
+
+class KiteAvatar extends StatelessWidget {
+  const KiteAvatar({
+    super.key,
+    this.imageUrl,
+    this.name,
+    this.child,
+    this.onTap,
+    this.size = KiteComponentSize.medium,
+    this.semanticLabel,
+  }) : assert(
+          imageUrl != null || name != null || child != null,
+          'Provide imageUrl, name, or child.',
+        );
+
+  final String? imageUrl;
+  final String? name;
+  final Widget? child;
+  final VoidCallback? onTap;
+  final KiteComponentSize size;
+  final String? semanticLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    final diameter = size.avatarDiameter;
+    final colorScheme = Theme.of(context).colorScheme;
+    final content = child ??
+        _AvatarImage(
+          imageUrl: imageUrl,
+          fallback: _AvatarFallback(name: name),
+        );
+
+    Widget avatar = Material(
+      color: colorScheme.secondaryContainer,
+      shape: const CircleBorder(),
+      clipBehavior: Clip.antiAlias,
+      child: SizedBox.square(
+        dimension: diameter,
+        child: onTap == null
+            ? Center(child: content)
+            : InkWell(
+                customBorder: const CircleBorder(),
+                onTap: onTap,
+                child: Center(child: content),
+              ),
+      ),
+    );
+
+    avatar = DefaultTextStyle.merge(
+      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+            color: colorScheme.onSecondaryContainer,
+          ),
+      child: avatar,
+    );
+
+    return Semantics(
+      label: semanticLabel ?? name,
+      image: imageUrl != null,
+      button: onTap != null,
+      child: avatar,
+    );
+  }
+}
+
+final class _AvatarImage extends StatelessWidget {
+  const _AvatarImage({
+    required this.imageUrl,
+    required this.fallback,
+  });
+
+  final String? imageUrl;
+  final Widget fallback;
+
+  @override
+  Widget build(BuildContext context) {
+    final url = imageUrl?.trim();
+    if (url == null || url.isEmpty) {
+      return fallback;
+    }
+
+    return Image.network(
+      url,
+      width: double.infinity,
+      height: double.infinity,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) => fallback,
+      loadingBuilder: (context, child, progress) {
+        if (progress == null) {
+          return child;
+        }
+        return const Center(
+          child: SizedBox.square(
+            dimension: 18,
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
+        );
+      },
+    );
+  }
+}
+
+final class _AvatarFallback extends StatelessWidget {
+  const _AvatarFallback({required this.name});
+
+  final String? name;
+
+  @override
+  Widget build(BuildContext context) {
+    final initials = (name ?? '')
+        .trim()
+        .split(RegExp(r'\s+'))
+        .where((part) => part.isNotEmpty)
+        .take(2)
+        .map((part) => part.substring(0, 1).toUpperCase())
+        .join();
+
+    return Text(initials.isEmpty ? '?' : initials);
+  }
+}

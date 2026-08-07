@@ -1,0 +1,45 @@
+<div class="page-kicker">Getting started</div>
+<h1>Installation</h1>
+<p class="page-lead">Install Kite globally for normal use, or activate a local checkout while developing the CLI and its templates.</p>
+<div class="page-meta"><span class="meta-chip">Dart SDK 3.8+</span><span class="meta-chip">Flutter project required for generation</span></div>
+
+<h2>Install from pub.dev</h2>
+<p>Activate the published package globally:</p>
+<pre><code class="language-bash">dart pub global activate kite</code></pre>
+<p>Confirm that the executable is available:</p>
+<pre><code class="language-bash">kite --version
+kite --help
+kite templates</code></pre>
+
+<h2>Activate a local checkout</h2>
+<p>Use path activation while changing Kite source or templates:</p>
+<pre><code class="language-bash">git clone https://github.com/orkitt/kite.git
+cd kite
+dart pub get
+dart pub global activate --source path .</code></pre>
+<div class="callout"><span class="callout-icon">i</span><div><strong>Local development behavior</strong><p>A path-activated executable may rebuild when its package source changes. That is expected while developing Kite.</p></div></div>
+
+<h2>Fix “command not found”</h2>
+<p>Dart global executables are placed in your pub cache. Add that directory to your shell path.</p>
+<h3>macOS and Linux using Zsh</h3>
+<pre><code class="language-bash">echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> ~/.zshrc
+source ~/.zshrc
+which kite</code></pre>
+<h3>Bash</h3>
+<pre><code class="language-bash">echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> ~/.bashrc
+source ~/.bashrc
+which kite</code></pre>
+<p>You can also run the package without editing your path:</p>
+<pre><code class="language-bash">dart pub global run kite:kite --version</code></pre>
+
+<h2>Validate your environment</h2>
+<p>Inside a Flutter project, run:</p>
+<pre><code class="language-bash">kite doctor</code></pre>
+<p>The doctor checks the Dart runtime, Flutter executable, current Flutter project, Kite project manifest, and bundled template registry.</p>
+
+<h2>Update or remove Kite</h2>
+<pre><code class="language-bash"># Refresh the published package
+dart pub global activate kite
+
+# Remove it
+dart pub global deactivate kite</code></pre>

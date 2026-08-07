@@ -1,0 +1,38 @@
+<div class="page-kicker">Project guide</div>
+<h1>Managed files & safety</h1>
+<p class="page-lead">Kite plans the complete generation before writing, records managed outputs, computes checksums, and asks before replacing conflicting files.</p>
+
+<h2>Project manifest</h2>
+<p>After initialization, Kite stores generation metadata in:</p>
+<pre><code class="language-bash">.kite/manifest.json</code></pre>
+<p>Each generation record includes the root template, template version, variables, generated paths, checksums, and upgrade policies.</p>
+
+<h2>Conflict strategies</h2>
+<div class="table-wrap"><table><thead><tr><th>Strategy</th><th>Command</th><th>Behavior</th></tr></thead><tbody>
+<tr><td>Ask</td><td>Default</td><td>Prompt before replacing an existing file.</td></tr>
+<tr><td>Skip</td><td><code>--skip-existing</code></td><td>Preserve existing targets and continue with missing files.</td></tr>
+<tr><td>Overwrite</td><td><code>--force</code></td><td>Replace conflicts intentionally.</td></tr>
+<tr><td>Preview</td><td><code>--dry-run</code></td><td>Print the plan without writing files.</td></tr>
+</tbody></table></div>
+
+<h2>Recommended workflow</h2>
+<pre><code class="language-bash"># 1. Preview
+kite --feat:clean settings --dry-run
+
+# 2. Generate while preserving existing shared foundations
+kite --feat:clean settings --skip-existing
+
+# 3. Analyze the result
+flutter pub get
+dart format .
+flutter analyze</code></pre>
+
+<h2>Why a feature may mention shared files</h2>
+<p>Root templates can require reusable foundations. For example, a clean feature may require Riverpod support, and the Dio preset requires both API contracts and Riverpod. Dependency resolution happens for each generation plan so missing requirements can be supplied automatically.</p>
+
+<div class="callout warning"><span class="callout-icon">!</span><div><strong>Repeated existing-file prompt</strong><p>If your current Kite build asks about an already-created shared dependency while generating a new feature, use <code>--skip-existing</code> to preserve the project foundation. Do not use <code>--force</code> unless replacing those files is intentional.</p></div></div>
+
+<h2>Upgrade separately</h2>
+<pre><code class="language-bash">kite upgrade --dry-run
+kite upgrade</code></pre>
+<p>Upgrade commands are the appropriate place to compare template versions and refresh Kite-managed foundations. Manually changed files should be reviewed rather than replaced silently.</p>

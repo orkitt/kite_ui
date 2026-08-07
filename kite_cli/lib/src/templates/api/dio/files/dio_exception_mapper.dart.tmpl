@@ -1,0 +1,35 @@
+import 'package:dio/dio.dart';
+
+import '../api_exception.dart';
+
+ApiException mapDioException(DioException error) {
+  final response = error.response;
+  final message = switch (error.type) {
+    DioExceptionType.connectionTimeout => 'Connection timed out.',
+    DioExceptionType.sendTimeout => 'Request upload timed out.',
+    DioExceptionType.receiveTimeout => 'Server response timed out.',
+    DioExceptionType.badCertificate => 'The server certificate is invalid.',
+    DioExceptionType.connectionError => 'Unable to connect to the server.',
+    DioExceptionType.cancel => 'The request was cancelled.',
+    DioExceptionType.badResponse => _responseMessage(response?.data),
+    DioExceptionType.unknown => error.message ?? 'Unexpected network error.',
+    DioExceptionType.transformTimeout => 'The transform timeout.'
+  };
+
+  return ApiException(
+    message: message,
+    statusCode: response?.statusCode,
+    data: response?.data,
+    cause: error,
+  );
+}
+
+String _responseMessage(Object? data) {
+  if (data case final Map<Object?, Object?> map) {
+    final message = map['message'];
+    if (message is String && message.trim().isNotEmpty) {
+      return message.trim();
+    }
+  }
+  return 'The server rejected the request.';
+}

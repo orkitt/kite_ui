@@ -1,0 +1,52 @@
+{
+  "site": {
+    "name": "Kite",
+    "version": "0.2.0",
+    "tagline": "Professional Flutter scaffolding CLI"
+  },
+  "groups": [
+    {
+      "title": "Overview",
+      "pages": [
+        {"route": "/", "title": "Why Kite", "file": "home.html", "description": "Understand what Kite generates, why it exists, and how it fits into professional Flutter development.", "keywords": ["flutter cli", "scaffolding", "overview", "kite"]},
+        {"route": "/getting-started/installation", "title": "Installation", "file": "installation.html", "description": "Install Kite from pub.dev or activate a local development checkout.", "keywords": ["install", "activate", "pub global", "path"]},
+        {"route": "/getting-started/quick-start", "title": "Quick start", "file": "quick-start.html", "description": "Initialize a project and generate your first clean or MVC feature.", "keywords": ["start", "first project", "example"]},
+        {"route": "/getting-started/project-init", "title": "Project initialization", "file": "project-init.html", "description": "Learn exactly what kite init creates and how to control generation behavior.", "keywords": ["kite init", "theme", "router", "shared"]}
+      ]
+    },
+    {
+      "title": "Feature architecture",
+      "pages": [
+        {"route": "/features/clean-architecture", "title": "Clean Architecture", "file": "clean-architecture.html", "description": "Generate feature-first data, domain, and presentation layers with compile-safe contracts.", "keywords": ["feat clean", "domain", "data", "presentation", "repository", "usecase"]},
+        {"route": "/features/mvc", "title": "MVC", "file": "mvc.html", "description": "Generate feature-first MVC modules with models, Riverpod controllers, providers, and views.", "keywords": ["feat mvc", "model", "view", "controller"]}
+      ]
+    },
+    {
+      "title": "Foundations",
+      "pages": [
+        {"route": "/generators/components", "title": "Shared components", "file": "components.html", "description": "Generate reusable Kite button, card, and avatar components with shared dependencies.", "keywords": ["widget", "button", "card", "avatar", "avater"]},
+        {"route": "/generators/riverpod", "title": "Riverpod state", "file": "riverpod.html", "description": "Add production Riverpod bootstrap, provider observation, and async notifier guards.", "keywords": ["state riverpod", "notifier", "asyncnotifier", "provider"]},
+        {"route": "/generators/dio", "title": "Dio API client", "file": "dio.html", "description": "Add a typed Dio client, token interceptor, exception mapping, config, and Riverpod providers.", "keywords": ["api dio", "network", "interceptor", "token", "client"]}
+      ]
+    },
+    {
+      "title": "Project guide",
+      "pages": [
+        {"route": "/guides/configuration", "title": "Configuration", "file": "configuration.html", "description": "Configure source paths, architecture defaults, routing, serialization, and conflict handling in kite.yaml.", "keywords": ["kite yaml", "config", "path", "router"]},
+        {"route": "/guides/generated-files", "title": "Managed files & safety", "file": "generated-files.html", "description": "Understand manifests, checksums, conflict strategies, dry runs, and existing-file behavior.", "keywords": ["manifest", "checksum", "overwrite", "skip existing", "force"]},
+        {"route": "/guides/templates", "title": "Template system", "file": "templates.html", "description": "Learn how JSON manifests, .tmpl sources, conditions, dependencies, and recursive requires work.", "keywords": ["template", "manifest", "requires", "registry"]},
+        {"route": "/guides/extending-kite", "title": "Extending Kite", "file": "extending-kite.html", "description": "Create new components, architecture presets, state foundations, and API client templates.", "keywords": ["custom template", "badge", "mvvm", "bloc", "http"]},
+        {"route": "/guides/deployment", "title": "Deploy this website", "file": "deployment.html", "description": "Build and deploy the Kite documentation website locally or through GitHub Pages.", "keywords": ["website", "github pages", "deploy", "docs"]}
+      ]
+    },
+    {
+      "title": "Reference",
+      "pages": [
+        {"route": "/reference/commands", "title": "CLI reference", "file": "commands.html", "description": "A complete reference for Kite commands, aliases, flags, and examples.", "keywords": ["command", "flags", "help", "dry run", "path"]},
+        {"route": "/reference/troubleshooting", "title": "Troubleshooting", "file": "troubleshooting.html", "description": "Resolve command-not-found, repeated prompts, local activation, formatting, and generation issues.", "keywords": ["error", "prompt", "cancelled", "command not found", "dependencies"]},
+        {"route": "/reference/faq", "title": "FAQ", "file": "faq.html", "description": "Answers to common questions about generated code, architecture, dependencies, and upgrades.", "keywords": ["questions", "answers", "codegen", "safe"]},
+        {"route": "/reference/changelog", "title": "Changelog", "file": "changelog.html", "description": "Review the capabilities introduced in Kite 0.2.0.", "keywords": ["release", "version", "0.2.0"], "badge": "0.2.0"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+import 'dart:developer' as developer;
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final class AppProviderObserver extends ProviderObserver {
+  const AppProviderObserver();
+
+  @override
+  void didUpdateProvider(
+    ProviderObserverContext context,
+    Object? previousValue,
+    Object? newValue,
+  ) {
+    if (!kDebugMode) {
+      return;
+    }
+
+    developer.log(
+      '${context.provider} updated',
+      name: 'riverpod',
+    );
+  }
+
+  @override
+  void providerDidFail(
+    ProviderObserverContext context,
+    Object error,
+    StackTrace stackTrace,
+  ) {
+    developer.log(
+      '${context.provider} failed',
+      name: 'riverpod',
+      error: error,
+      stackTrace: stackTrace,
+    );
+  }
+}

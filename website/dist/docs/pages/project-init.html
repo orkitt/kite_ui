@@ -1,0 +1,55 @@
+<div class="page-kicker">Getting started</div>
+<h1>Project initialization</h1>
+<p class="page-lead"><code>kite init</code> turns an existing Flutter application into a structured starting point with routing, theming, state foundations, shared feedback widgets, and managed generation metadata.</p>
+
+<h2>Run initialization</h2>
+<pre><code class="language-bash">cd your_flutter_app
+kite init</code></pre>
+<p>Preview without writing:</p>
+<pre><code class="language-bash">kite init --dry-run</code></pre>
+
+<h2>Generated foundation</h2>
+<div class="file-tree">lib/
+├── app/
+│   ├── app.dart
+│   ├── bootstrap.dart
+│   ├── router/
+│   │   ├── app_router.dart
+│   │   ├── app_routes.dart
+│   │   └── generated_routes.dart
+│   └── theme/
+│       ├── app_color_schemes.dart
+│       ├── app_theme.dart
+│       └── app_typography.dart
+├── core/
+│   ├── errors/
+│   ├── result/
+│   └── state/
+├── shared/widgets/
+├── features/
+└── main.dart
+
+kite.yaml
+.kite/manifest.json</div>
+
+<h2>What each area owns</h2>
+<div class="table-wrap"><table><thead><tr><th>Area</th><th>Responsibility</th></tr></thead><tbody>
+<tr><td><code>app/</code></td><td>Application bootstrap, Material 3 theme, navigation, and top-level composition.</td></tr>
+<tr><td><code>core/</code></td><td>Framework-level contracts and infrastructure shared across multiple features.</td></tr>
+<tr><td><code>shared/</code></td><td>Reusable presentation elements that are not owned by a single business feature.</td></tr>
+<tr><td><code>features/</code></td><td>Feature-first modules generated with Clean Architecture or MVC.</td></tr>
+<tr><td><code>kite.yaml</code></td><td>Human-editable project generation preferences.</td></tr>
+<tr><td><code>.kite/manifest.json</code></td><td>Kite-managed generation records, template versions, file paths, and checksums.</td></tr>
+</tbody></table></div>
+
+<h2>Initialization options</h2>
+<div class="command-list">
+  <div class="command-row"><code>kite init --dry-run</code><p>Print the planned changes without modifying the project.</p></div>
+  <div class="command-row"><code>kite init --skip-existing</code><p>Preserve files that already exist and generate only missing targets.</p></div>
+  <div class="command-row"><code>kite init --force</code><p>Overwrite conflicts intentionally. Review the plan first.</p></div>
+  <div class="command-row"><code>kite init --no-dependencies</code><p>Generate source without running package dependency installation.</p></div>
+  <div class="command-row"><code>kite init --no-format</code><p>Skip formatting after generation.</p></div>
+  <div class="command-row"><code>kite init --path ./apps/mobile</code><p>Target a Flutter project outside the current directory.</p></div>
+</div>
+
+<div class="callout danger"><span class="callout-icon">!</span><div><strong>Use force deliberately</strong><p><code>--force</code> is appropriate when you intentionally want Kite's current template to replace an existing file. It is not the default path for normal feature generation.</p></div></div>

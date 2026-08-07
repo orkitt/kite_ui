@@ -1,0 +1,53 @@
+<div class="page-kicker">Project guide</div>
+<h1>Configuration</h1>
+<p class="page-lead"><code>kite.yaml</code> is the project-facing configuration file. It records generation preferences without mixing them into internal template manifests.</p>
+
+<h2>Example configuration</h2>
+<pre><code class="language-yaml">schema_version: 1
+
+project:
+  source_directory: lib
+
+architecture:
+  type: clean
+  feature_directory: lib/features
+
+state_management:
+  type: riverpod
+  code_generation: false
+
+routing:
+  type: go_router
+  auto_register_features: true
+
+serialization:
+  type: json_serializable
+
+generation:
+  format_after_generation: true
+  install_dependencies: true
+  conflict_strategy: ask</code></pre>
+
+<h2>Configuration areas</h2>
+<div class="table-wrap"><table><thead><tr><th>Key</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>project.source_directory</code></td><td>Root Dart source directory, normally <code>lib</code>.</td></tr>
+<tr><td><code>architecture.feature_directory</code></td><td>Destination for generated feature modules.</td></tr>
+<tr><td><code>state_management.code_generation</code></td><td>Records that Kite uses manual Riverpod providers.</td></tr>
+<tr><td><code>routing.auto_register_features</code></td><td>Controls whether route-enabled features update the managed route registry.</td></tr>
+<tr><td><code>generation.format_after_generation</code></td><td>Runs Dart formatting after successful writes.</td></tr>
+<tr><td><code>generation.install_dependencies</code></td><td>Allows templates to add required package dependencies.</td></tr>
+<tr><td><code>generation.conflict_strategy</code></td><td>Default behavior when a target file already exists.</td></tr>
+</tbody></table></div>
+
+<h2>Override the project path</h2>
+<p>Every generation command can target another Flutter project:</p>
+<pre><code class="language-bash">kite --feat:clean dashboard --path ./apps/mobile
+kite --widget button --path ../customer_app
+kite --api:dio --path /absolute/path/to/app</code></pre>
+
+<h2>Command flags override defaults</h2>
+<p>Use command flags for one-off behavior without rewriting project configuration:</p>
+<pre><code class="language-bash">kite --feat:mvc settings --dry-run
+kite --widget button --skip-existing
+kite --api:dio --no-dependencies
+kite init --no-format</code></pre>
