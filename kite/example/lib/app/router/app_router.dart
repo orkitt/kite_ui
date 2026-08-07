@@ -1,0 +1,19 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../shared/widgets/app_startup_view.dart';
+import '../../vanila/files/app_routes.dart';
+import '../../vanila/files/generated_routes.dart';
+
+final appRouterProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
+    initialLocation: AppRoutes.home,
+    routes: <RouteBase>[
+      GoRoute(
+        path: AppRoutes.home,
+        builder: (context, state) => const AppStartupView(),
+      ),
+      ...generatedRoutes,
+    ],
+  );
+});

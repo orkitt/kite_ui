@@ -11,7 +11,13 @@ import '../project/kite_config.dart';
 import '../templates/template_store.dart';
 import '../version.dart';
 import 'generation_options.dart';
-
+// usecase
+// PresetGenerator
+// │
+// ├── kite --state riverpod
+// ├── kite --api:dio
+// ├── kite --widget ...
+// └── future reusable preset/bundle commands
 final class PresetGenerator {
   const PresetGenerator({
     this.templateStore = const TemplateStore(),

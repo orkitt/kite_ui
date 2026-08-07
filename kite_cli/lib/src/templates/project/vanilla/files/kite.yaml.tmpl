@@ -1,0 +1,24 @@
+schema_version: 1
+
+project:
+  source_directory: lib
+
+architecture:
+  type: clean
+  feature_directory: lib/features
+
+state_management:
+  type: riverpod
+  code_generation: false
+
+routing:
+  type: go_router
+  auto_register_features: true
+
+serialization:
+  type: json_serializable
+
+generation:
+  format_after_generation: true
+  install_dependencies: true
+  conflict_strategy: skip

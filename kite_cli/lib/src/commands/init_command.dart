@@ -5,6 +5,7 @@ import '../generators/generation_options.dart';
 import '../generators/project_generator.dart';
 import '../logging/kite_logger.dart';
 import '../project/project_detector.dart';
+import '../project/project_preset.dart';
 import 'shared_command_options.dart';
 
 final class InitCommand extends Command<int> {
@@ -17,6 +18,13 @@ final class InitCommand extends Command<int> {
        _logger = logger {
     addProjectPathOption(argParser);
     addGenerationOptions(argParser);
+   argParser
+      ..addFlag(
+        'vanilla',
+        negatable: false,
+        help: 'Initialize a lightweight Material3 vanilla Flutter project foundation.',
+      )
+      ..addFlag('vanila', negatable: false, hide: true);
   }
 
   final ProjectDetector _projectDetector;
@@ -35,9 +43,16 @@ final class InitCommand extends Command<int> {
     final results = argResults!;
     try {
       final project = _projectDetector.detect(results.option('path')!);
-      _logger.info('Initializing Kite in ${project.name}...');
+      final useVanilla = results.flag('vanilla') || results.flag('vanila');
+      final preset = useVanilla ? ProjectPreset.vanilla : ProjectPreset.clean;
+
+      _logger.info(
+        'Initializing Kite ${preset.name} foundation in ${project.name}...',
+      );
+
       await _generator.generate(
         project: project,
+        preset: preset,
         options: GenerationOptions(
           conflictStrategy: resolveConflictStrategy(results),
           dryRun: results.flag('dry-run'),

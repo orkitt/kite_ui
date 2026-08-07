@@ -1,13 +1,10 @@
 {
   "schemaVersion": 2,
-  "id": "project.clean",
+  "id": "project.vanilla",
   "version": "1.1.0",
   "description": "Material 3, Riverpod, GoRouter, shared states, failures, and project configuration.",
   "dependencies": [
-    "kite",
-    "lucide_icons_flutter",
     "go_router"
-
   ],
   "devDependencies": [],
   "files": [
@@ -71,26 +68,7 @@
       "target": "{{config.sourceDirectory}}/core/result/result.dart",
       "upgradePolicy": "replace"
     },
-    {
-      "template": "files/app_loading_view.dart.tmpl",
-      "target": "{{config.sourceDirectory}}/shared/widgets/app_loading_view.dart",
-      "upgradePolicy": "replace"
-    },
-    {
-      "template": "files/app_error_view.dart.tmpl",
-      "target": "{{config.sourceDirectory}}/shared/widgets/app_error_view.dart",
-      "upgradePolicy": "replace"
-    },
-    {
-      "template": "files/app_empty_view.dart.tmpl",
-      "target": "{{config.sourceDirectory}}/shared/widgets/app_empty_view.dart",
-      "upgradePolicy": "replace"
-    },
-    {
-      "template": "files/app_startup_view.dart.tmpl",
-      "target": "{{config.sourceDirectory}}/shared/widgets/app_startup_view.dart",
-      "upgradePolicy": "replace"
-    },
+
     {
       "template": "files/gitkeep.tmpl",
       "target": "{{config.featureDirectory}}/.gitkeep",
@@ -99,7 +77,7 @@
     {
       "template": "files/kite.yaml.tmpl",
       "target": "kite.yaml",
-      "upgradePolicy": "preserve"
+      "upgradePolicy": "replace"
     }
   ],
   "requires": [

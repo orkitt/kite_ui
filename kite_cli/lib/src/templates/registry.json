@@ -72,6 +72,13 @@
       "version": "1.0.0",
       "manifest": "api/core/manifest.json",
       "internal": true
+    },
+    {
+      "id": "project.vanilla",
+      "name": "Vanilla Flutter Project For material support",
+      "type": "project",
+      "version": "1.0.0",
+      "manifest": "project/vanilla/manifest.json"
     }
   ]
 }

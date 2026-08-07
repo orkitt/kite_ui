@@ -1,0 +1,13 @@
+import 'package:flutter/material.dart';
+
+abstract final class AppTypography {
+  static TextTheme apply(TextTheme base) {
+    return base.copyWith(
+      headlineLarge: base.headlineLarge?.copyWith(fontWeight: FontWeight.w700),
+      headlineMedium: base.headlineMedium?.copyWith(
+        fontWeight: FontWeight.w700,
+      ),
+      titleLarge: base.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+    );
+  }
+}

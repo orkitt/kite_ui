@@ -6,10 +6,15 @@ import '../logging/kite_logger.dart';
 import '../process/dart_formatter.dart';
 import '../process/dependency_installer.dart';
 import '../project/flutter_project.dart';
+import '../project/project_preset.dart';
 import '../templates/template_store.dart';
 import '../version.dart';
 import 'generation_options.dart';
-
+// usecase
+// ProjectGenerator
+// │
+// ├── kite init
+// └── kite init --vanilla
 final class ProjectGenerator {
   const ProjectGenerator({
     this.templateStore = const TemplateStore(),
@@ -31,9 +36,11 @@ final class ProjectGenerator {
 
   Future<GenerationResult> generate({
     required FlutterProject project,
+    ProjectPreset preset = ProjectPreset.clean,
     required GenerationOptions options,
   }) async {
-    const templateId = 'project.clean';
+    final templateId = preset.templateId;
+    logger.info('Using template: $templateId');
     final templates = await templateStore.resolve(templateId);
     final variables = <String, Object?>{
       'project': <String, Object?>{

@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+
+import '../../vanila/files/app_color_schemes.dart';
+import '../../vanila/files/app_typography.dart';
+
+abstract final class AppTheme {
+  static ThemeData get light => _build(AppColorSchemes.light);
+
+  static ThemeData get dark => _build(AppColorSchemes.dark);
+
+  static ThemeData _build(ColorScheme colorScheme) {
+    final base = ThemeData(useMaterial3: true, colorScheme: colorScheme);
+
+    return base.copyWith(
+      scaffoldBackgroundColor: colorScheme.surface,
+      textTheme: AppTypography.apply(base.textTheme),
+      inputDecorationTheme: InputDecorationThemeData(
+        filled: true,
+        fillColor: colorScheme.surfaceContainerLow,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: colorScheme.outlineVariant),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: colorScheme.outlineVariant),
+        ),
+      ),
+      cardTheme: CardThemeData(
+        elevation: 0,
+        color: colorScheme.surfaceContainerLow,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: BorderSide(color: colorScheme.outlineVariant),
+        ),
+      ),
+    );
+  }
+}

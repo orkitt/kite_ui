@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "kiteVersion": "0.2.0",
+  "generations": [
+    {
+      "id": "project.vanilla",
+      "templateId": "project.vanilla",
+      "templateVersion": "1.1.0",
+      "variables": {
+        "project": {
+          "name": "example",
+          "package": "example"
+        },
+        "config": {
+          "sourceDirectory": "lib",
+          "featureDirectory": "lib/features",
+          "architecture": "clean",
+          "router": "go_router",
+          "stateManagement": "riverpod"
+        },
+        "kite": {
+          "version": "0.2.0"
+        },
+        "generated": {
+          "date": "2026-08-07T20:44:08.701885Z"
+        }
+      },
+      "generatedAt": "2026-08-07T20:44:08.779339Z",
+      "files": [
+        {
+          "path": "lib/core/state/app_provider_observer.dart",
+          "checksum": "sha256:e681dfa8639f10cb83849dec23e6a6eb8435997bfe38c470ff283b52f69bc4a8",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/core/state/async_notifier_guard.dart",
+          "checksum": "sha256:dabcf69c045d6c55b8c6603e04df9f924937922a97934fe4dd8f6ce0ba36bc14",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/core/state/riverpod_bootstrap.dart",
+          "checksum": "sha256:2b9c638cd831c3bb3115326a222b27921b51b055343ac81c0d60afd6c9316f9a",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/main.dart",
+          "checksum": "sha256:8fcce50fb977df0d8c0c6ffb0c71e8af66c79a242f487fb988a0212f51a61ab5",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/app/app.dart",
+          "checksum": "sha256:af01ba8e4ef4bca787badf73c04d2dded63caf95f4ad06c8d4954b50a7942d9a",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/app/bootstrap.dart",
+          "checksum": "sha256:2dc6b2b97af901559c8536f3187024fc4c1a679580ff2ed34eb187b722e27f04",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/app/router/app_router.dart",
+          "checksum": "sha256:3ad3f75973b461570606c946dc59527152beb71418cf06d0b839fec7c910d027",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/app/router/app_routes.dart",
+          "checksum": "sha256:e1e24cc213eb9a1ac716134860e034f9724278367a034f8fd9e8ef079f5a7046",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/app/router/generated_routes.dart",
+          "checksum": "sha256:6b12a26d9e4edd6883d1f6bc6dd7feb5865094d0a0793d38876bcf9636f3a4cf",
+          "upgradePolicy": "preserve"
+        },
+        {
+          "path": "lib/app/theme/app_theme.dart",
+          "checksum": "sha256:fb72bc88433d6795ba81ab89ddd5485964e7da9d8b6a565ced6de32f08e67958",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/app/theme/app_color_schemes.dart",
+          "checksum": "sha256:8065b560f68de62325eee34dcb45bc0290edf9f030320084deb2e29d4e0c275f",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/app/theme/app_typography.dart",
+          "checksum": "sha256:d68886bd30950d6833ed66b101a417f7fd96707a20a1f8ec27773a1704c234cf",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/core/errors/app_exception.dart",
+          "checksum": "sha256:5a69953a228b6cdd954e2ffecb7b86665e389c93ad5f28f5ab8c8059e4e3b4bc",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/core/errors/app_failure.dart",
+          "checksum": "sha256:6993cbc11435a30973a63bff0beda3d3f09edbe8fed2ced2ca481cee00186f88",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/core/result/result.dart",
+          "checksum": "sha256:c0f08b317a7c8641a99d172acf3ac1033289374d0c1e19c4468a1c488c19eda0",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/.gitkeep",
+          "checksum": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "upgradePolicy": "preserve"
+        },
+        {
+          "path": "kite.yaml",
+          "checksum": "sha256:a6459093f5c3c6b64a38282b4ac02432c586e3da3f89f3540dd4d3c41f257068",
+          "upgradePolicy": "replace"
+        }
+      ]
+    }
+  ]
+}
