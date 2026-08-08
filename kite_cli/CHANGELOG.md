@@ -1,3 +1,7 @@
+## 0.2.0
+* Added Vanilla support for pure material design.
+* Improved CLI logging for clearer generation progress and error messages.
+
 ## 0.1.0
 
 * Fixed bundled template registry resolution after global installation.
