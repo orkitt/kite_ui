@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 2,
+  "id": "foundation.core",
+  "version": "1.0.0",
+  "description": "Core constants, preferences, persisted theme mode, and theme changer widget.",
+  "requires": [
+    "state.riverpod"
+  ],
+  "dependencies": [
+    "shared_preferences"
+  ],
+  "devDependencies": [],
+  "files": [
+    {
+      "template": "files/app_constants.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/constants/app_constants.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_storage_keys.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/constants/app_storage_keys.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_environment.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/constants/app_environment.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_preferences.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/preferences/app_preferences.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/shared_preferences_app_preferences.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/preferences/shared_preferences_app_preferences.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_preferences_provider.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/preferences/app_preferences_provider.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/theme_mode_provider.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/theme/theme_mode_provider.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/theme_changer.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/shared/widgets/theme_changer.dart",
+      "upgradePolicy": "replace"
+    }
+  ]
+}

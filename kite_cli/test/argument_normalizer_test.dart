@@ -27,7 +27,6 @@ void main() {
       );
     });
 
-
     test('preserves branch target for feature shorthand', () {
       expect(
         normalizeArguments(const <String>[

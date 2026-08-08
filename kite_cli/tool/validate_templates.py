@@ -106,8 +106,106 @@ def condition_enabled(condition: str | None, variables: dict) -> bool:
     return not result if negated else result
 
 
+routing_template_files = [
+    'feature_route.dart.tmpl',
+    'root_routes.dart.tmpl',
+    'branch.dart.tmpl',
+    'generated_shell_routes.dart.tmpl',
+    'generated_root_routes.dart.tmpl',
+    'app_shell.dart.tmpl',
+    'partials/branch_child.dart.tmpl',
+    'partials/navigation_destination.dart.tmpl',
+    'partials/navigation_rail_destination.dart.tmpl',
+]
+routing_template_values = {
+    'feature_route.dart.tmpl': {
+        'route': {
+            'screenImport': '../../../../features/details/presentation/screens/details_screen.dart',
+            'functionName': 'detailsRoute',
+            'screenClass': 'DetailsScreen',
+        },
+    },
+    'root_routes.dart.tmpl': {
+        'routes': {
+            'imports': "import 'features/about_route.dart';\n",
+            'entries': '  aboutRoute(path: AppRoutes.about),\n',
+        },
+    },
+    'branch.dart.tmpl': {
+        'branch': {
+            'screenImport': '../../../../features/blog/presentation/screens/blog_screen.dart',
+            'screenClass': 'BlogScreen',
+            'childImports': "import '../features/details_route.dart';\n",
+            'variableName': 'blogBranch',
+            'routeConstant': 'blog',
+            'children': (
+                '        detailsRoute(\n'
+                '          path: _relativeChildPath(\n'
+                '            AppRoutes.blog,\n'
+                '            AppRoutes.blogDetails,\n'
+                '          ),\n'
+                '        ),\n'
+            ),
+        },
+    },
+    'generated_shell_routes.dart.tmpl': {
+        'shell': {
+            'imports': "import 'branches/home_branch.dart';\nimport 'branches/blog_branch.dart';",
+            'entries': '      homeBranch,\n      blogBranch,',
+            'initialRouteConstant': 'home',
+        },
+    },
+    'generated_root_routes.dart.tmpl': {},
+    'app_shell.dart.tmpl': {
+        'shell': {
+            'visibleIndexes': '    0,\n    1,',
+            'showNavigation': 'true',
+            'navigationDestinations': (
+                "          NavigationDestination(\n"
+                "            icon: Icon(Icons.circle_outlined),\n"
+                "            selectedIcon: Icon(Icons.circle),\n"
+                "            label: 'Home',\n"
+                "          ),"
+            ),
+            'railDestinations': (
+                "                NavigationRailDestination(\n"
+                "                  icon: Icon(Icons.circle_outlined),\n"
+                "                  selectedIcon: Icon(Icons.circle),\n"
+                "                  label: Text('Home'),\n"
+                "                ),"
+            ),
+        },
+    },
+    'partials/branch_child.dart.tmpl': {
+        'child': {
+            'routeFunction': 'detailsRoute',
+            'parentConstant': 'blog',
+            'routeConstant': 'blogDetails',
+        },
+    },
+    'partials/navigation_destination.dart.tmpl': {
+        'navigation': {'label': "'Home'"},
+    },
+    'partials/navigation_rail_destination.dart.tmpl': {
+        'navigation': {'label': "'Home'"},
+    },
+}
+for name in routing_template_files:
+    path = templates_root / 'routing' / 'go_router' / 'files' / name
+    if not path.exists():
+        errors.append(f'Missing routing template: {path}')
+        continue
+    try:
+        rendered = render(path.read_text(), routing_template_values[name])
+    except ValueError as error:
+        errors.append(f'routing.go_router/{name}: {error}')
+        continue
+    if '{{' in rendered or '}}' in rendered:
+        errors.append(f'Unresolved routing token in {name}')
+
+
 base_variables = {
-    'project': {'name': 'sample_app', 'package': 'sample_app'},
+    'project': {'name': 'sample_app', 'package': 'sample_app', 'displayName': 'Sample App'},
     'feature': {
         'raw': 'user-profile',
         'snake': 'user_profile',
@@ -210,6 +308,7 @@ report = {
         'safe target paths',
         'dependency bundle target conflict detection',
         'generated relative import resolution',
+        'routing template source existence and token rendering',
     ],
 }
 (root / 'STATIC_VALIDATION.json').write_text(json.dumps(report, indent=2) + '\n')

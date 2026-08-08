@@ -36,6 +36,8 @@ routing:
     final config = KiteConfig.load(root);
     expect(config.routing.shell.enabled, isTrue);
     expect(config.routing.shell.branches.length, 2);
+    expect(config.routing.shell.branches.first.feature, 'home');
+    expect(config.routing.shell.branches.first.navigation.visible, isTrue);
     expect(config.routing.routes.single.path, '/blog/details');
     expect(config.routing.routes.single.branch, 'blog');
   });

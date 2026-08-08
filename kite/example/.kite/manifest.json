@@ -3,6 +3,87 @@
   "kiteVersion": "0.3.0",
   "generations": [
     {
+      "id": "feature.clean:blog",
+      "templateId": "feature.clean",
+      "templateVersion": "1.2.0",
+      "variables": {
+        "project": {
+          "name": "example",
+          "package": "example"
+        },
+        "feature": {
+          "raw": "blog",
+          "snake": "blog",
+          "camel": "blog",
+          "pascal": "Blog",
+          "kebab": "blog"
+        },
+        "config": {
+          "sourceDirectory": "lib",
+          "featureDirectory": "lib/features",
+          "architecture": "clean",
+          "router": "go_router",
+          "stateManagement": "riverpod"
+        },
+        "includeRoute": false,
+        "includeJson": false,
+        "kite": {
+          "version": "0.3.0"
+        },
+        "generated": {
+          "date": "2026-08-08T13:33:36.661971Z"
+        }
+      },
+      "generatedAt": "2026-08-08T13:33:36.669861Z",
+      "files": [
+        {
+          "path": "lib/features/blog/domain/entities/blog_entity.dart",
+          "checksum": "sha256:1aa8cc32de512e85f07434a1a3535c9b71a3204bd19ac4d60a9d3906f8d8dc58",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/blog/domain/repositories/blog_repository.dart",
+          "checksum": "sha256:b08d81ef63fd62859427f872f1eaa33bcc80effda0932b03015c6b8768c61438",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/blog/domain/usecases/get_blog_use_case.dart",
+          "checksum": "sha256:1b9d6e2d233dd3d2158cca78ed674a9d4c0a5239d69f049e90d8938ed8a64e48",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/blog/data/dtos/blog_dto.dart",
+          "checksum": "sha256:d4586e9b3919209bcd052c20139ee39872324231bb73357fdeb02314a2018b48",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/blog/data/sources/blog_remote_source.dart",
+          "checksum": "sha256:fc8b040937c1a602cd3dc7747086de8460f236bd120044107ea7b85a2c28bc53",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/blog/data/repositories/blog_repository_impl.dart",
+          "checksum": "sha256:da68dbd48ef55516c3639b979c92d54e7b626e89336b40ae9c90fe13c17830ee",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/blog/presentation/providers/blog_providers.dart",
+          "checksum": "sha256:39a102e8d727b1b0a8a9b1f88b22ebab1ea927e289f295b2ac29a5bb3a364dbf",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/blog/presentation/screens/blog_screen.dart",
+          "checksum": "sha256:9e454fffc3b1d90a5e0c1659aa5a427d35a11ab41750dca1efa32c8bc6e7491b",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/blog/presentation/widgets/blog_content.dart",
+          "checksum": "sha256:383023293c1eff07d47655261ed2f029d7882e48d24fef5c8515ad09189abb4f",
+          "upgradePolicy": "replace"
+        }
+      ]
+    },
+    {
       "id": "feature.clean:deatils",
       "templateId": "feature.clean",
       "templateVersion": "1.2.0",
@@ -31,10 +112,10 @@
           "version": "0.3.0"
         },
         "generated": {
-          "date": "2026-08-08T12:13:45.431466Z"
+          "date": "2026-08-08T13:36:49.954160Z"
         }
       },
-      "generatedAt": "2026-08-08T12:13:45.464236Z",
+      "generatedAt": "2026-08-08T13:36:49.983148Z",
       "files": [
         {
           "path": "lib/features/deatils/domain/entities/deatils_entity.dart",
@@ -84,13 +165,176 @@
       ]
     },
     {
-      "id": "project.clean",
-      "templateId": "project.clean",
+      "id": "feature.clean:home",
+      "templateId": "feature.clean",
       "templateVersion": "1.2.0",
       "variables": {
         "project": {
           "name": "example",
           "package": "example"
+        },
+        "feature": {
+          "raw": "home",
+          "snake": "home",
+          "camel": "home",
+          "pascal": "Home",
+          "kebab": "home"
+        },
+        "config": {
+          "sourceDirectory": "lib",
+          "featureDirectory": "lib/features",
+          "architecture": "clean",
+          "router": "go_router",
+          "stateManagement": "riverpod"
+        },
+        "includeRoute": false,
+        "includeJson": false,
+        "kite": {
+          "version": "0.3.0"
+        },
+        "generated": {
+          "date": "2026-08-08T13:33:36.645013Z"
+        }
+      },
+      "generatedAt": "2026-08-08T13:33:36.654651Z",
+      "files": [
+        {
+          "path": "lib/features/home/domain/entities/home_entity.dart",
+          "checksum": "sha256:cd12af3d94d5fe107e749cb0bb314e3d335eb73d89f7b5afb745a5538b99af6c",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/home/domain/repositories/home_repository.dart",
+          "checksum": "sha256:9bb61bf2601a98800878c8718bf6445140dd60f59f7e010cb09d535274b62b90",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/home/domain/usecases/get_home_use_case.dart",
+          "checksum": "sha256:a26c4bcbc6a8113c6ce83fc260daf99b69d2fc36fbcfde27d491d684addd7cd3",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/home/data/dtos/home_dto.dart",
+          "checksum": "sha256:7a0cf45fc3c35679e675ab922ed38b5964f9a9b8596ad3b3b19629efdf3f6609",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/home/data/sources/home_remote_source.dart",
+          "checksum": "sha256:a11972eb923cbc318bedfc33441fa7afb0562a85befc1a7c877f10d71900242e",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/home/data/repositories/home_repository_impl.dart",
+          "checksum": "sha256:599fac3d29f3466c79b50373a45d77ea10cfeadebdf812c9def835c2e148d196",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/home/presentation/providers/home_providers.dart",
+          "checksum": "sha256:1690a0d91ffa6b511abf510ccb6ce3e379bfc19d7aa289b6c56caa115cf73a22",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/home/presentation/screens/home_screen.dart",
+          "checksum": "sha256:7500d92e79c77fb79cc86966367494fd9e4193acfb5af2cd63ca5a77f848b8e1",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/home/presentation/widgets/home_content.dart",
+          "checksum": "sha256:760f2c06aaef26839e278f38b09e1e239f220790571c59ec4399c745dee6dd56",
+          "upgradePolicy": "replace"
+        }
+      ]
+    },
+    {
+      "id": "feature.clean:settings",
+      "templateId": "feature.clean",
+      "templateVersion": "1.2.0",
+      "variables": {
+        "project": {
+          "name": "example",
+          "package": "example"
+        },
+        "feature": {
+          "raw": "settings",
+          "snake": "settings",
+          "camel": "settings",
+          "pascal": "Settings",
+          "kebab": "settings"
+        },
+        "config": {
+          "sourceDirectory": "lib",
+          "featureDirectory": "lib/features",
+          "architecture": "clean",
+          "router": "go_router",
+          "stateManagement": "riverpod"
+        },
+        "includeRoute": false,
+        "includeJson": false,
+        "kite": {
+          "version": "0.3.0"
+        },
+        "generated": {
+          "date": "2026-08-08T13:33:36.673323Z"
+        }
+      },
+      "generatedAt": "2026-08-08T13:33:36.680080Z",
+      "files": [
+        {
+          "path": "lib/features/settings/domain/entities/settings_entity.dart",
+          "checksum": "sha256:8d3e08267094a3496456ea7ced57deaac7230386be67f9765f8537152e035ac1",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/settings/domain/repositories/settings_repository.dart",
+          "checksum": "sha256:b76e2342ddb385cba8daedd2d5f07d19b594abbe98796da4a599cce7a47582ea",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/settings/domain/usecases/get_settings_use_case.dart",
+          "checksum": "sha256:4608b3e9f2ae2454eec2242f6cb120ddd24fd859027cab983fc61e5457a6fdb0",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/settings/data/dtos/settings_dto.dart",
+          "checksum": "sha256:e376eca3403b159a8b5aa737e91f77257cc5e106225c1fcb6e233cb90da0b863",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/settings/data/sources/settings_remote_source.dart",
+          "checksum": "sha256:4956c8c264f4922479002389633229d43c0ac44ca1c8abb83da3c37ffb366081",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/settings/data/repositories/settings_repository_impl.dart",
+          "checksum": "sha256:cd9a2838f32da109d4cf7f77cc56a8d33391c942222ed3cbf7700951d6b02f3a",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/settings/presentation/providers/settings_providers.dart",
+          "checksum": "sha256:5008f9cc56b1f7ec159d46f2041236c4f778d816676c8ec82820e811cd1419cc",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/settings/presentation/screens/settings_screen.dart",
+          "checksum": "sha256:b83392db7f1f3b67adc893f2309521ecce5697f7e4fb9ffd1fca7e04a93f624f",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/features/settings/presentation/widgets/settings_content.dart",
+          "checksum": "sha256:9cb66d26ed26d49b40f18f5d4bb7d2360ce8d4bfedbcea1c01729017ae9f587c",
+          "upgradePolicy": "replace"
+        }
+      ]
+    },
+    {
+      "id": "project.clean",
+      "templateId": "project.clean",
+      "templateVersion": "1.3.0",
+      "variables": {
+        "project": {
+          "name": "example",
+          "package": "example",
+          "displayName": "Example"
         },
         "config": {
           "sourceDirectory": "lib",
@@ -103,10 +347,10 @@
           "version": "0.3.0"
         },
         "generated": {
-          "date": "2026-08-08T12:08:17.022971Z"
+          "date": "2026-08-08T13:33:36.570518Z"
         }
       },
-      "generatedAt": "2026-08-08T12:08:24.322758Z",
+      "generatedAt": "2026-08-08T13:33:36.620153Z",
       "files": [
         {
           "path": "lib/core/state/app_provider_observer.dart",
@@ -124,18 +368,58 @@
           "upgradePolicy": "replace"
         },
         {
+          "path": "lib/core/constants/app_constants.dart",
+          "checksum": "sha256:c048147d115232dfa4817c9a9b95fef4afad1003b24f7ee9d282c8690e2a8db5",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/core/constants/app_storage_keys.dart",
+          "checksum": "sha256:5f4aead0c26171ee1a5242d43c0efbd3b4b4370ea2982ff9f7f5e61b9353e80c",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/core/constants/app_environment.dart",
+          "checksum": "sha256:c66516a56db89ec9f0f95a3fe5296b3ad2df7ae5b7259d4529bc797966def8b4",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/core/preferences/app_preferences.dart",
+          "checksum": "sha256:f1b48523ad7ef2e9f3cb1781b2f629f432758f74d85ebf87e8dda6e59cf39786",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/core/preferences/shared_preferences_app_preferences.dart",
+          "checksum": "sha256:53c78a9a317de1dcb271110e882576419410fcae7f1048c8639a547fa950f520",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/core/preferences/app_preferences_provider.dart",
+          "checksum": "sha256:644361696eca912ff2ea3db414a7a7f6519d75cf73b276e617a7d749db1bbd1d",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/core/theme/theme_mode_provider.dart",
+          "checksum": "sha256:66304d5f0c0f0a4b3ac1fce283c4bee366c5e98d63ac62a997f75667bb934217",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/shared/widgets/theme_changer.dart",
+          "checksum": "sha256:0c3136da787b7817e3d5063b58e5aad3a7e6a49ae14b378070d9d51085b0165d",
+          "upgradePolicy": "replace"
+        },
+        {
           "path": "lib/main.dart",
           "checksum": "sha256:38f3493d8f36224d41838dbe7e7e92d7aa2e9005ce6d39963057afe8e188098f",
           "upgradePolicy": "replace"
         },
         {
           "path": "lib/app/app.dart",
-          "checksum": "sha256:d28d67623b3a38c2c1550b9d1eeb5a8d688e35760dc0c96e9a71988b4b8bf2c2",
+          "checksum": "sha256:3116041258bb6a7cb27b30e469748ceafe579a8e15a9f6527ee0deb171febf79",
           "upgradePolicy": "replace"
         },
         {
           "path": "lib/app/bootstrap.dart",
-          "checksum": "sha256:6f9a27f8df47fa333f168da995efef173dea14876e8390031ff1b19b52a65595",
+          "checksum": "sha256:535047365d1baa187c0df3645a6155c21d4e4395c27c4403624773b81bb0287c",
           "upgradePolicy": "replace"
         },
         {
@@ -145,7 +429,7 @@
         },
         {
           "path": "lib/app/router/app_routes.dart",
-          "checksum": "sha256:2b53b10a8dfd0a79fe530d036a4b4567bee5b2a32df2a5bef632bb2650147cfc",
+          "checksum": "sha256:afa2a15adca1a6ed2a9cb67ec4f960bf1ef52c75cd2afdb33636691103bc8964",
           "upgradePolicy": "replace"
         },
         {
@@ -220,122 +504,15 @@
         },
         {
           "path": "kite.yaml",
-          "checksum": "sha256:92da4b4f6c5dab908c50ee886a15e5c6621490e840fc800e0e22eaa806706d97",
+          "checksum": "sha256:1e66ba0e357cc9442a961ca7bc3b858c80c8c3ef71da1034d704b9c0c04a2d88",
           "upgradePolicy": "preserve"
-        }
-      ]
-    },
-    {
-      "id": "project.vanilla",
-      "templateId": "project.vanilla",
-      "templateVersion": "1.1.0",
-      "variables": {
-        "project": {
-          "name": "example",
-          "package": "example"
-        },
-        "config": {
-          "sourceDirectory": "lib",
-          "featureDirectory": "lib/features",
-          "architecture": "clean",
-          "router": "go_router",
-          "stateManagement": "riverpod"
-        },
-        "kite": {
-          "version": "0.2.0"
-        },
-        "generated": {
-          "date": "2026-08-08T05:50:29.774231Z"
-        }
-      },
-      "generatedAt": "2026-08-08T05:50:29.818539Z",
-      "files": [
-        {
-          "path": "lib/main.dart",
-          "checksum": "sha256:effc06bbc43292ac392b792552da17bd96e8a0e4715aacaa2c9f1a48ecb71c24",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/app/app.dart",
-          "checksum": "sha256:d2bfbee81637a6b20e54cffd1bc9347e9a86e7a3f5ad76d7fd5ffa228eba9fd0",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/app/bootstrap.dart",
-          "checksum": "sha256:2dc6b2b97af901559c8536f3187024fc4c1a679580ff2ed34eb187b722e27f04",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/app/router/app_router.dart",
-          "checksum": "sha256:6366ea97ecde6681b5b1af21a3974321775095403c014743f1d84209e0151c56",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/app/router/app_routes.dart",
-          "checksum": "sha256:2b53b10a8dfd0a79fe530d036a4b4567bee5b2a32df2a5bef632bb2650147cfc",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/app/router/app_shell.dart",
-          "checksum": "sha256:9965ad9aa40fd1ed1e386484f12c0462c61839920d52bda6284ca5efaa0a3c3f",
-          "upgradePolicy": "preserve"
-        },
-        {
-          "path": "lib/app/router/app_navigator_observer.dart",
-          "checksum": "sha256:941d87c65e537f823c7df9a2077f9310ed0ef89411f4fa54a3e43239b036baf9",
-          "upgradePolicy": "preserve"
-        },
-        {
-          "path": "lib/app/theme/app_theme.dart",
-          "checksum": "sha256:fb72bc88433d6795ba81ab89ddd5485964e7da9d8b6a565ced6de32f08e67958",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/app/constants/app_colors.dart",
-          "checksum": "sha256:8065b560f68de62325eee34dcb45bc0290edf9f030320084deb2e29d4e0c275f",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/app/constants/app_dimension.dart",
-          "checksum": "sha256:4543f7b7e332dd5e14a9be4ea63abc399aef9f8ddf5fd769004cff7d00bc22fc",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/app/constants/app_typography.dart",
-          "checksum": "sha256:c480bf1bbf9952d881e522a6fd98e5f6e24e06eac92ed62e07b611bf12dac500",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/core/errors/app_exception.dart",
-          "checksum": "sha256:5a69953a228b6cdd954e2ffecb7b86665e389c93ad5f28f5ab8c8059e4e3b4bc",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/core/errors/app_failure.dart",
-          "checksum": "sha256:6993cbc11435a30973a63bff0beda3d3f09edbe8fed2ced2ca481cee00186f88",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/core/result/result.dart",
-          "checksum": "sha256:c0f08b317a7c8641a99d172acf3ac1033289374d0c1e19c4468a1c488c19eda0",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/.gitkeep",
-          "checksum": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "upgradePolicy": "preserve"
-        },
-        {
-          "path": "kite.yaml",
-          "checksum": "sha256:92da4b4f6c5dab908c50ee886a15e5c6621490e840fc800e0e22eaa806706d97",
-          "upgradePolicy": "replace"
         }
       ]
     },
     {
       "id": "routing.generated",
-      "templateId": "routing.generated",
-      "templateVersion": "0.3.0",
+      "templateId": "routing.go_router",
+      "templateVersion": "1.0.0",
       "variables": {
         "routing": {
           "shell": true,
@@ -345,15 +522,21 @@
             "settings"
           ],
           "routes": [
-            "/blog/deatils"
+            "/blog/deatils",
+            "/blog/photo"
           ]
         }
       },
-      "generatedAt": "2026-08-08T12:13:45.494759Z",
+      "generatedAt": "2026-08-08T13:49:52.713346Z",
       "files": [
         {
           "path": "lib/app/router/generated/features/deatils_route.dart",
           "checksum": "sha256:f050205ea339fa8f958695372be75baa38ffab65b7e3fe55e993edcf4169f01f",
+          "upgradePolicy": "replace"
+        },
+        {
+          "path": "lib/app/router/generated/features/photo_route.dart",
+          "checksum": "sha256:fe0dd4dad97e14c82bc0185f96d4fd59e5d6d7cad272847b86af0fbf4a7ec681",
           "upgradePolicy": "replace"
         },
         {
@@ -363,17 +546,17 @@
         },
         {
           "path": "lib/app/router/generated/branches/home_branch.dart",
-          "checksum": "sha256:ae2c9b315ea04f95ff4270ab9dc84e95210dfceaf614acbf04aab89f8ff6e557",
+          "checksum": "sha256:f84e68d816f924990a65fc7276afc53c57db43d5a5c622185af29e9be548ce26",
           "upgradePolicy": "replace"
         },
         {
           "path": "lib/app/router/generated/branches/blog_branch.dart",
-          "checksum": "sha256:5c9bf1bdfdceba10c50f117a851f5892eee76990916bb990aa532147067020a4",
+          "checksum": "sha256:0201a4ef03c4bc903f47fe3362fd99421f530e4be9c0fb9fd94ac4ef46bcffa8",
           "upgradePolicy": "replace"
         },
         {
           "path": "lib/app/router/generated/branches/settings_branch.dart",
-          "checksum": "sha256:b027ce76dd7235c68e83586cc50fe5d5155918507bcf56155954ceb5157992d5",
+          "checksum": "sha256:3fb75988e90d770c33466f43b34f3193bf198f17c03f2d261340388ad2abeeb4",
           "upgradePolicy": "replace"
         },
         {
@@ -386,7 +569,7 @@
     {
       "id": "routing.shell",
       "templateId": "routing.shell",
-      "templateVersion": "0.3.0",
+      "templateVersion": "1.0.0",
       "variables": {
         "branches": [
           "home",
@@ -394,11 +577,11 @@
           "settings"
         ]
       },
-      "generatedAt": "2026-08-08T12:08:24.403956Z",
+      "generatedAt": "2026-08-08T13:49:57.640005Z",
       "files": [
         {
           "path": "lib/app/router/app_shell.dart",
-          "checksum": "sha256:e710d8fb21f7a8c8fd5bb22106a88af80f2f8e1e13a1f3b2e3b2eee3b922d61a",
+          "checksum": "sha256:c5cd4fa32da8ac32b3600d984c9a72707253dac90dece1c728196782c687c582",
           "upgradePolicy": "preserve"
         }
       ]

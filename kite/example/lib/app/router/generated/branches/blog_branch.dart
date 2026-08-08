@@ -9,18 +9,22 @@
 
 import 'package:go_router/go_router.dart';
 
-import '../../../../shared/widgets/app_startup_view.dart';
+import '../../../../features/blog/presentation/screens/blog_screen.dart';
 import '../../app_routes.dart';
 import '../features/deatils_route.dart';
+import '../features/photo_route.dart';
 
 final StatefulShellBranch blogBranch = StatefulShellBranch(
   routes: <RouteBase>[
     GoRoute(
       path: AppRoutes.blog,
-      builder: (context, state) => const AppStartupView(),
+      builder: (context, state) => const BlogScreen(),
       routes: <RouteBase>[
         deatilsRoute(
           path: _relativeChildPath(AppRoutes.blog, AppRoutes.blogDeatils),
+        ),
+        photoRoute(
+          path: _relativeChildPath(AppRoutes.blog, AppRoutes.blogPhoto),
         ),
       ],
     ),

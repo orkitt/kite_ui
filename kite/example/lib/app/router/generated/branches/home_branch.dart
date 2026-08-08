@@ -9,14 +9,14 @@
 
 import 'package:go_router/go_router.dart';
 
-import '../../../../shared/widgets/app_startup_view.dart';
+import '../../../../features/home/presentation/screens/home_screen.dart';
 import '../../app_routes.dart';
 
 final StatefulShellBranch homeBranch = StatefulShellBranch(
   routes: <RouteBase>[
     GoRoute(
       path: AppRoutes.home,
-      builder: (context, state) => const AppStartupView(),
+      builder: (context, state) => const HomeScreen(),
       routes: <RouteBase>[],
     ),
   ],

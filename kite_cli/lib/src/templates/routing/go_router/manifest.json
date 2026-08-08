@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 2,
+  "id": "routing.go_router",
+  "version": "1.0.0",
+  "description": "GoRouter generated route graph templates used by Kite routing services.",
+  "requires": [],
+  "dependencies": [],
+  "devDependencies": [],
+  "files": []
+}

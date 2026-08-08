@@ -6,6 +6,7 @@ import '../commands/doctor_command.dart';
 import '../commands/feature_command.dart';
 import '../commands/init_command.dart';
 import '../commands/state_command.dart';
+import '../commands/sync_command.dart';
 import '../commands/templates_command.dart';
 import '../commands/upgrade_command.dart';
 import '../logging/kite_logger.dart';
@@ -28,6 +29,7 @@ final class KiteCommandRunner extends CommandRunner<int> {
       help: 'Print the installed Kite version.',
     );
     addCommand(InitCommand(logger: logger));
+    addCommand(SyncCommand(logger: logger));
     addCommand(FeatureCommand(logger: logger));
     addCommand(ComponentCommand(logger: logger));
     addCommand(StateCommand(logger: logger));

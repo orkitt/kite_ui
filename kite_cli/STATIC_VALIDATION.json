@@ -1,9 +1,9 @@
 {
   "status": "passed",
   "registrySchemaVersion": 2,
-  "templateCount": 11,
+  "templateCount": 13,
   "validatedScenarios": {
-    "project.clean": 23,
+    "project.clean": 31,
     "feature.clean": 12,
     "feature.mvc": 8,
     "component.button": 2,
@@ -20,6 +20,7 @@
     "condition evaluation and token rendering",
     "safe target paths",
     "dependency bundle target conflict detection",
-    "generated relative import resolution"
+    "generated relative import resolution",
+    "routing template source existence and token rendering"
   ]
 }

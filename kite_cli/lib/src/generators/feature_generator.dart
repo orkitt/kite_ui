@@ -62,7 +62,7 @@ final class FeatureGenerator {
     final feature = NameConverter(featureName);
     final config = KiteConfig.load(project.root);
     if (includeRoute) {
-      routeGenerator.validateFeatureRegistration(
+      await routeGenerator.validateFeatureRegistration(
         project: project,
         feature: feature,
         architecture: architecture,

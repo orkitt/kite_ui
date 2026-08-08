@@ -3,6 +3,7 @@ import '../generation/generation_result.dart';
 import '../generation/project_manifest.dart';
 import '../generation/template_planner.dart';
 import '../logging/kite_logger.dart';
+import '../naming/name_converter.dart';
 import '../process/dart_formatter.dart';
 import '../process/dependency_installer.dart';
 import '../project/flutter_project.dart';
@@ -11,6 +12,7 @@ import '../routing/route_generator.dart';
 import '../routing/shell_definition.dart';
 import '../templates/template_store.dart';
 import '../version.dart';
+import 'feature_generator.dart';
 import 'generation_options.dart';
 
 final class ProjectGenerator {
@@ -20,6 +22,7 @@ final class ProjectGenerator {
     this.fileWriter = const FileWriter(),
     this.manifestStore = const ProjectManifestStore(),
     this.routeGenerator = const RouteGenerator(),
+    this.featureGenerator = const FeatureGenerator(),
     this.dependencyInstaller = const DependencyInstaller(),
     this.formatter = const DartFormatter(),
     this.logger = const KiteLogger(),
@@ -30,6 +33,7 @@ final class ProjectGenerator {
   final FileWriter fileWriter;
   final ProjectManifestStore manifestStore;
   final RouteGenerator routeGenerator;
+  final FeatureGenerator featureGenerator;
   final DependencyInstaller dependencyInstaller;
   final DartFormatter formatter;
   final KiteLogger logger;
@@ -53,6 +57,7 @@ final class ProjectGenerator {
       'project': <String, Object?>{
         'name': project.name,
         'package': project.name,
+        'displayName': NameConverter(project.name).titleCase,
       },
       'config': <String, Object?>{
         'sourceDirectory': 'lib',
@@ -85,6 +90,24 @@ final class ProjectGenerator {
         plan: plan,
         result: result,
       );
+    }
+
+    if (preset == ProjectPreset.clean && shellDefinition != null) {
+      for (final branch in shellDefinition.branches) {
+        await featureGenerator.generate(
+          project: project,
+          featureName: branch.name,
+          architecture: 'clean',
+          includeRoute: false,
+          includeJsonSerialization: false,
+          options: GenerationOptions(
+            conflictStrategy: options.conflictStrategy,
+            dryRun: options.dryRun,
+            installDependencies: false,
+            format: false,
+          ),
+        );
+      }
     }
 
     if (preset == ProjectPreset.clean) {

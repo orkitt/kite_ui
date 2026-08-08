@@ -8,9 +8,7 @@ import '../naming/name_converter.dart';
 import '../project/kite_config.dart';
 
 final class AppRoutesUpdater {
-  const AppRoutesUpdater({
-    this.manifestStore = const ProjectManifestStore(),
-  });
+  const AppRoutesUpdater({this.manifestStore = const ProjectManifestStore()});
 
   static const String startMarker = '// kite:routes:start';
   static const String endMarker = '// kite:routes:end';
@@ -52,9 +50,7 @@ final class AppRoutesUpdater {
     }
 
     final lines = desired.entries
-        .map(
-          (entry) => '  static const String ${entry.key} = ${entry.value};',
-        )
+        .map((entry) => '  static const String ${entry.key} = ${entry.value};')
         .toList(growable: false);
     final replacement = lines.isEmpty ? '\n  ' : '\n${lines.join('\n')}\n  ';
     return currentContent.replaceRange(managedStart, end, replacement);
@@ -96,18 +92,21 @@ final class AppRoutesUpdater {
   Map<String, String> _buildManagedConstants(KiteRoutingConfig routing) {
     final constants = <String, String>{};
 
-    for (final branch in routing.shell.branches) {
-      final converter = NameConverter(branch.name);
-      _addConstant(
-        constants,
-        name: converter.camelCase,
-        expression: "'${branch.path}'",
-        source: 'shell branch `${branch.name}`',
-      );
+    if (routing.shell.enabled) {
+      for (final branch in routing.shell.branches) {
+        final converter = NameConverter(branch.name);
+        _addConstant(
+          constants,
+          name: converter.camelCase,
+          expression: "'${branch.path}'",
+          source: 'shell branch `${branch.name}`',
+        );
+      }
     }
 
     final branchesByName = <String, KiteShellBranchConfig>{
-      for (final branch in routing.shell.branches) branch.name: branch,
+      if (routing.shell.enabled)
+        for (final branch in routing.shell.branches) branch.name: branch,
     };
     for (final route in routing.routes) {
       final feature = NameConverter(route.feature);
@@ -134,9 +133,7 @@ final class AppRoutesUpdater {
       final prefix = branch.path == '/'
           ? r'${' + parentConstant + '}'
           : r'$' + parentConstant + '/';
-      final expression = branch.path == '/'
-          ? "'$prefix${route.segment}'"
-          : "'$prefix${route.segment}'";
+      final expression = "'$prefix${route.segment}'";
       _addConstant(
         constants,
         name: constantName,
@@ -155,7 +152,8 @@ final class AppRoutesUpdater {
     required String source,
   }) {
     final previous = constants[name];
-    if (previous != null && _normalizeExpression(previous) != _normalizeExpression(expression)) {
+    if (previous != null &&
+        _normalizeExpression(previous) != _normalizeExpression(expression)) {
       throw StateError(
         'Route constant `$name` collides while generating $source.',
       );

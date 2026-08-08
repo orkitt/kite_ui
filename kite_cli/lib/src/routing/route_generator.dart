@@ -56,25 +56,19 @@ final class RouteGenerator {
                   (branch) => KiteShellBranchConfig(
                     name: branch.name,
                     path: branch.path,
+                    feature: NameConverter(branch.name).snakeCase,
+                    architecture: config.architecture,
+                    navigation: KiteShellNavigationConfig(
+                      label: NameConverter(branch.name).titleCase,
+                    ),
                   ),
                 )
                 .toList(growable: false),
           );
-    final routing = config.routing.copyWith(shell: shell);
-    _validateTopology(routing);
+    final routing = reconcilePaths(config.routing.copyWith(shell: shell));
+    await _validateTopology(routing, config: config);
 
-    final updatedConfig = KiteConfig(
-      projectPreset: config.projectPreset,
-      sourceDirectory: config.sourceDirectory,
-      featureDirectory: config.featureDirectory,
-      architecture: config.architecture,
-      routing: routing,
-      stateManagement: config.stateManagement,
-      formatAfterGeneration: config.formatAfterGeneration,
-      installDependencies: config.installDependencies,
-      conflictStrategy: config.conflictStrategy,
-    );
-
+    final updatedConfig = config.copyWith(routing: routing);
     await appRoutesUpdater.update(
       projectRoot: project.root,
       sourceDirectory: config.sourceDirectory,
@@ -87,7 +81,7 @@ final class RouteGenerator {
       routing: routing,
       dryRun: false,
     );
-    if (shellDefinition != null) {
+    if (shell.enabled) {
       await routerWriter.writeShell(
         projectRoot: project.root,
         sourceDirectory: config.sourceDirectory,
@@ -97,6 +91,97 @@ final class RouteGenerator {
       );
     }
     await _writeRoutingConfig(project.root, routing);
+  }
+
+  Future<KiteRoutingConfig> syncProject({
+    required FlutterProject project,
+    required ConflictStrategy conflictStrategy,
+    required bool dryRun,
+  }) async {
+    final config = KiteConfig.load(project.root);
+    if (config.projectPreset == 'vanilla' ||
+        config.routing.type != 'go_router') {
+      throw StateError(
+        '`kite sync` currently supports Kite clean GoRouter projects only.',
+      );
+    }
+
+    final routing = reconcilePaths(config.routing);
+    await _validateTopology(routing, config: config);
+
+    final appRoutesFile = File(
+      _absolutePath(
+        project.root,
+        p.posix.join(
+          _portable(config.sourceDirectory),
+          'app',
+          'router',
+          'app_routes.dart',
+        ),
+      ),
+    );
+    if (!appRoutesFile.existsSync()) {
+      throw StateError('AppRoutes not found. Run `kite init` first.');
+    }
+    appRoutesUpdater.buildContent(
+      currentContent: appRoutesFile.readAsStringSync(),
+      routing: routing,
+    );
+    await routerWriter.buildGeneratedFiles(config: config, routing: routing);
+    if (routing.shell.enabled) {
+      await routerWriter.buildAppShell(routing.shell);
+    }
+
+    if (dryRun) {
+      return routing;
+    }
+
+    await appRoutesUpdater.update(
+      projectRoot: project.root,
+      sourceDirectory: config.sourceDirectory,
+      routing: routing,
+      dryRun: false,
+    );
+    await routerWriter.writeGeneratedRoutes(
+      projectRoot: project.root,
+      config: config.copyWith(routing: routing),
+      routing: routing,
+      dryRun: false,
+    );
+    if (routing.shell.enabled) {
+      await routerWriter.writeShell(
+        projectRoot: project.root,
+        sourceDirectory: config.sourceDirectory,
+        shell: routing.shell,
+        conflictStrategy: conflictStrategy,
+        dryRun: false,
+      );
+    }
+    await _writeRoutingConfig(project.root, routing);
+    return routing;
+  }
+
+  KiteRoutingConfig reconcilePaths(KiteRoutingConfig routing) {
+    final branches = <String, KiteShellBranchConfig>{
+      if (routing.shell.enabled)
+        for (final branch in routing.shell.branches) branch.name: branch,
+    };
+    final routes = routing.routes
+        .map((route) {
+          if (route.branch == 'root') {
+            return route.copyWith(path: '/${route.segment}');
+          }
+          final branch = branches[route.branch];
+          if (branch == null) {
+            return route;
+          }
+          final path = branch.path == '/'
+              ? '/${route.segment}'
+              : '${branch.path}/${route.segment}';
+          return route.copyWith(path: path);
+        })
+        .toList(growable: false);
+    return routing.copyWith(routes: routes);
   }
 
   void ensureAvailable({
@@ -149,24 +234,24 @@ final class RouteGenerator {
     }
   }
 
-  void validateFeatureRegistration({
+  Future<void> validateFeatureRegistration({
     required FlutterProject project,
     required NameConverter feature,
     required String architecture,
     required RouteTarget target,
-  }) {
+  }) async {
     final config = KiteConfig.load(project.root);
     ensureAvailable(
       projectRoot: project.root,
       sourceDirectory: config.sourceDirectory,
     );
     final routing = _routingWithFeature(
-      config.routing,
+      reconcilePaths(config.routing),
       feature: feature,
       architecture: architecture,
       target: target,
     );
-    _validateTopology(routing);
+    await _validateTopology(routing, config: config);
     final appRoutesFile = File(
       _absolutePath(
         project.root,
@@ -185,7 +270,7 @@ final class RouteGenerator {
       currentContent: appRoutesFile.readAsStringSync(),
       routing: routing,
     );
-    routerWriter.buildGeneratedFiles(config: config, routing: routing);
+    await routerWriter.buildGeneratedFiles(config: config, routing: routing);
   }
 
   Future<void> registerFeature({
@@ -201,12 +286,12 @@ final class RouteGenerator {
       sourceDirectory: config.sourceDirectory,
     );
     final routing = _routingWithFeature(
-      config.routing,
+      reconcilePaths(config.routing),
       feature: feature,
       architecture: architecture,
       target: target,
     );
-    _validateTopology(routing);
+    await _validateTopology(routing, config: config);
 
     final appRoutesFile = File(
       _absolutePath(
@@ -226,7 +311,7 @@ final class RouteGenerator {
       currentContent: appRoutesFile.readAsStringSync(),
       routing: routing,
     );
-    routerWriter.buildGeneratedFiles(config: config, routing: routing);
+    await routerWriter.buildGeneratedFiles(config: config, routing: routing);
 
     if (dryRun) {
       return;
@@ -240,7 +325,7 @@ final class RouteGenerator {
     );
     await routerWriter.writeGeneratedRoutes(
       projectRoot: project.root,
-      config: config,
+      config: config.copyWith(routing: routing),
       routing: routing,
       dryRun: false,
     );
@@ -257,7 +342,7 @@ final class RouteGenerator {
       throw ArgumentError.value(
         architecture,
         'architecture',
-        'Unsupported route architecture.',
+        'Unsupported feature architecture.',
       );
     }
 
@@ -325,15 +410,22 @@ final class RouteGenerator {
       );
     }
 
-    return routing.copyWith(routes: <KiteRouteConfig>[...routing.routes, candidate]);
+    return routing.copyWith(
+      routes: <KiteRouteConfig>[...routing.routes, candidate],
+    );
   }
 
-  void _validateTopology(KiteRoutingConfig routing) {
+  Future<void> _validateTopology(
+    KiteRoutingConfig routing, {
+    required KiteConfig config,
+  }) async {
     final branchNames = <String>{};
     final branchPaths = <String>{};
+    final branchFeatures = <String>{};
     final branchesByName = <String, KiteShellBranchConfig>{};
     for (final branch in routing.shell.branches) {
       final normalizedName = NameConverter(branch.name).kebabCase;
+      final normalizedFeature = NameConverter(branch.feature).snakeCase;
       if (normalizedName == 'root') {
         throw StateError(
           'Shell branch `root` is reserved for root-level routes.',
@@ -343,6 +435,12 @@ final class RouteGenerator {
         throw StateError(
           'Shell branch `${branch.name}` is not normalized. Use '
           '`$normalizedName` in kite.yaml.',
+        );
+      }
+      if (normalizedFeature != branch.feature) {
+        throw StateError(
+          'Shell root feature `${branch.feature}` is not normalized. Use '
+          '`$normalizedFeature` in kite.yaml.',
         );
       }
       if (!branch.path.startsWith('/') ||
@@ -355,7 +453,20 @@ final class RouteGenerator {
       if (!branchPaths.add(branch.path)) {
         throw StateError('Duplicate shell branch path `${branch.path}`.');
       }
-      branchesByName[branch.name] = branch;
+      if (!branchFeatures.add(branch.feature)) {
+        throw StateError(
+          'Shell root feature `${branch.feature}` is used by more than one branch.',
+        );
+      }
+      if (branch.architecture != 'clean' && branch.architecture != 'mvc') {
+        throw StateError(
+          'Unsupported architecture `${branch.architecture}` for shell branch '
+          '`${branch.name}`.',
+        );
+      }
+      if (routing.shell.enabled) {
+        branchesByName[branch.name] = branch;
+      }
     }
 
     if (routing.shell.enabled && routing.shell.branches.isEmpty) {
@@ -364,10 +475,23 @@ final class RouteGenerator {
       );
     }
 
+    final activeBranchPaths = routing.shell.enabled
+        ? branchPaths
+        : const <String>{};
+    final activeBranchFeatures = routing.shell.enabled
+        ? branchFeatures
+        : const <String>{};
+
     final routePaths = <String>{};
     final routeFeatures = <String>{};
     for (final route in routing.routes) {
-      if (branchPaths.contains(route.path)) {
+      if (activeBranchFeatures.contains(route.feature)) {
+        throw StateError(
+          'Feature `${route.feature}` is already used as a shell branch root '
+          'and cannot also be registered as a generated child/root route.',
+        );
+      }
+      if (activeBranchPaths.contains(route.path)) {
         throw StateError(
           'Generated route `${route.path}` collides with a shell branch root.',
         );
@@ -395,6 +519,12 @@ final class RouteGenerator {
         }
         continue;
       }
+      if (!routing.shell.enabled) {
+        throw StateError(
+          'Route `${route.feature}` targets shell branch `${route.branch}`, '
+          'but shell routing is disabled.',
+        );
+      }
       final branch = branchesByName[route.branch];
       if (branch == null) {
         throw StateError(
@@ -412,6 +542,8 @@ final class RouteGenerator {
         );
       }
     }
+
+    await routerWriter.buildGeneratedFiles(config: config, routing: routing);
   }
 
   Future<void> _writeRoutingConfig(

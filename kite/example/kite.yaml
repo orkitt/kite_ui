@@ -16,14 +16,34 @@ routing:
     branches:
       - name: home
         path: /
+        feature: home
+        architecture: clean
+        navigation:
+          visible: true
+          label: Home
       - name: blog
         path: /blog
+        feature: blog
+        architecture: clean
+        navigation:
+          visible: true
+          label: Blog
       - name: settings
         path: /settings
+        feature: settings
+        architecture: clean
+        navigation:
+          visible: true
+          label: Settings
   routes:
     - feature: deatils
       path: /blog/deatils
       segment: deatils
+      branch: blog
+      architecture: clean
+    - feature: photo
+      path: /blog/photo
+      segment: photo
       branch: blog
       architecture: clean
 serialization:

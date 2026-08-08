@@ -4,9 +4,12 @@ import 'package:test/test.dart';
 
 void main() {
   test('--into requires --route', () async {
-    final exitCode = await KiteCommandRunner().execute(
-      const <String>['feature', 'details', '--into', 'blog'],
-    );
+    final exitCode = await KiteCommandRunner().execute(const <String>[
+      'feature',
+      'details',
+      '--into',
+      'blog',
+    ]);
 
     expect(exitCode, ExitCodes.usage);
   });

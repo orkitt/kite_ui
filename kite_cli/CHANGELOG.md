@@ -1,3 +1,11 @@
+## 0.3.0
+
+* Added `kite sync` to reconcile clean GoRouter infrastructure from `kite.yaml`.
+* Added per-branch navigation visibility so shell branches can stay out of the navbar/rail.
+* Moved generated GoRouter Dart bodies to reusable routing templates.
+* Added clean-project constants, SharedPreferences providers, persisted theme mode, and `ThemeChanger`.
+
+
 ## 0.2.0
 
 * Added central GoRouter generation under `lib/app/router/generated/`.

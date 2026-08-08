@@ -5,7 +5,7 @@
       "id": "project.clean",
       "name": "Clean Flutter Project",
       "type": "project",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "manifest": "project/clean/manifest.json"
     },
     {
@@ -71,6 +71,22 @@
       "type": "internal",
       "version": "1.0.0",
       "manifest": "api/core/manifest.json",
+      "internal": true
+    },
+    {
+      "id": "foundation.core",
+      "name": "Core Application Foundation",
+      "type": "internal",
+      "version": "1.0.0",
+      "manifest": "foundations/core/manifest.json",
+      "internal": true
+    },
+    {
+      "id": "routing.go_router",
+      "name": "Generated GoRouter Infrastructure",
+      "type": "internal",
+      "version": "1.0.0",
+      "manifest": "routing/go_router/manifest.json",
       "internal": true
     },
     {

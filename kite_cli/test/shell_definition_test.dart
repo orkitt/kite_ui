@@ -8,23 +8,26 @@ void main() {
     test('parses bracketed branch list', () {
       final definition = parser.parse('[home,blog,profile]');
 
-      expect(
-        definition.branches.map((item) => item.name),
-        <String>['home', 'blog', 'profile'],
-      );
-      expect(
-        definition.branches.map((item) => item.path),
-        <String>['/', '/blog', '/profile'],
-      );
+      expect(definition.branches.map((item) => item.name), <String>[
+        'home',
+        'blog',
+        'profile',
+      ]);
+      expect(definition.branches.map((item) => item.path), <String>[
+        '/',
+        '/blog',
+        '/profile',
+      ]);
     });
 
     test('parses plain comma-separated branch list', () {
       final definition = parser.parse('home,blog,profile');
 
-      expect(
-        definition.branches.map((item) => item.name),
-        <String>['home', 'blog', 'profile'],
-      );
+      expect(definition.branches.map((item) => item.name), <String>[
+        'home',
+        'blog',
+        'profile',
+      ]);
     });
 
     test('rejects duplicate normalized branches', () {
@@ -35,10 +38,7 @@ void main() {
     });
 
     test('rejects invalid branch names', () {
-      expect(
-        () => parser.parse('[home,123-blog]'),
-        throwsA(anything),
-      );
+      expect(() => parser.parse('[home,123-blog]'), throwsA(anything));
       expect(
         () => parser.parse('[home,root]'),
         throwsA(isA<FormatException>()),

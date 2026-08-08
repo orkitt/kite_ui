@@ -34,6 +34,8 @@ final class NameConverter {
 
   String get pascalCase => words.map(_capitalize).join();
 
+  String get titleCase => words.map(_capitalize).join(' ');
+
   static List<String> _parseWords(String input) {
     final separated = input
         .trim()

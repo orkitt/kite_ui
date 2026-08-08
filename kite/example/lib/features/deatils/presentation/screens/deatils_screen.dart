@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/deatils_content.dart';
 
 class DeatilsScreen extends StatelessWidget {
-  const DeatilsScreen({super.key});
+  const DeatilsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
