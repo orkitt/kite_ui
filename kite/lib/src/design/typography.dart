@@ -1,11 +1,10 @@
-
 import 'package:flutter/material.dart';
 
 import 'kolors.dart';
 
 @immutable
-class AppTypography extends ThemeExtension<AppTypography> {
-  const AppTypography({
+class KiteTypography extends ThemeExtension<KiteTypography> {
+  const KiteTypography({
     required this.display,
     required this.h1,
     required this.h2,
@@ -80,7 +79,7 @@ class AppTypography extends ThemeExtension<AppTypography> {
   // Standard
   // ===========================================================================
 
-  static const standard = AppTypography(
+  static const standard = KiteTypography(
     display: TextStyle(
       fontSize: 40,
       fontWeight: FontWeight.w700,
@@ -146,7 +145,7 @@ class AppTypography extends ThemeExtension<AppTypography> {
   ///
   /// Typography controls font metrics.
   /// KiteColors remains the source of truth for content colors.
-  AppTypography resolve(KiteColors colors) {
+  KiteTypography resolve(KiteColors colors) {
     return copyWith(
       display: display.copyWith(color: colors.textPrimary),
       h1: h1.copyWith(color: colors.textPrimary),
@@ -200,7 +199,7 @@ class AppTypography extends ThemeExtension<AppTypography> {
   // ===========================================================================
 
   @override
-  AppTypography copyWith({
+  KiteTypography copyWith({
     TextStyle? display,
     TextStyle? h1,
     TextStyle? h2,
@@ -213,7 +212,7 @@ class AppTypography extends ThemeExtension<AppTypography> {
     TextStyle? labelSmall,
     TextStyle? caption,
   }) {
-    return AppTypography(
+    return KiteTypography(
       display: display ?? this.display,
       h1: h1 ?? this.h1,
       h2: h2 ?? this.h2,
@@ -229,12 +228,12 @@ class AppTypography extends ThemeExtension<AppTypography> {
   }
 
   @override
-  AppTypography lerp(covariant AppTypography? other, double t) {
+  KiteTypography lerp(covariant KiteTypography? other, double t) {
     if (other == null) {
       return this;
     }
 
-    return AppTypography(
+    return KiteTypography(
       display: TextStyle.lerp(display, other.display, t)!,
       h1: TextStyle.lerp(h1, other.h1, t)!,
       h2: TextStyle.lerp(h2, other.h2, t)!,
@@ -255,8 +254,8 @@ class AppTypography extends ThemeExtension<AppTypography> {
 // =============================================================================
 
 extension AppTypographyX on BuildContext {
-  AppTypography get typography {
-    final typography = Theme.of(this).extension<AppTypography>();
+  KiteTypography get typography {
+    final typography = Theme.of(this).extension<KiteTypography>();
 
     assert(
       typography != null,

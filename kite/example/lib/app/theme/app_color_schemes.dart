@@ -1,13 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:kite/kite_ui.dart';
 
-abstract final class AppColorSchemes {
-  static final ColorScheme light = ColorScheme.fromSeed(
-    seedColor: const Color(0xFF4F46E5),
-    brightness: Brightness.light,
+abstract final class AppColors {
+  AppColors._();
+
+  // ---------------------------------------------------------------------------
+  // Light Theme Palette
+  // ---------------------------------------------------------------------------
+  static final lightColors = KiteColors(
+    primary: const Color(0xFF5B5BD6), // Deep Electric Indigo
+    onPrimary: const Color(0xFFFFFFFF),
+    secondary: const Color(0xFF6366F1),
+    onSecondary: const Color(0xFFFFFFFF),
+    background: const Color(0xFFFAFAFA), // Soft Off-White
+    card: const Color(0xFFFFFFFF), // Pure White
+    muted: const Color(0xFFF1F5F9), // Light Neutral Tint
+    inputFill: const Color(0xFFF8FAFC),
+    border: const Color(0xFFE2E8F0), // Subtle Border
+    textPrimary: const Color(0xFF0F172A), // Dark Slate
+    textSecondary: const Color(0xFF64748B), // Slate Muted
+    textDisabled: const Color(0xFF94A3B8),
+    icon: const Color(0xFF475569),
+    success: const Color(0xFF10B981), // Emerald
+    warning: const Color(0xFFF59E0B), // Amber
+    error: const Color(0xFFEF4444), // Rose/Red
+    info: const Color(0xFF3B82F6), // Sky Blue
   );
 
-  static final ColorScheme dark = ColorScheme.fromSeed(
-    seedColor: const Color(0xFF818CF8),
-    brightness: Brightness.dark,
+  // ---------------------------------------------------------------------------
+  // Dark Theme Palette (Linear / Raycast Style)
+  // ---------------------------------------------------------------------------
+  static final darkColors = KiteColors(
+    primary: const Color(0xFF6366F1), // Vibrant Indigo
+    onPrimary: const Color(0xFFFFFFFF),
+    secondary: const Color(0xFF818CF8),
+    onSecondary: const Color(0xFF0F172A),
+    background: const Color(0xFF090D16), // Deep Space Black
+    card: const Color(0xFF131B2E), // Dark Navy Surface
+    muted: const Color(0xFF1E293B),
+    inputFill: const Color(0xFF0F172A),
+    border: const Color(0xFF1E293B), // Subtle Dark Border
+    textPrimary: const Color(0xFFF8FAFC), // Crisp White
+    textSecondary: const Color(0xFF94A3B8), // Slate Muted
+    textDisabled: const Color(0xFF64748B),
+    icon: const Color(0xFFCBD5E1),
+    success: const Color(0xFF34D399),
+    warning: const Color(0xFFFBBF24),
+    error: const Color(0xFFF87171),
+    info: const Color(0xFF60A5FA),
   );
 }

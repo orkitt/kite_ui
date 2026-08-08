@@ -9,21 +9,16 @@
 
 import 'package:go_router/go_router.dart';
 
+import '../../../shared/widgets/app_startup_view.dart';
 import '../app_routes.dart';
-import '../app_shell.dart';
-import 'branches/home_branch.dart';
-import 'branches/blog_branch.dart';
-import 'branches/settings_branch.dart';
 import 'root_routes.dart';
 
 final String generatedInitialLocation = AppRoutes.home;
 
 final List<RouteBase> generatedRoutes = <RouteBase>[
-  StatefulShellRoute.indexedStack(
-    builder: (context, state, navigationShell) {
-      return AppShell(navigationShell: navigationShell);
-    },
-    branches: <StatefulShellBranch>[homeBranch, blogBranch, settingsBranch],
+  GoRoute(
+    path: AppRoutes.home,
+    builder: (context, state) => const AppStartupView(),
   ),
   ...rootRoutes,
 ];

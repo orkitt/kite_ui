@@ -6,7 +6,7 @@ part of 'kite_theme.dart';
 
 ThemeData _buildKiteTheme({
   required KiteColors colors,
-  required AppTypography typography,
+  required KiteTypography typography,
   required Brightness brightness,
 }) {
   final type = typography.resolve(colors);
@@ -496,7 +496,7 @@ ThemeData _buildKiteTheme({
 
 InputDecorationThemeData _buildInputTheme({
   required KiteColors colors,
-  required AppTypography typography,
+  required KiteTypography typography,
 }) {
   return InputDecorationThemeData(
     filled: true,

@@ -12,7 +12,7 @@ abstract final class KiteTheme {
 
   static ThemeData use({
     required KiteColors color,
-    AppTypography typography = AppTypography.standard,
+    KiteTypography typography = KiteTypography.standard,
     required Brightness brightness,
   }) {
     return _buildKiteTheme(
