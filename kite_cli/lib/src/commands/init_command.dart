@@ -18,11 +18,12 @@ final class InitCommand extends Command<int> {
        _logger = logger {
     addProjectPathOption(argParser);
     addGenerationOptions(argParser);
-   argParser
+    argParser
       ..addFlag(
         'vanilla',
         negatable: false,
-        help: 'Initialize a lightweight Material3 vanilla Flutter project foundation.',
+        help:
+            'Initialize a lightweight Material3 vanilla Flutter project foundation.',
       )
       ..addFlag('vanila', negatable: false, hide: true);
   }

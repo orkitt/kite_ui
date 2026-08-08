@@ -10,6 +10,7 @@ import '../project/project_preset.dart';
 import '../templates/template_store.dart';
 import '../version.dart';
 import 'generation_options.dart';
+
 // usecase
 // ProjectGenerator
 // │
