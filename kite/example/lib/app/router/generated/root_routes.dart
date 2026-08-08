@@ -10,5 +10,8 @@
 import 'package:go_router/go_router.dart';
 
 import '../app_routes.dart';
+import 'features/showcase_route.dart';
 
-final List<RouteBase> rootRoutes = <RouteBase>[];
+final List<RouteBase> rootRoutes = <RouteBase>[
+  showcaseRoute(path: AppRoutes.showcase),
+];

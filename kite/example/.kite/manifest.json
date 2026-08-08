@@ -3,7 +3,7 @@
   "kiteVersion": "0.3.0",
   "generations": [
     {
-      "id": "feature.clean:blog",
+      "id": "feature.clean:showcase",
       "templateId": "feature.clean",
       "templateVersion": "1.2.0",
       "variables": {
@@ -12,92 +12,11 @@
           "package": "example"
         },
         "feature": {
-          "raw": "blog",
-          "snake": "blog",
-          "camel": "blog",
-          "pascal": "Blog",
-          "kebab": "blog"
-        },
-        "config": {
-          "sourceDirectory": "lib",
-          "featureDirectory": "lib/features",
-          "architecture": "clean",
-          "router": "go_router",
-          "stateManagement": "riverpod"
-        },
-        "includeRoute": false,
-        "includeJson": false,
-        "kite": {
-          "version": "0.3.0"
-        },
-        "generated": {
-          "date": "2026-08-08T13:33:36.661971Z"
-        }
-      },
-      "generatedAt": "2026-08-08T13:33:36.669861Z",
-      "files": [
-        {
-          "path": "lib/features/blog/domain/entities/blog_entity.dart",
-          "checksum": "sha256:1aa8cc32de512e85f07434a1a3535c9b71a3204bd19ac4d60a9d3906f8d8dc58",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/blog/domain/repositories/blog_repository.dart",
-          "checksum": "sha256:b08d81ef63fd62859427f872f1eaa33bcc80effda0932b03015c6b8768c61438",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/blog/domain/usecases/get_blog_use_case.dart",
-          "checksum": "sha256:1b9d6e2d233dd3d2158cca78ed674a9d4c0a5239d69f049e90d8938ed8a64e48",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/blog/data/dtos/blog_dto.dart",
-          "checksum": "sha256:d4586e9b3919209bcd052c20139ee39872324231bb73357fdeb02314a2018b48",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/blog/data/sources/blog_remote_source.dart",
-          "checksum": "sha256:fc8b040937c1a602cd3dc7747086de8460f236bd120044107ea7b85a2c28bc53",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/blog/data/repositories/blog_repository_impl.dart",
-          "checksum": "sha256:da68dbd48ef55516c3639b979c92d54e7b626e89336b40ae9c90fe13c17830ee",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/blog/presentation/providers/blog_providers.dart",
-          "checksum": "sha256:39a102e8d727b1b0a8a9b1f88b22ebab1ea927e289f295b2ac29a5bb3a364dbf",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/blog/presentation/screens/blog_screen.dart",
-          "checksum": "sha256:9e454fffc3b1d90a5e0c1659aa5a427d35a11ab41750dca1efa32c8bc6e7491b",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/blog/presentation/widgets/blog_content.dart",
-          "checksum": "sha256:383023293c1eff07d47655261ed2f029d7882e48d24fef5c8515ad09189abb4f",
-          "upgradePolicy": "replace"
-        }
-      ]
-    },
-    {
-      "id": "feature.clean:deatils",
-      "templateId": "feature.clean",
-      "templateVersion": "1.2.0",
-      "variables": {
-        "project": {
-          "name": "example",
-          "package": "example"
-        },
-        "feature": {
-          "raw": "deatils",
-          "snake": "deatils",
-          "camel": "deatils",
-          "pascal": "Deatils",
-          "kebab": "deatils"
+          "raw": "showcase",
+          "snake": "showcase",
+          "camel": "showcase",
+          "pascal": "Showcase",
+          "kebab": "showcase"
         },
         "config": {
           "sourceDirectory": "lib",
@@ -112,216 +31,54 @@
           "version": "0.3.0"
         },
         "generated": {
-          "date": "2026-08-08T13:36:49.954160Z"
+          "date": "2026-08-08T18:08:41.315101Z"
         }
       },
-      "generatedAt": "2026-08-08T13:36:49.983148Z",
+      "generatedAt": "2026-08-08T18:08:41.374205Z",
       "files": [
         {
-          "path": "lib/features/deatils/domain/entities/deatils_entity.dart",
-          "checksum": "sha256:27746ec7e33bbbb01d1762ca2adb713d80c94519dab06b2b95615fcfae43efcb",
+          "path": "lib/features/showcase/domain/entities/showcase_entity.dart",
+          "checksum": "sha256:e59c11f479d21882494656dd4194b96036de3efa0d681db42e93eff90f3d02e5",
           "upgradePolicy": "replace"
         },
         {
-          "path": "lib/features/deatils/domain/repositories/deatils_repository.dart",
-          "checksum": "sha256:90c1dbbb7d135aaf20868751d620c00ef250b46f9c750eeab6c524f5b8f7542a",
+          "path": "lib/features/showcase/domain/repositories/showcase_repository.dart",
+          "checksum": "sha256:f0496c64fdef7e417280731f6e3337513ec5a34728f81189744ff6745e28c704",
           "upgradePolicy": "replace"
         },
         {
-          "path": "lib/features/deatils/domain/usecases/get_deatils_use_case.dart",
-          "checksum": "sha256:9983995a087d3d6d4ba9778e65fe076db457b127769b4f761397386fed15d23f",
+          "path": "lib/features/showcase/domain/usecases/get_showcase_use_case.dart",
+          "checksum": "sha256:e0e801e7a3bc8d5b976b9ebba286d2e5b5e6625251938605d33403215fbdbdb7",
           "upgradePolicy": "replace"
         },
         {
-          "path": "lib/features/deatils/data/dtos/deatils_dto.dart",
-          "checksum": "sha256:d1c6027e85528e56b155de5036669080cc2a7e6f8f8bfc84b9bff5f67aaf6d77",
+          "path": "lib/features/showcase/data/dtos/showcase_dto.dart",
+          "checksum": "sha256:03a8633acf7830ad9ad63ccd66eaba0dfe62ce9433994a046b53f0653158615b",
           "upgradePolicy": "replace"
         },
         {
-          "path": "lib/features/deatils/data/sources/deatils_remote_source.dart",
-          "checksum": "sha256:b9e82356df280534f6f99ab820d01944a18488ef2dc99041e17281d80a68dac7",
+          "path": "lib/features/showcase/data/sources/showcase_remote_source.dart",
+          "checksum": "sha256:a038d9b8e8a9b91e87018dcc8e19a99d48082ea267c051b53680a4baedb7c64d",
           "upgradePolicy": "replace"
         },
         {
-          "path": "lib/features/deatils/data/repositories/deatils_repository_impl.dart",
-          "checksum": "sha256:498c96e77bb09da09502ebf5bbbdc6f343eab05517af620e993cda503f0694e0",
+          "path": "lib/features/showcase/data/repositories/showcase_repository_impl.dart",
+          "checksum": "sha256:8f000d487814ba1fbd9992d9434a6a0ea09af0594faa2a6c45f87b3ec658e6c9",
           "upgradePolicy": "replace"
         },
         {
-          "path": "lib/features/deatils/presentation/providers/deatils_providers.dart",
-          "checksum": "sha256:d1b55dd4a60ee9f0c42e04b02490152e0bbc5dce1ac337162b79d045a697a3be",
+          "path": "lib/features/showcase/presentation/providers/showcase_providers.dart",
+          "checksum": "sha256:5f4606bf0e738c12fb5c083112b71895574eab05f1857ffad93540dbf60aea19",
           "upgradePolicy": "replace"
         },
         {
-          "path": "lib/features/deatils/presentation/screens/deatils_screen.dart",
-          "checksum": "sha256:492f5ef2ec7d63be861ee8cd62a081b4539e875bd3bba027cd99b0540d8a6cce",
+          "path": "lib/features/showcase/presentation/screens/showcase_screen.dart",
+          "checksum": "sha256:8015b53a5ed48aa886368f100e78959eda71046839643c33828d6b17772d186d",
           "upgradePolicy": "replace"
         },
         {
-          "path": "lib/features/deatils/presentation/widgets/deatils_content.dart",
-          "checksum": "sha256:b978c9ef04446ecf608627130ac1ef18610ed8245b1ddc8e3036c06dcc9be163",
-          "upgradePolicy": "replace"
-        }
-      ]
-    },
-    {
-      "id": "feature.clean:home",
-      "templateId": "feature.clean",
-      "templateVersion": "1.2.0",
-      "variables": {
-        "project": {
-          "name": "example",
-          "package": "example"
-        },
-        "feature": {
-          "raw": "home",
-          "snake": "home",
-          "camel": "home",
-          "pascal": "Home",
-          "kebab": "home"
-        },
-        "config": {
-          "sourceDirectory": "lib",
-          "featureDirectory": "lib/features",
-          "architecture": "clean",
-          "router": "go_router",
-          "stateManagement": "riverpod"
-        },
-        "includeRoute": false,
-        "includeJson": false,
-        "kite": {
-          "version": "0.3.0"
-        },
-        "generated": {
-          "date": "2026-08-08T13:33:36.645013Z"
-        }
-      },
-      "generatedAt": "2026-08-08T13:33:36.654651Z",
-      "files": [
-        {
-          "path": "lib/features/home/domain/entities/home_entity.dart",
-          "checksum": "sha256:cd12af3d94d5fe107e749cb0bb314e3d335eb73d89f7b5afb745a5538b99af6c",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/home/domain/repositories/home_repository.dart",
-          "checksum": "sha256:9bb61bf2601a98800878c8718bf6445140dd60f59f7e010cb09d535274b62b90",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/home/domain/usecases/get_home_use_case.dart",
-          "checksum": "sha256:a26c4bcbc6a8113c6ce83fc260daf99b69d2fc36fbcfde27d491d684addd7cd3",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/home/data/dtos/home_dto.dart",
-          "checksum": "sha256:7a0cf45fc3c35679e675ab922ed38b5964f9a9b8596ad3b3b19629efdf3f6609",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/home/data/sources/home_remote_source.dart",
-          "checksum": "sha256:a11972eb923cbc318bedfc33441fa7afb0562a85befc1a7c877f10d71900242e",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/home/data/repositories/home_repository_impl.dart",
-          "checksum": "sha256:599fac3d29f3466c79b50373a45d77ea10cfeadebdf812c9def835c2e148d196",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/home/presentation/providers/home_providers.dart",
-          "checksum": "sha256:1690a0d91ffa6b511abf510ccb6ce3e379bfc19d7aa289b6c56caa115cf73a22",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/home/presentation/screens/home_screen.dart",
-          "checksum": "sha256:7500d92e79c77fb79cc86966367494fd9e4193acfb5af2cd63ca5a77f848b8e1",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/home/presentation/widgets/home_content.dart",
-          "checksum": "sha256:760f2c06aaef26839e278f38b09e1e239f220790571c59ec4399c745dee6dd56",
-          "upgradePolicy": "replace"
-        }
-      ]
-    },
-    {
-      "id": "feature.clean:settings",
-      "templateId": "feature.clean",
-      "templateVersion": "1.2.0",
-      "variables": {
-        "project": {
-          "name": "example",
-          "package": "example"
-        },
-        "feature": {
-          "raw": "settings",
-          "snake": "settings",
-          "camel": "settings",
-          "pascal": "Settings",
-          "kebab": "settings"
-        },
-        "config": {
-          "sourceDirectory": "lib",
-          "featureDirectory": "lib/features",
-          "architecture": "clean",
-          "router": "go_router",
-          "stateManagement": "riverpod"
-        },
-        "includeRoute": false,
-        "includeJson": false,
-        "kite": {
-          "version": "0.3.0"
-        },
-        "generated": {
-          "date": "2026-08-08T13:33:36.673323Z"
-        }
-      },
-      "generatedAt": "2026-08-08T13:33:36.680080Z",
-      "files": [
-        {
-          "path": "lib/features/settings/domain/entities/settings_entity.dart",
-          "checksum": "sha256:8d3e08267094a3496456ea7ced57deaac7230386be67f9765f8537152e035ac1",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/settings/domain/repositories/settings_repository.dart",
-          "checksum": "sha256:b76e2342ddb385cba8daedd2d5f07d19b594abbe98796da4a599cce7a47582ea",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/settings/domain/usecases/get_settings_use_case.dart",
-          "checksum": "sha256:4608b3e9f2ae2454eec2242f6cb120ddd24fd859027cab983fc61e5457a6fdb0",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/settings/data/dtos/settings_dto.dart",
-          "checksum": "sha256:e376eca3403b159a8b5aa737e91f77257cc5e106225c1fcb6e233cb90da0b863",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/settings/data/sources/settings_remote_source.dart",
-          "checksum": "sha256:4956c8c264f4922479002389633229d43c0ac44ca1c8abb83da3c37ffb366081",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/settings/data/repositories/settings_repository_impl.dart",
-          "checksum": "sha256:cd9a2838f32da109d4cf7f77cc56a8d33391c942222ed3cbf7700951d6b02f3a",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/settings/presentation/providers/settings_providers.dart",
-          "checksum": "sha256:5008f9cc56b1f7ec159d46f2041236c4f778d816676c8ec82820e811cd1419cc",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/settings/presentation/screens/settings_screen.dart",
-          "checksum": "sha256:b83392db7f1f3b67adc893f2309521ecce5697f7e4fb9ffd1fca7e04a93f624f",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/features/settings/presentation/widgets/settings_content.dart",
-          "checksum": "sha256:9cb66d26ed26d49b40f18f5d4bb7d2360ce8d4bfedbcea1c01729017ae9f587c",
+          "path": "lib/features/showcase/presentation/widgets/showcase_content.dart",
+          "checksum": "sha256:e74ff7b502b4941f1dee340a1d6db811713ec141e85c750206f90f3ce46cb0b0",
           "upgradePolicy": "replace"
         }
       ]
@@ -347,10 +104,10 @@
           "version": "0.3.0"
         },
         "generated": {
-          "date": "2026-08-08T13:33:36.570518Z"
+          "date": "2026-08-08T18:04:57.653808Z"
         }
       },
-      "generatedAt": "2026-08-08T13:33:36.620153Z",
+      "generatedAt": "2026-08-08T18:04:57.746655Z",
       "files": [
         {
           "path": "lib/core/state/app_provider_observer.dart",
@@ -429,7 +186,7 @@
         },
         {
           "path": "lib/app/router/app_routes.dart",
-          "checksum": "sha256:afa2a15adca1a6ed2a9cb67ec4f960bf1ef52c75cd2afdb33636691103bc8964",
+          "checksum": "sha256:8bb2b56a91254ec792936989523b1b8aa5e463951699b4af79a7f44ca3bfebf5",
           "upgradePolicy": "replace"
         },
         {
@@ -439,12 +196,12 @@
         },
         {
           "path": "lib/app/router/generated/root_routes.dart",
-          "checksum": "sha256:6bbde265048a67d45fb502a7d16adb9a76ed7d72ba7ebafd7af668ea2355baa8",
+          "checksum": "sha256:24cfb87d6f40415ac135c74c813fa9d364b485f47fbe527db03c90d476094367",
           "upgradePolicy": "replace"
         },
         {
           "path": "lib/app/router/generated/generated_routes.dart",
-          "checksum": "sha256:555dda0bd1877b456e3166935230300ef1a48811d3d872717918f146989e3c46",
+          "checksum": "sha256:6ab9d4781d34b84190c3d8bed42d743f73508c70ebca68959205728e05676dca",
           "upgradePolicy": "replace"
         },
         {
@@ -504,7 +261,7 @@
         },
         {
           "path": "kite.yaml",
-          "checksum": "sha256:1e66ba0e357cc9442a961ca7bc3b858c80c8c3ef71da1034d704b9c0c04a2d88",
+          "checksum": "sha256:a850ead19e02fdc0156a2c84edb3d84c9484f7321a1888539e8888280e3e03fb",
           "upgradePolicy": "preserve"
         }
       ]
@@ -515,74 +272,29 @@
       "templateVersion": "1.0.0",
       "variables": {
         "routing": {
-          "shell": true,
-          "branches": [
-            "home",
-            "blog",
-            "settings"
-          ],
+          "shell": false,
+          "branches": [],
           "routes": [
-            "/blog/deatils",
-            "/blog/photo"
+            "/showcase"
           ]
         }
       },
-      "generatedAt": "2026-08-08T13:49:52.713346Z",
+      "generatedAt": "2026-08-08T18:08:41.429819Z",
       "files": [
         {
-          "path": "lib/app/router/generated/features/deatils_route.dart",
-          "checksum": "sha256:f050205ea339fa8f958695372be75baa38ffab65b7e3fe55e993edcf4169f01f",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/app/router/generated/features/photo_route.dart",
-          "checksum": "sha256:fe0dd4dad97e14c82bc0185f96d4fd59e5d6d7cad272847b86af0fbf4a7ec681",
+          "path": "lib/app/router/generated/features/showcase_route.dart",
+          "checksum": "sha256:3e08e9d41b9ac0b46a9d3c9361441b0f15bd999364ef71bb445ee805c1f2fd92",
           "upgradePolicy": "replace"
         },
         {
           "path": "lib/app/router/generated/root_routes.dart",
-          "checksum": "sha256:6bbde265048a67d45fb502a7d16adb9a76ed7d72ba7ebafd7af668ea2355baa8",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/app/router/generated/branches/home_branch.dart",
-          "checksum": "sha256:f84e68d816f924990a65fc7276afc53c57db43d5a5c622185af29e9be548ce26",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/app/router/generated/branches/blog_branch.dart",
-          "checksum": "sha256:0201a4ef03c4bc903f47fe3362fd99421f530e4be9c0fb9fd94ac4ef46bcffa8",
-          "upgradePolicy": "replace"
-        },
-        {
-          "path": "lib/app/router/generated/branches/settings_branch.dart",
-          "checksum": "sha256:3fb75988e90d770c33466f43b34f3193bf198f17c03f2d261340388ad2abeeb4",
+          "checksum": "sha256:24cfb87d6f40415ac135c74c813fa9d364b485f47fbe527db03c90d476094367",
           "upgradePolicy": "replace"
         },
         {
           "path": "lib/app/router/generated/generated_routes.dart",
-          "checksum": "sha256:555dda0bd1877b456e3166935230300ef1a48811d3d872717918f146989e3c46",
+          "checksum": "sha256:6ab9d4781d34b84190c3d8bed42d743f73508c70ebca68959205728e05676dca",
           "upgradePolicy": "replace"
-        }
-      ]
-    },
-    {
-      "id": "routing.shell",
-      "templateId": "routing.shell",
-      "templateVersion": "1.0.0",
-      "variables": {
-        "branches": [
-          "home",
-          "blog",
-          "settings"
-        ]
-      },
-      "generatedAt": "2026-08-08T13:49:57.640005Z",
-      "files": [
-        {
-          "path": "lib/app/router/app_shell.dart",
-          "checksum": "sha256:c5cd4fa32da8ac32b3600d984c9a72707253dac90dece1c728196782c687c582",
-          "upgradePolicy": "preserve"
         }
       ]
     }

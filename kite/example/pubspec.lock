@@ -219,11 +219,10 @@ packages:
   kite:
     dependency: "direct main"
     description:
-      name: kite
-      sha256: "76f96876982e06c170cf9e3b4a9363d3ce022aa90b39d6eeb4e7f1110308f6e9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.1-dev.1"
+      path: ".."
+      relative: true
+    source: path
+    version: "0.0.1"
   leak_tracker:
     dependency: transitive
     description:

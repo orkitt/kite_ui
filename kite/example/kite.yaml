@@ -12,39 +12,13 @@ routing:
   type: go_router
   auto_register_features: true
   shell:
-    enabled: true
-    branches:
-      - name: home
-        path: /
-        feature: home
-        architecture: clean
-        navigation:
-          visible: true
-          label: Home
-      - name: blog
-        path: /blog
-        feature: blog
-        architecture: clean
-        navigation:
-          visible: true
-          label: Blog
-      - name: settings
-        path: /settings
-        feature: settings
-        architecture: clean
-        navigation:
-          visible: true
-          label: Settings
+    enabled: false
+    branches: []
   routes:
-    - feature: deatils
-      path: /blog/deatils
-      segment: deatils
-      branch: blog
-      architecture: clean
-    - feature: photo
-      path: /blog/photo
-      segment: photo
-      branch: blog
+    - feature: showcase
+      path: /showcase
+      segment: showcase
+      branch: root
       architecture: clean
 serialization:
   type: json_serializable
