@@ -1,11 +1,9 @@
 {
   "schemaVersion": 2,
   "id": "project.vanilla",
-  "version": "1.1.0",
-  "description": "Material 3, Riverpod, GoRouter, shared states, failures, and project configuration.",
-  "dependencies": [
-    "go_router"
-  ],
+  "version": "1.2.0",
+  "description": "Lightweight Material 3 Flutter foundation with routing, theming, shared widgets, extensions, errors, and result handling.",
+  "dependencies": [],
   "devDependencies": [],
   "files": [
     {
@@ -19,11 +17,6 @@
       "upgradePolicy": "replace"
     },
     {
-      "template": "files/bootstrap.dart.tmpl",
-      "target": "{{config.sourceDirectory}}/app/bootstrap.dart",
-      "upgradePolicy": "replace"
-    },
-    {
       "template": "files/app_router.dart.tmpl",
       "target": "{{config.sourceDirectory}}/app/router/app_router.dart",
       "upgradePolicy": "replace"
@@ -34,9 +27,14 @@
       "upgradePolicy": "replace"
     },
     {
-      "template": "files/generated_routes.dart.tmpl",
-      "target": "{{config.sourceDirectory}}/app/router/generated_routes.dart",
-      "upgradePolicy": "preserve"
+      "template": "files/app_shell.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/app/router/app_shell.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/navigator_observer.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/app/router/navigator_observer.dart",
+      "upgradePolicy": "replace"
     },
     {
       "template": "files/app_theme.dart.tmpl",
@@ -44,13 +42,18 @@
       "upgradePolicy": "replace"
     },
     {
-      "template": "files/app_color_schemes.dart.tmpl",
-      "target": "{{config.sourceDirectory}}/app/theme/app_color_schemes.dart",
+      "template": "files/app_colors.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/constants/app_colors.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_dimensions.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/constants/app_dimensions.dart",
       "upgradePolicy": "replace"
     },
     {
       "template": "files/app_typography.dart.tmpl",
-      "target": "{{config.sourceDirectory}}/app/theme/app_typography.dart",
+      "target": "{{config.sourceDirectory}}/core/constants/app_typography.dart",
       "upgradePolicy": "replace"
     },
     {
@@ -64,11 +67,50 @@
       "upgradePolicy": "replace"
     },
     {
+      "template": "files/context_extensions.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/extensions/context_extensions.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/extensions.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/extensions/extensions.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/num_extensions.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/extensions/num_extensions.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/text_style_extensions.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/extensions/text_style_extensions.dart",
+      "upgradePolicy": "replace"
+    },
+    {
       "template": "files/result.dart.tmpl",
       "target": "{{config.sourceDirectory}}/core/result/result.dart",
       "upgradePolicy": "replace"
     },
-
+    {
+      "template": "files/app_empty_view.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/shared/widgets/app_empty_view.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_error_view.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/shared/widgets/app_error_view.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_loading_view.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/shared/widgets/app_loading_view.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_startup_view.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/shared/widgets/app_startup_view.dart",
+      "upgradePolicy": "replace"
+    },
     {
       "template": "files/gitkeep.tmpl",
       "target": "{{config.featureDirectory}}/.gitkeep",
@@ -80,7 +122,5 @@
       "upgradePolicy": "replace"
     }
   ],
-  "requires": [
-    "state.riverpod"
-  ]
+  "requires": []
 }

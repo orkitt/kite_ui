@@ -1,9 +1,7 @@
-import '/app/app.dart';
-import 'package:flutter/material.dart';
-
 /// Built with Kite 🪁
 /// Flutter foundations, architecture, and developer tooling.
 /// Learn more: https://kite.orkitt.dev
-void main() {
-  runApp(const KiteApp());
-}
+
+export 'context_extensions.dart';
+export 'num_extensions.dart';
+export 'text_style_extensions.dart';

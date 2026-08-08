@@ -1,22 +1,23 @@
 schema_version: 1
 
 project:
+  preset: vanilla
   source_directory: lib
 
 architecture:
-  type: clean
+  type: none
   feature_directory: lib/features
 
 state_management:
-  type: riverpod
+  type: none
   code_generation: false
 
 routing:
-  type: go_router
-  auto_register_features: true
+  type: material
+  auto_register_features: false
 
 serialization:
-  type: json_serializable
+  type: none
 
 generation:
   format_after_generation: true

@@ -1,8 +1,6 @@
-
+import 'package:example/core/constants/app_colors.dart';
+import 'package:example/core/constants/app_typography.dart';
 import 'package:flutter/material.dart';
-
-import '../../core/constants/app_colors.dart';
-import '../../core/constants/app_typography.dart';
 
 class AppStartupView extends StatelessWidget {
   final IconData? icon;
@@ -35,7 +33,7 @@ class AppStartupView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Text('Kite is Flying', style: textStyle.headingMedium),
+              Text('Kite is Flying', style: textStyle.headingMedium),
 
                 const SizedBox(height: 8),
 

@@ -1,19 +1,75 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter/material.dart';
+import 'app_routes.dart';
+import 'app_shell.dart';
+/// Optional authentication state placeholder.
+///
+/// Replace this with your application's actual authentication source
+/// (for example Riverpod, ValueNotifier, or another state-management solution).
+//
 
-import '../../shared/widgets/app_startup_view.dart';
-import '../../vanila/files/app_routes.dart';
-import '../../vanila/files/generated_routes.dart';
+// abstract class AuthService {
+//   static bool isAuthenticated = false;
+// }
 
-final appRouterProvider = Provider<GoRouter>((ref) {
-  return GoRouter(
-    initialLocation: AppRoutes.home,
-    routes: <RouteBase>[
-      GoRoute(
-        path: AppRoutes.home,
-        builder: (context, state) => const AppStartupView(),
-      ),
-      ...generatedRoutes,
-    ],
-  );
-});
+abstract final class AppRouter {
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
+
+   /// Routes that should only be accessible to authenticated users.
+  static const Set<String> _protectedRoutes = <String>{
+    AppRoutes.profile,
+    AppRoutes.details,
+  };
+
+  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+    final routeName = settings.name ?? AppRoutes.home;
+
+    /// Authentication guard example.
+    ///
+    /// Enable and adapt this block when authentication is added to the app.
+    /// Protected routes should redirect unauthenticated users to the login page.
+    //
+    // if (_protectedRoutes.contains(routeName) &&
+    //     !AuthService.isAuthenticated) {
+    //   return _buildPage(
+    //     const LoginScreen(),
+    //     const RouteSettings(name: AppRoutes.login),
+    //   );
+    // }
+
+    switch (routeName) {
+      // Authentication route example.
+      // case AppRoutes.login:
+      //   return _buildPage(const LoginScreen(), settings);
+
+      case AppRoutes.home:
+        return _buildPage(const MainShellScaffold(initialIndex: 0), settings);
+
+      case AppRoutes.explore:
+        return _buildPage(const MainShellScaffold(initialIndex: 1), settings);
+
+      case AppRoutes.profile:
+        return _buildPage(const MainShellScaffold(initialIndex: 2), settings);
+      // Example route that receives typed navigation arguments.
+      // case AppRoutes.details:
+      //   final args = settings.arguments as DetailsArguments?;
+      //   return _buildPage(DetailsScreen(id: args?.id ?? ''), settings);
+
+      default:
+        return _buildPage(
+          Scaffold(body: Center(child: Text('Route not found: $routeName'))),
+          settings,
+        );
+    }
+  }
+
+  static PageRoute<T> _buildPage<T>(Widget page, RouteSettings settings) {
+    return PageRouteBuilder<T>(
+      settings: settings,
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(opacity: animation, child: child);
+      },
+    );
+  }
+}

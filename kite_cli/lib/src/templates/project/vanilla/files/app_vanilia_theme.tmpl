@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+
+abstract final class AppColorSchemes {
+  static final ColorScheme light = ColorScheme.fromSeed(
+    seedColor: const Color(0xFF4F46E5),
+    brightness: Brightness.light,
+  );
+
+  static final ColorScheme dark = ColorScheme.fromSeed(
+    seedColor: const Color(0xFF818CF8),
+    brightness: Brightness.dark,
+  );
+}
+
+abstract final class AppTheme {
+  static ThemeData get light => _build(AppColorSchemes.light);
+
+  static ThemeData get dark => _build(AppColorSchemes.dark);
+
+  static ThemeData _build(ColorScheme colorScheme) {
+    final base = ThemeData(useMaterial3: true, colorScheme: colorScheme);
+
+    return base.copyWith(
+      scaffoldBackgroundColor: colorScheme.surface,
+      textTheme: AppTypography.apply(base.textTheme),
+      inputDecorationTheme: InputDecorationThemeData(
+        filled: true,
+        fillColor: colorScheme.surfaceContainerLow,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: colorScheme.outlineVariant),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: colorScheme.outlineVariant),
+        ),
+      ),
+      cardTheme: CardThemeData(
+        elevation: 0,
+        color: colorScheme.surfaceContainerLow,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: BorderSide(color: colorScheme.outlineVariant),
+        ),
+      ),
+    );
+  }
+}
+
+abstract final class AppTypography {
+  static TextTheme apply(TextTheme base) {
+    return base.copyWith(
+      headlineLarge: base.headlineLarge?.copyWith(fontWeight: FontWeight.w700),
+      headlineMedium: base.headlineMedium?.copyWith(
+        fontWeight: FontWeight.w700,
+      ),
+      titleLarge: base.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+    );
+  }
+}
