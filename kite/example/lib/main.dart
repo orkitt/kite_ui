@@ -1,9 +1,11 @@
-import '/app/app.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
+import 'app/app.dart';
+import 'app/bootstrap.dart';
 
 /// Built with Kite 🪁
 /// Flutter foundations, architecture, and developer tooling.
 /// Learn more: https://kite.orkitt.dev
-void main() {
-  runApp(const KiteApp());
+Future<void> main() async {
+  await bootstrap(() => const App());
 }

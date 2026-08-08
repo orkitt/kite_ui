@@ -1,62 +1,86 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../shared/widgets/app_startup_view.dart';
+class AppShell extends StatelessWidget {
+  const AppShell({required this.navigationShell, super.key});
 
-class MainShellScaffold extends StatefulWidget {
-  const MainShellScaffold({this.initialIndex = 0, super.key});
+  final StatefulNavigationShell navigationShell;
 
-  final int initialIndex;
-
-  @override
-  State<MainShellScaffold> createState() => _MainShellScaffoldState();
-}
-
-class _MainShellScaffoldState extends State<MainShellScaffold> {
-  late int _currentIndex;
-
-  final List<Widget> _screens = const <Widget>[
-    AppStartupView(icon: Icons.home_outlined),
-    AppStartupView(icon: Icons.explore_outlined),
-    AppStartupView(icon: Icons.person_outline),
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    _currentIndex = widget.initialIndex;
-  }
-
-  void _onDestinationSelected(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+  void _selectBranch(int index) {
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(index: _currentIndex, children: _screens),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
-        onDestinationSelected: _onDestinationSelected,
-        destinations: const <NavigationDestination>[
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Home',
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth >= 720) {
+          return Scaffold(
+            body: Row(
+              children: <Widget>[
+                NavigationRail(
+                  minExtendedWidth: 320,
+                  selectedIndex: navigationShell.currentIndex,
+                  onDestinationSelected: _selectBranch,
+                  destinations: const <NavigationRailDestination>[
+                    NavigationRailDestination(
+                      icon: Icon(Icons.circle_outlined),
+                      selectedIcon: Icon(Icons.circle),
+                      label: Text('Home'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.circle_outlined),
+                      selectedIcon: Icon(Icons.circle),
+                      label: Text('Blog'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.circle_outlined),
+                      selectedIcon: Icon(Icons.circle),
+                      label: Text(
+                        'Settings',
+                        style: TextStyle(
+                          color: Colors.amber,
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(child: navigationShell),
+              ],
+            ),
+          );
+        }
+
+        return Scaffold(
+          body: navigationShell,
+          bottomNavigationBar: NavigationBar(
+            selectedIndex: navigationShell.currentIndex,
+            onDestinationSelected: _selectBranch,
+            destinations: const <NavigationDestination>[
+              NavigationDestination(
+                icon: Icon(Icons.circle_outlined),
+                selectedIcon: Icon(Icons.circle),
+                label: 'Home',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.circle_outlined),
+                selectedIcon: Icon(Icons.circle),
+                label: 'Blog',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.circle_outlined),
+                selectedIcon: Icon(Icons.circle),
+                label: 'Settings',
+              ),
+            ],
           ),
-          NavigationDestination(
-            icon: Icon(Icons.explore_outlined),
-            selectedIcon: Icon(Icons.explore),
-            label: 'Explore',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

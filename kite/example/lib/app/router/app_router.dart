@@ -1,65 +1,14 @@
-import 'package:flutter/material.dart';
-import 'app_routes.dart';
-import 'app_shell.dart';
-/// Uncomment to use the navigator overserver
-/// Simple state container for auth (replace with your ValueNotifier/InheritedWidget)
-// abstract class AuthService {
-//   static bool isAuthenticated = false;
-// }
+import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-abstract final class AppRouter {
-  static final GlobalKey<NavigatorState> navigatorKey =
-      GlobalKey<NavigatorState>();
+import 'generated/generated_routes.dart';
+import 'navigator_observer.dart';
 
-  /// List of routes that require an authenticated user
-  static const Set<String> _protectedRoutes = <String>{
-    AppRoutes.profile,
-    AppRoutes.details,
-  };
-
-  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    final routeName = settings.name ?? AppRoutes.home;
-
-    // Todo:  Here  Auth Guard Logic will be palaced
-    // if (_protectedRoutes.contains(routeName) && !AuthService.isAuthenticated) {
-    //   return _buildPage(
-    //     const LoginScreen(),
-    //     const RouteSettings(name: AppRoutes.login),
-    //   );
-    // }
-
-    switch (routeName) {
-      // case AppRoutes.login:
-      //   return _buildPage(const LoginScreen(), settings);
-
-      case AppRoutes.home:
-        return _buildPage(const MainShellScaffold(initialIndex: 0), settings);
-
-      case AppRoutes.explore:
-        return _buildPage(const MainShellScaffold(initialIndex: 1), settings);
-
-      case AppRoutes.profile:
-        return _buildPage(const MainShellScaffold(initialIndex: 2), settings);
-
-      // case AppRoutes.details:
-      //   final args = settings.arguments as DetailsArguments?;
-      //   return _buildPage(DetailsScreen(id: args?.id ?? ''), settings);
-
-      default:
-        return _buildPage(
-          Scaffold(body: Center(child: Text('Route not found: $routeName'))),
-          settings,
-        );
-    }
-  }
-
-  static PageRoute<T> _buildPage<T>(Widget page, RouteSettings settings) {
-    return PageRouteBuilder<T>(
-      settings: settings,
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(opacity: animation, child: child);
-      },
-    );
-  }
-}
+final appRouterProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
+    initialLocation: generatedInitialLocation,
+    observers: <NavigatorObserver>[KiteNavigatorObserver()],
+    routes: generatedRoutes,
+  );
+});

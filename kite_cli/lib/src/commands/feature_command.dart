@@ -5,6 +5,7 @@ import '../generators/feature_generator.dart';
 import '../generators/generation_options.dart';
 import '../logging/kite_logger.dart';
 import '../project/project_detector.dart';
+import '../routing/route_target.dart';
 import 'shared_command_options.dart';
 
 final class FeatureCommand extends Command<int> {
@@ -34,7 +35,12 @@ final class FeatureCommand extends Command<int> {
       ..addFlag(
         'route',
         negatable: false,
-        help: 'Generate and register a GoRouter route.',
+        help: 'Generate and centrally register a GoRouter route.',
+      )
+      ..addOption(
+        'into',
+        valueHelp: 'branch',
+        help: 'Attach the generated route to a configured shell branch.',
       )
       ..addFlag(
         'json',
@@ -69,11 +75,23 @@ final class FeatureCommand extends Command<int> {
       throw UsageException('Use either --clean or --mvc, not both.', usage);
     }
 
+    final includeRoute = results.flag('route');
+    final into = results.option('into')?.trim();
+    if (into != null && !includeRoute) {
+      throw UsageException('--into requires --route.', usage);
+    }
+    if (into != null && into.isEmpty) {
+      throw UsageException('--into requires a shell branch name.', usage);
+    }
+
     final architecture = switch ((cleanFlag, mvcFlag)) {
       (_, true) => 'mvc',
       (true, _) => 'clean',
       _ => results.option('architecture')!,
     };
+    final routeTarget = into == null
+        ? const RouteTarget.root()
+        : RouteTarget.branch(into);
 
     try {
       final project = _projectDetector.detect(results.option('path')!);
@@ -81,7 +99,8 @@ final class FeatureCommand extends Command<int> {
         project: project,
         featureName: results.rest.single,
         architecture: architecture,
-        includeRoute: results.flag('route'),
+        includeRoute: includeRoute,
+        routeTarget: routeTarget,
         includeJsonSerialization: results.flag('json'),
         options: GenerationOptions(
           conflictStrategy: resolveConflictStrategy(results),

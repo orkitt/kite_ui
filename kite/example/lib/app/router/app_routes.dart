@@ -1,14 +1,9 @@
-
 abstract final class AppRoutes {
-  static const String login = '/login';
   static const String home = '/';
-  static const String explore = '/explore';
-  static const String profile = '/profile';
-  static const String details = '/details';
-}
 
-/// Strongly typed arguments class for parameter passing
-class DetailsArguments {
-  const DetailsArguments({required this.id});
-  final String id;
+  // kite:routes:start
+  static const String blog = '/blog';
+  static const String settings = '/settings';
+  static const String blogDeatils = '$blog/deatils';
+  // kite:routes:end
 }

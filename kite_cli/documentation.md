@@ -269,6 +269,28 @@ Target another Flutter project:
 kite init --path ./apps/mobile
 ```
 
+Create a GoRouter shell with independent navigation stacks:
+
+```bash
+kite init --shell "[home,blog,profile]"
+```
+
+The unbracketed form is equivalent:
+
+```bash
+kite init --shell "home,blog,profile"
+```
+
+The first branch becomes the `/` branch. Later branches use kebab-case paths, so the example configures:
+
+```text
+/
+/blog
+/profile
+```
+
+Kite generates a `StatefulShellRoute.indexedStack` and one `StatefulShellBranch` per configured branch. `AppShell` switches branches with `StatefulNavigationShell.goBranch`, so each branch keeps its own navigation stack.
+
 ---
 
 # Clean Architecture
@@ -408,21 +430,74 @@ lib/features/dashboard/
 
 # Route Generation
 
-Generate a feature and automatically add its GoRouter route:
+Routing is application composition, so generated features no longer own route folders. Kite keeps the runtime route graph under:
 
-```bash
-kite --feat:clean dashboard --route
+```text
+lib/app/router/
+├── app_router.dart
+├── app_routes.dart
+├── app_shell.dart              # shell projects
+├── navigator_observer.dart
+└── generated/
+    ├── generated_routes.dart
+    ├── root_routes.dart
+    ├── branches/
+    └── features/
 ```
 
-or:
+`kite.yaml` is the routing topology source of truth, while `AppRoutes` is the single source of truth for runtime URL constants.
+
+Generate a root-level route:
 
 ```bash
-kite --feat:mvc dashboard --route
+kite --feat:clean about --route
 ```
 
-Kite generates the feature route and registers it with the Kite-managed route registry.
+This keeps the feature at:
 
-This keeps generated routing code separate from application-owned routing code.
+```text
+lib/features/about/
+```
+
+and registers:
+
+```text
+/about
+```
+
+For a shell project, place a feature route into a configured branch with `--into`:
+
+```bash
+kite --feat:clean details --route --into blog
+```
+
+The feature still lives independently at:
+
+```text
+lib/features/details/
+```
+
+but its route becomes:
+
+```text
+/blog/details
+```
+
+Application code navigates with the generated constant:
+
+```dart
+context.go(AppRoutes.blogDetails);
+```
+
+MVC uses exactly the same central routing flow:
+
+```bash
+kite --feat:mvc account --route --into profile
+```
+
+`--into` is valid only together with `--route`, and the branch must already exist in `kite.yaml`. Kite never silently creates a missing shell branch.
+
+Generated route files under `lib/app/router/generated/` are Kite-owned and can be regenerated. Existing legacy files such as `features/*/presentation/routes/` or `features/*/routes/` are not deleted automatically during migration.
 
 ---
 
@@ -836,6 +911,7 @@ Example:
 schema_version: 1
 
 project:
+  preset: clean
   source_directory: lib
 
 architecture:
@@ -849,6 +925,21 @@ state_management:
 routing:
   type: go_router
   auto_register_features: true
+  shell:
+    enabled: true
+    branches:
+      - name: home
+        path: /
+      - name: blog
+        path: /blog
+      - name: profile
+        path: /profile
+  routes:
+    - feature: details
+      path: /blog/details
+      segment: details
+      branch: blog
+      architecture: clean
 
 serialization:
   type: json_serializable
@@ -946,6 +1037,7 @@ See `documentation.md` for the internal generator architecture and template auth
 
 ```bash
 kite init
+kite init --shell "[home,blog,profile]"
 kite doctor
 kite upgrade
 ```
@@ -964,6 +1056,7 @@ kite feature dashboard --architecture mvc
 
 ```bash
 --route
+--into <branch>
 --json
 --dry-run
 --force

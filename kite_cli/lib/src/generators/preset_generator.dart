@@ -1,6 +1,7 @@
 import '../generation/file_writer.dart';
 import '../generation/generation_plan.dart';
 import '../generation/generation_result.dart';
+import '../generation/managed_template_filter.dart';
 import '../generation/project_manifest.dart';
 import '../generation/template_planner.dart';
 import '../logging/kite_logger.dart';
@@ -11,7 +12,6 @@ import '../project/kite_config.dart';
 import '../templates/template_store.dart';
 import '../version.dart';
 import 'generation_options.dart';
-
 // usecase
 // PresetGenerator
 // │
@@ -25,6 +25,7 @@ final class PresetGenerator {
     this.planner = const TemplatePlanner(),
     this.fileWriter = const FileWriter(),
     this.manifestStore = const ProjectManifestStore(),
+    this.managedTemplateFilter = const ManagedTemplateFilter(),
     this.dependencyInstaller = const DependencyInstaller(),
     this.formatter = const DartFormatter(),
     this.logger = const KiteLogger(),
@@ -34,6 +35,7 @@ final class PresetGenerator {
   final TemplatePlanner planner;
   final FileWriter fileWriter;
   final ProjectManifestStore manifestStore;
+  final ManagedTemplateFilter managedTemplateFilter;
   final DependencyInstaller dependencyInstaller;
   final DartFormatter formatter;
   final KiteLogger logger;
@@ -67,14 +69,21 @@ final class PresetGenerator {
 
     for (final templateId in templateIds.toSet()) {
       final templates = await templateStore.resolve(templateId);
+      final generationTemplates = await managedTemplateFilter
+          .excludeInstalledDependencies(
+            projectRoot: project.root,
+            rootTemplateId: templateId,
+            templates: templates,
+            variables: variables,
+          );
       rootPlans.add(
         await planner.buildResolved(
           rootTemplateId: templateId,
-          templates: templates,
+          templates: generationTemplates,
           variables: variables,
         ),
       );
-      for (final template in templates) {
+      for (final template in generationTemplates) {
         dependencies.addAll(template.manifest.dependencies);
         devDependencies.addAll(template.manifest.devDependencies);
       }

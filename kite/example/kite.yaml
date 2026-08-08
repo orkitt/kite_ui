@@ -1,24 +1,34 @@
 schema_version: 1
-
 project:
+  preset: clean
   source_directory: lib
-
 architecture:
   type: clean
   feature_directory: lib/features
-
 state_management:
   type: riverpod
   code_generation: false
-
 routing:
   type: go_router
   auto_register_features: true
-
+  shell:
+    enabled: true
+    branches:
+      - name: home
+        path: /
+      - name: blog
+        path: /blog
+      - name: settings
+        path: /settings
+  routes:
+    - feature: deatils
+      path: /blog/deatils
+      segment: deatils
+      branch: blog
+      architecture: clean
 serialization:
   type: json_serializable
-
 generation:
   format_after_generation: true
   install_dependencies: true
-  conflict_strategy: skip
+  conflict_strategy: ask

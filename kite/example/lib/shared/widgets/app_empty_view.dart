@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class AppEmptyView extends StatelessWidget {
   const AppEmptyView({
     super.key,

@@ -1,11 +1,11 @@
 {
   "status": "passed",
   "registrySchemaVersion": 2,
-  "templateCount": 10,
+  "templateCount": 11,
   "validatedScenarios": {
-    "project.clean": 21,
-    "feature.clean": 13,
-    "feature.mvc": 9,
+    "project.clean": 23,
+    "feature.clean": 12,
+    "feature.mvc": 8,
     "component.button": 2,
     "component.card": 2,
     "component.avatar": 2,

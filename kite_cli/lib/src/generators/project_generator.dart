@@ -7,21 +7,19 @@ import '../process/dart_formatter.dart';
 import '../process/dependency_installer.dart';
 import '../project/flutter_project.dart';
 import '../project/project_preset.dart';
+import '../routing/route_generator.dart';
+import '../routing/shell_definition.dart';
 import '../templates/template_store.dart';
 import '../version.dart';
 import 'generation_options.dart';
 
-// usecase
-// ProjectGenerator
-// │
-// ├── kite init
-// └── kite init --vanilla
 final class ProjectGenerator {
   const ProjectGenerator({
     this.templateStore = const TemplateStore(),
     this.planner = const TemplatePlanner(),
     this.fileWriter = const FileWriter(),
     this.manifestStore = const ProjectManifestStore(),
+    this.routeGenerator = const RouteGenerator(),
     this.dependencyInstaller = const DependencyInstaller(),
     this.formatter = const DartFormatter(),
     this.logger = const KiteLogger(),
@@ -31,6 +29,7 @@ final class ProjectGenerator {
   final TemplatePlanner planner;
   final FileWriter fileWriter;
   final ProjectManifestStore manifestStore;
+  final RouteGenerator routeGenerator;
   final DependencyInstaller dependencyInstaller;
   final DartFormatter formatter;
   final KiteLogger logger;
@@ -38,8 +37,15 @@ final class ProjectGenerator {
   Future<GenerationResult> generate({
     required FlutterProject project,
     ProjectPreset preset = ProjectPreset.clean,
+    ShellDefinition? shellDefinition,
     required GenerationOptions options,
   }) async {
+    if (shellDefinition != null && preset != ProjectPreset.clean) {
+      throw ArgumentError(
+        'Shell routing requires the default GoRouter project preset.',
+      );
+    }
+
     final templateId = preset.templateId;
     logger.info('Using template: $templateId');
     final templates = await templateStore.resolve(templateId);
@@ -51,9 +57,9 @@ final class ProjectGenerator {
       'config': <String, Object?>{
         'sourceDirectory': 'lib',
         'featureDirectory': 'lib/features',
-        'architecture': 'clean',
-        'router': 'go_router',
-        'stateManagement': 'riverpod',
+        'architecture': preset == ProjectPreset.clean ? 'clean' : 'none',
+        'router': preset == ProjectPreset.clean ? 'go_router' : 'material',
+        'stateManagement': preset == ProjectPreset.clean ? 'riverpod' : 'none',
       },
       'kite': <String, Object?>{'version': kiteCliVersion},
       'generated': <String, Object?>{
@@ -78,6 +84,15 @@ final class ProjectGenerator {
         generationId: templateId,
         plan: plan,
         result: result,
+      );
+    }
+
+    if (preset == ProjectPreset.clean) {
+      await routeGenerator.initializeProject(
+        project: project,
+        shellDefinition: shellDefinition,
+        conflictStrategy: options.conflictStrategy,
+        dryRun: options.dryRun,
       );
     }
 

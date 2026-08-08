@@ -5,21 +5,21 @@
       "id": "project.clean",
       "name": "Clean Flutter Project",
       "type": "project",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "manifest": "project/clean/manifest.json"
     },
     {
       "id": "feature.clean",
       "name": "Clean Architecture Feature",
       "type": "feature",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "manifest": "features/clean/manifest.json"
     },
     {
       "id": "feature.mvc",
       "name": "MVC Architecture Feature",
       "type": "feature",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "manifest": "features/mvc/manifest.json"
     },
     {
@@ -77,7 +77,7 @@
       "id": "project.vanilla",
       "name": "Vanilla Flutter Project For material support",
       "type": "project",
-      "version": "1.0.0",
+      "version": "1.2.0",
       "manifest": "project/vanilla/manifest.json"
     }
   ]

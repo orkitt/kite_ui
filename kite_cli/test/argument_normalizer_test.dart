@@ -27,6 +27,28 @@ void main() {
       );
     });
 
+
+    test('preserves branch target for feature shorthand', () {
+      expect(
+        normalizeArguments(const <String>[
+          '--feat:clean',
+          'details',
+          '--route',
+          '--into',
+          'blog',
+        ]),
+        const <String>[
+          'feature',
+          'details',
+          '--architecture',
+          'clean',
+          '--route',
+          '--into',
+          'blog',
+        ],
+      );
+    });
+
     test('normalizes widget shorthand', () {
       expect(
         normalizeArguments(const <String>['--widget', '[button,card,avater]']),

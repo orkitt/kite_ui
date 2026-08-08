@@ -1,6 +1,7 @@
 schema_version: 1
 
 project:
+  preset: clean
   source_directory: lib
 
 architecture:
@@ -14,6 +15,10 @@ state_management:
 routing:
   type: go_router
   auto_register_features: true
+  shell:
+    enabled: false
+    branches: []
+  routes: []
 
 serialization:
   type: json_serializable

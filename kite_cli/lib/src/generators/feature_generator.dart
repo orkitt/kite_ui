@@ -1,5 +1,6 @@
 import '../generation/file_writer.dart';
 import '../generation/generation_result.dart';
+import '../generation/managed_template_filter.dart';
 import '../generation/project_manifest.dart';
 import '../generation/template_planner.dart';
 import '../logging/kite_logger.dart';
@@ -8,10 +9,11 @@ import '../process/dart_formatter.dart';
 import '../process/dependency_installer.dart';
 import '../project/flutter_project.dart';
 import '../project/kite_config.dart';
+import '../routing/route_generator.dart';
+import '../routing/route_target.dart';
 import '../templates/template_store.dart';
 import '../version.dart';
 import 'generation_options.dart';
-import 'route_registry_updater.dart';
 
 final class FeatureGenerator {
   const FeatureGenerator({
@@ -19,7 +21,8 @@ final class FeatureGenerator {
     this.planner = const TemplatePlanner(),
     this.fileWriter = const FileWriter(),
     this.manifestStore = const ProjectManifestStore(),
-    this.routeRegistryUpdater = const RouteRegistryUpdater(),
+    this.managedTemplateFilter = const ManagedTemplateFilter(),
+    this.routeGenerator = const RouteGenerator(),
     this.dependencyInstaller = const DependencyInstaller(),
     this.formatter = const DartFormatter(),
     this.logger = const KiteLogger(),
@@ -29,7 +32,8 @@ final class FeatureGenerator {
   final TemplatePlanner planner;
   final FileWriter fileWriter;
   final ProjectManifestStore manifestStore;
-  final RouteRegistryUpdater routeRegistryUpdater;
+  final ManagedTemplateFilter managedTemplateFilter;
+  final RouteGenerator routeGenerator;
   final DependencyInstaller dependencyInstaller;
   final DartFormatter formatter;
   final KiteLogger logger;
@@ -39,6 +43,7 @@ final class FeatureGenerator {
     required String featureName,
     required String architecture,
     required bool includeRoute,
+    RouteTarget routeTarget = const RouteTarget.root(),
     required bool includeJsonSerialization,
     required GenerationOptions options,
   }) async {
@@ -50,13 +55,18 @@ final class FeatureGenerator {
         'Unsupported feature architecture.',
       );
     }
+    if (!includeRoute && !routeTarget.isRoot) {
+      throw ArgumentError('--into requires --route.');
+    }
 
     final feature = NameConverter(featureName);
     final config = KiteConfig.load(project.root);
     if (includeRoute) {
-      routeRegistryUpdater.ensureAvailable(
-        projectRoot: project.root,
-        sourceDirectory: config.sourceDirectory,
+      routeGenerator.validateFeatureRegistration(
+        project: project,
+        feature: feature,
+        architecture: architecture,
+        target: routeTarget,
       );
     }
 
@@ -82,9 +92,16 @@ final class FeatureGenerator {
         'date': DateTime.now().toUtc().toIso8601String(),
       },
     };
+    final generationTemplates = await managedTemplateFilter
+        .excludeInstalledDependencies(
+          projectRoot: project.root,
+          rootTemplateId: templateId,
+          templates: templates,
+          variables: variables,
+        );
     final plan = await planner.buildResolved(
       rootTemplateId: templateId,
-      templates: templates,
+      templates: generationTemplates,
       variables: variables,
     );
     final result = await fileWriter.write(
@@ -103,20 +120,20 @@ final class FeatureGenerator {
       );
     }
 
-    if (includeRoute && !options.dryRun) {
-      await routeRegistryUpdater.addFeatureRoute(
-        projectRoot: project.root,
+    if (includeRoute) {
+      await routeGenerator.registerFeature(
+        project: project,
         feature: feature,
-        sourceDirectory: config.sourceDirectory,
-        featureDirectory: config.featureDirectory,
         architecture: architecture,
+        target: routeTarget,
+        dryRun: options.dryRun,
       );
     }
 
     if (options.installDependencies && !options.dryRun) {
       final dependencies = <String>{};
       final devDependencies = <String>{};
-      for (final template in templates) {
+      for (final template in generationTemplates) {
         dependencies.addAll(template.manifest.dependencies);
         devDependencies.addAll(template.manifest.devDependencies);
       }

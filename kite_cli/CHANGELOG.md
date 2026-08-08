@@ -1,6 +1,11 @@
 ## 0.2.0
-* Added Vanilla support for pure material design.
-* Improved CLI logging for clearer generation progress and error messages.
+
+* Added central GoRouter generation under `lib/app/router/generated/`.
+* Added `kite init --shell` with `StatefulShellRoute.indexedStack` branches.
+* Added feature `--into <branch>` routing for Clean and MVC generators.
+* Added typed routing topology in `kite.yaml` and managed `AppRoutes` constants.
+* Added managed recursive-template dependency filtering to avoid repeated foundation conflicts.
+* Added routing parser, generation, dry-run, idempotency, MVC, and migration tests.
 
 ## 0.1.0
 

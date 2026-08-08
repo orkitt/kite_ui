@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "id": "feature.clean",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Feature-first clean architecture with empty contracts and manual Riverpod providers.",
   "dependencies": [],
   "devDependencies": [],
@@ -56,12 +56,6 @@
     {
       "template": "files/content.dart.tmpl",
       "target": "{{config.featureDirectory}}/{{feature.snake}}/presentation/widgets/{{feature.snake}}_content.dart",
-      "upgradePolicy": "replace"
-    },
-    {
-      "template": "files/routes.dart.tmpl",
-      "target": "{{config.featureDirectory}}/{{feature.snake}}/presentation/routes/{{feature.snake}}_routes.dart",
-      "condition": "includeRoute",
       "upgradePolicy": "replace"
     }
   ],

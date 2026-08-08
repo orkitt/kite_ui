@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'router/app_router.dart';
-import 'router/app_routes.dart';
-import 'router/navigator_observer.dart';
 import 'theme/app_theme.dart';
-
 
 /// Built with Kite 🪁
 /// Flutter foundations, architecture, and developer tooling.
 /// Learn more: https://kite.orkitt.dev
-class KiteApp extends StatelessWidget {
-  const KiteApp({super.key});
+
+class App extends ConsumerWidget {
+  const App({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Kite App',
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(appRouterProvider);
+    return MaterialApp.router(
+      title: 'example',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
-      navigatorKey: AppRouter.navigatorKey,
-      initialRoute: AppRoutes.home,
-      onGenerateRoute: AppRouter.onGenerateRoute,
-      navigatorObservers: <NavigatorObserver>[AppNavigatorObserver()],
+      routerConfig: router,
     );
   }
 }
