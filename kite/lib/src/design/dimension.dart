@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// Built with Kite 🪁
+/// Flutter foundations, architecture, and developer tooling.
+/// Learn more: https://kite.orkitt.dev
 /// Centralized application dimensions, paddings, radiuses, and layout gaps.
 ///
 /// Based on an 4px grid system.

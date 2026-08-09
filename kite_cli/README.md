@@ -33,7 +33,7 @@ kite init
 ## Documentation
 
 Full documentation, examples, architecture guides, and updates:
-
+**https://pub.dev/kite** and 
 **https://kite.orkitt.dev**
 
 ## License

@@ -5,18 +5,14 @@
 import 'package:flutter/material.dart';
 import 'package:kite/kite_ui.dart';
 
-
-
 class ShowcaseScreen extends StatefulWidget {
   const ShowcaseScreen({super.key});
 
   @override
-  State<ShowcaseScreen> createState() =>
-      _ShowcaseScreenState();
+  State<ShowcaseScreen> createState() => _ShowcaseScreenState();
 }
 
-class _ShowcaseScreenState
-    extends State<ShowcaseScreen> {
+class _ShowcaseScreenState extends State<ShowcaseScreen> {
   int _navigationIndex = 0;
   int _page = 2;
 
@@ -1110,11 +1106,7 @@ class _QuickActionCard extends StatelessWidget {
                 color: colors.primarySoft,
                 borderRadius: Dimensions.rad12,
               ),
-              child: Icon(
-                icon,
-                color: colors.primary,
-                size: Dimensions.iconMd,
-              ),
+              child: Icon(icon, color: colors.primary, size: Dimensions.iconMd),
             ),
             Dimensions.gapV16,
             Text(title, style: context.typography.title),
@@ -1204,11 +1196,7 @@ class _ActivityRow extends StatelessWidget {
               color: colors.primarySoft,
               borderRadius: Dimensions.rad12,
             ),
-            child: Icon(
-              icon,
-              color: colors.primary,
-              size: Dimensions.iconSm,
-            ),
+            child: Icon(icon, color: colors.primary, size: Dimensions.iconSm),
           ),
           Dimensions.gapH12,
           Expanded(child: Text(title, style: context.typography.bodySmall)),

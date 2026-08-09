@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'kolors.dart';
 
+/// Built with Kite 🪁
+/// Flutter foundations, architecture, and developer tooling.
+/// Learn more: https://kite.orkitt.dev
 @immutable
 class KiteTypography extends ThemeExtension<KiteTypography> {
   const KiteTypography({

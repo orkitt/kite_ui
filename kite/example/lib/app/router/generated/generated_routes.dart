@@ -7,9 +7,9 @@
 // https://kite.orkitt.dev
 // -----------------------------------------------------------------------------
 
+import 'package:example/features/showcase/presentation/screens/showcase_screen.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../shared/widgets/app_startup_view.dart';
 import '../app_routes.dart';
 import 'root_routes.dart';
 
@@ -18,7 +18,7 @@ final String generatedInitialLocation = AppRoutes.home;
 final List<RouteBase> generatedRoutes = <RouteBase>[
   GoRoute(
     path: AppRoutes.home,
-    builder: (context, state) => const AppStartupView(),
+    builder: (context, state) => const ShowcaseScreen(),
   ),
   ...rootRoutes,
 ];

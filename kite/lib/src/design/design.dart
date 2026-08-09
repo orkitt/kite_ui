@@ -4,3 +4,7 @@ export 'kolors.dart';
 export 'responsive.dart';
 export 'shapes.dart';
 export 'typography.dart';
+
+/// Built with Kite 🪁
+/// Flutter foundations, architecture, and developer tooling.
+/// Learn more: https://kite.orkitt.dev

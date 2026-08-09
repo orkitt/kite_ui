@@ -1,7 +1,7 @@
 // Kite UI Components
 // Copyright (c) 2026 Kite UI Contributors.
 // Licensed under the MIT License. Keep this notice in substantial copies.
-
+// Learn more: https://kite.orkitt.dev
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';

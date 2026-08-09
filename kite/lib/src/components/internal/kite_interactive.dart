@@ -31,7 +31,8 @@ class KitePressable extends StatefulWidget {
     this.mouseCursor,
   });
 
-  final Widget Function(BuildContext context, KiteInteractionState state) builder;
+  final Widget Function(BuildContext context, KiteInteractionState state)
+  builder;
   final VoidCallback? onTap;
   final String? semanticLabel;
   final bool autofocus;
@@ -68,7 +69,8 @@ class _KitePressableState extends State<KitePressable> {
       label: widget.semanticLabel,
       onTap: _enabled ? _activate : null,
       child: MouseRegion(
-        cursor: widget.mouseCursor ??
+        cursor:
+            widget.mouseCursor ??
             (_enabled ? SystemMouseCursors.click : SystemMouseCursors.basic),
         onEnter: (_) => setState(() => _hovered = true),
         onExit: (_) => setState(() {
@@ -95,7 +97,9 @@ class _KitePressableState extends State<KitePressable> {
             onTap: _enabled ? _activate : null,
             onTapDown: _enabled ? (_) => setState(() => _pressed = true) : null,
             onTapUp: _enabled ? (_) => setState(() => _pressed = false) : null,
-            onTapCancel: _enabled ? () => setState(() => _pressed = false) : null,
+            onTapCancel: _enabled
+                ? () => setState(() => _pressed = false)
+                : null,
             child: widget.builder(context, state),
           ),
         ),

@@ -1,7 +1,7 @@
 // Kite UI Components
 // Copyright (c) 2026 Kite UI Contributors.
 // Licensed under the MIT License. Keep this notice in substantial copies.
-
+// Learn more: https://kite.orkitt.dev
 export 'kite_accordion.dart';
 export 'kite_alert.dart';
 export 'kite_app_drawer.dart';
