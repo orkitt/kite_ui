@@ -1,13 +1,242 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart';
+
+import '../function/result.dart';
+
+/// Adds a lightweight guard around a normal [AsyncNotifier].
+///
+/// Best suited for operations that throw exceptions directly rather than
+/// returning a [Result].
+///
+/// Example:
+///
+/// ```dart
+/// class ProfileNotifier extends AsyncNotifier<Profile>
+///     with AsyncNotifierGuard<Profile> {
+///   @override
+///   Future<Profile> build() => loadProfile();
+///
+///   Future<Profile?> refreshProfile() {
+///     return runGuarded(loadProfile);
+///   }
+/// }
+/// ```
 mixin AsyncNotifierGuard<T> on AsyncNotifier<T> {
-  Future<void> runGuarded(
+  Future<T?> runGuarded(
     Future<T> Function() operation, {
     bool showLoading = true,
   }) async {
     if (showLoading) {
       state = const AsyncLoading();
     }
-    state = await AsyncValue.guard(operation);
+
+    final result = await AsyncValue.guard(operation);
+
+    state = result;
+
+    return result.value;
   }
 }
+
+/// Base notifier for user-triggered asynchronous actions.
+///
+/// Typical use cases:
+///
+/// - Login
+/// - Submit form
+/// - Delete
+/// - Verify
+/// - Upload
+/// - Download
+/// - Save
+///
+/// State lifecycle:
+///
+/// ```text
+/// AsyncData(null)
+///      ↓
+/// AsyncLoading()
+///      ↓
+/// AsyncData(value)
+///
+/// or
+///
+/// AsyncError(error)
+/// ```
+///
+/// The initial [null] value represents an idle action.
+abstract class AsyncActionNotifier<T> extends AsyncNotifier<T?> {
+  @override
+  FutureOr<T?> build() => null;
+
+  /// Executes a Result-based asynchronous operation.
+  ///
+  /// When [preventConcurrent] is true, subsequent calls are ignored while
+  /// an operation is already running.
+  ///
+  /// Returns the successful value or `null` when the operation fails.
+  @protected
+  Future<T?> execute(
+    Future<Result<T>> Function() operation, {
+    bool preventConcurrent = true,
+  }) async {
+    if (preventConcurrent && state.isLoading) {
+      return state.value;
+    }
+
+    state = const AsyncLoading();
+
+    try {
+      final result = await operation();
+
+      return switch (result) {
+        Success<T>(:final value) => _handleSuccess(value),
+        Failure<T>(:final failure) => _handleFailure(failure),
+      };
+    } catch (error, stackTrace) {
+      state = AsyncError(error, stackTrace);
+
+      return null;
+    }
+  }
+
+  T _handleSuccess(T value) {
+    state = AsyncData(value);
+
+    return value;
+  }
+
+  T? _handleFailure(Object failure) {
+    state = AsyncError(failure, StackTrace.current);
+
+    return null;
+  }
+
+  /// Restores this action to its idle state.
+  ///
+  /// Resetting does not trigger [AsyncActionListener.onSuccess].
+  void reset() {
+    state = const AsyncData(null);
+  }
+}
+
+/// Listens to an [AsyncActionNotifier] and exposes action completion callbacks.
+///
+/// Unlike listening to every [AsyncData] state, this listener only reacts
+/// when an action transitions from loading to success/error.
+///
+/// This prevents callbacks from firing for:
+///
+/// - Initial `AsyncData(null)`
+/// - [AsyncActionNotifier.reset]
+/// - Unrelated provider rebuilds
+///
+/// Example:
+///
+/// ```dart
+/// return AsyncActionListener<AuthSession>(
+///   provider: loginProvider,
+///   onSuccess: (context, session) {
+///     context.go(AppRoutes.home);
+///   },
+///   onError: (context, error, stackTrace) {
+///     ScaffoldMessenger.of(context).showSnackBar(
+///       SnackBar(
+///         content: Text(error.toString()),
+///       ),
+///     );
+///   },
+///   child: const LoginView(),
+/// );
+/// ```
+class AsyncActionListener<T> extends ConsumerWidget {
+  const AsyncActionListener({
+    required this.provider,
+    required this.child,
+    this.onSuccess,
+    this.onError,
+    super.key,
+  });
+
+  /// Provider representing the action state.
+  final ProviderListenable<AsyncValue<T?>> provider;
+
+  /// Widget rendered beneath the listener.
+  final Widget child;
+
+  /// Called when the action successfully completes with a non-null value.
+  final void Function(BuildContext context, T value)? onSuccess;
+
+  /// Called when the action completes with an error.
+  final void Function(
+    BuildContext context,
+    Object error,
+    StackTrace stackTrace,
+  )?
+  onError;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<AsyncValue<T?>>(provider, (previous, next) {
+      // Action callbacks should only happen after an actual operation.
+      //
+      // AsyncData(null) is our idle state, therefore normal provider
+      // initialization and reset() must not invoke callbacks.
+      if (previous?.isLoading != true) {
+        return;
+      }
+
+      switch (next) {
+        case AsyncData<T?>(:final value) when value != null:
+          onSuccess?.call(context, value);
+
+        case AsyncError<T?>(:final error, :final stackTrace):
+          onError?.call(context, error, stackTrace);
+
+        default:
+          break;
+      }
+    });
+
+    return child;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Example
+// -----------------------------------------------------------------------------
+
+// class LoginNotifier extends AsyncActionNotifier<AuthSession> {
+//   Future<AuthSession?> login(LoginRequest request) {
+//     return execute(
+//       () => ref.read(loginUseCaseProvider)(request),
+//     );
+//   }
+// }
+
+// final loginProvider =
+//     AsyncNotifierProvider<LoginNotifier, AuthSession?>(
+//   LoginNotifier.new,
+// );
+
+// -----------------------------------------------------------------------------
+// UI Usage
+// -----------------------------------------------------------------------------
+
+// return AsyncActionListener<AuthSession>(
+//   provider: loginProvider,
+//   onSuccess: (context, session) {
+//     context.go(AppRoutes.home);
+//   },
+//   onError: (context, error, stackTrace) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(
+//         content: Text(error.toString()),
+//       ),
+//     );
+//   },
+//   child: const LoginView(),
+// );

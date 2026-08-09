@@ -1,0 +1,154 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart';
+
+import '../function/result.dart';
+
+/// Built with Kite 🪁
+/// Flutter foundations, architecture, and developer tooling.
+/// Learn more: https://kite.orkitt.dev
+
+mixin AsyncNotifierGuard<T> on AsyncNotifier<T> {
+  Future<void> runGuarded(
+    Future<T> Function() operation, {
+    bool showLoading = true,
+  }) async {
+    if (showLoading) {
+      state = const AsyncLoading();
+    }
+    state = await AsyncValue.guard(operation);
+  }
+}
+
+abstract class AsyncActionNotifier<T> extends AsyncNotifier<T?> {
+  @override
+  FutureOr<T?> build() => null;
+
+  /// Executes a Result-based async operation and automatically
+  /// manages loading, success, and failure states.
+  @protected
+  Future<T?> execute(
+    Future<Result<T>> Function() operation, {
+    bool preventConcurrent = true,
+  }) async {
+    if (preventConcurrent && state.isLoading) {
+      return state.value;
+    }
+
+    state = const AsyncLoading();
+
+    try {
+      final result = await operation();
+
+      return switch (result) {
+        Success<T>(:final value) => _success(value),
+        Failure<T>(:final failure) => _failure(failure),
+      };
+    } catch (error, stackTrace) {
+      state = AsyncError(error, stackTrace);
+
+      return null;
+    }
+  }
+
+  T _success(T value) {
+    state = AsyncData(value);
+    return value;
+  }
+
+  T? _failure(Object failure) {
+    state = AsyncError(failure, StackTrace.current);
+
+    return null;
+  }
+
+  /// Clears the current action state.
+  void reset() {
+    state = const AsyncData(null);
+  }
+}
+
+///USAGE
+
+// class LoginNotifier extends AsyncActionNotifier<AuthSession> {
+//   Future<AuthSession?> login(LoginRequest request) {
+//     return execute(() => ref.read(loginUseCaseProvider)(request));
+//   }
+// }
+
+// final loginProvider = AsyncNotifierProvider<LoginNotifier, AuthSession?>(
+//   LoginNotifier.new,
+// );
+
+class AsyncProviderListener<T> extends ConsumerWidget {
+  const AsyncProviderListener({
+    super.key,
+    required this.provider,
+    required this.child,
+    this.onData,
+    this.onError,
+  });
+
+  final ProviderListenable<AsyncValue<T>> provider;
+
+  final Widget child;
+
+  final void Function(BuildContext context, T value)? onData;
+
+  final void Function(
+    BuildContext context,
+    Object error,
+    StackTrace stackTrace,
+  )?
+  onError;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<AsyncValue<T>>(provider, (previous, next) {
+      switch (next) {
+        case AsyncData<T>(:final value):
+          final sameValue =
+              previous?.hasValue == true && previous?.value == value;
+
+          if (!sameValue) {
+            onData?.call(context, value);
+          }
+
+        case AsyncError<T>(:final error, :final stackTrace):
+          final sameError =
+              previous?.hasError == true && previous?.error == error;
+
+          if (!sameError) {
+            onError?.call(context, error, stackTrace);
+          }
+
+        case AsyncLoading<T>():
+          break;
+      }
+    });
+
+    return child;
+  }
+}
+
+// Useage
+// return AsyncProviderListener<AuthSession?>(
+//   provider: loginProvider,
+//   onData: (context, session) {
+//     if (session == null) return;
+
+//     Navigator.of(context).pushReplacementNamed(
+//       '/home',
+//     );
+//   },
+//   onError: (context, error, stackTrace) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(
+//         content: Text(error.toString()),
+//       ),
+//     );
+//   },
+//   child: const LoginView(),
+// );

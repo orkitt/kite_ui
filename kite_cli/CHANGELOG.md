@@ -1,3 +1,9 @@
+## 0.4.0
+
+* Added some `Action` `Listener` patterns.
+* Improved `Functions` for pattern matching.
+* Added some extensions and overall improvement
+
 ## 0.3.0
 
 * Added `kite sync` to reconcile clean GoRouter infrastructure from `kite.yaml`.
