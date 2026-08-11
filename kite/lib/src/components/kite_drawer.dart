@@ -4,7 +4,8 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
 
 class KiteDrawer extends StatelessWidget {
   const KiteDrawer({
@@ -22,7 +23,7 @@ class KiteDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return SizedBox(
       width: width,

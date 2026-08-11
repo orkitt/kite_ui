@@ -4,7 +4,9 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/typography.dart';
 
 enum KiteBadgeVariant { neutral, primary, success, warning, error, info }
 
@@ -22,7 +24,7 @@ class KiteBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
     final foreground = switch (variant) {
       KiteBadgeVariant.primary => colors.primary,
       KiteBadgeVariant.success => colors.success,
@@ -52,7 +54,7 @@ class KiteBadge extends StatelessWidget {
           children: [
             if (icon != null) ...[
               Icon(icon, size: Dimensions.iconSm, color: foreground),
-              Dimensions.gapH4,
+              Dimensions.hBox4,
             ],
             Text(
               label,

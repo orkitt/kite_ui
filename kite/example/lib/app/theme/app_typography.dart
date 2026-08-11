@@ -11,19 +11,14 @@ abstract final class AppTypography {
       height: 1.2,
       letterSpacing: -0.8,
     ),
-    h1: const TextStyle(
+    heading: const TextStyle(
       fontSize: 24,
       fontWeight: FontWeight.w700,
       height: 1.25,
       letterSpacing: -0.5,
     ),
-    h2: const TextStyle(
-      fontSize: 20,
-      fontWeight: FontWeight.w600,
-      height: 1.3,
-      letterSpacing: -0.3,
-    ),
-    h3: const TextStyle(
+
+    section: const TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w600,
       height: 1.35,
@@ -35,7 +30,7 @@ abstract final class AppTypography {
       height: 1.4,
       letterSpacing: -0.1,
     ),
-    bodyLarge: const TextStyle(
+    lead: const TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w400,
       height: 1.5,
@@ -47,7 +42,7 @@ abstract final class AppTypography {
       height: 1.45,
       letterSpacing: 0.0,
     ),
-    bodySmall: const TextStyle(
+    paragraph: const TextStyle(
       fontSize: 13,
       fontWeight: FontWeight.w400,
       height: 1.4,

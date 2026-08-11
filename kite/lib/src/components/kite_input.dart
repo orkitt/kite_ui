@@ -5,7 +5,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
+import '../design/typography.dart';
 
 enum KiteInputType { text, password, phone, email, number }
 
@@ -89,7 +92,7 @@ class _KiteInputState extends State<KiteInput> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
     final type = context.typography;
     final password = widget.type == KiteInputType.password;
     final hasError = widget.errorText != null;
@@ -109,7 +112,7 @@ class _KiteInputState extends State<KiteInput> {
               color: hasError ? colors.error : colors.textPrimary,
             ),
           ),
-          Dimensions.gapV8,
+          Dimensions.vBox8,
         ],
         AnimatedContainer(
           duration: const Duration(milliseconds: 150),
@@ -145,7 +148,7 @@ class _KiteInputState extends State<KiteInput> {
                   ),
                   child: widget.prefixIcon!,
                 ),
-                Dimensions.gapH12,
+                Dimensions.hBox12,
               ],
               Expanded(
                 child: TextFormField(
@@ -187,7 +190,7 @@ class _KiteInputState extends State<KiteInput> {
                 ),
               ),
               if (password) ...[
-                Dimensions.gapH8,
+                Dimensions.hBox8,
                 _FieldAction(
                   icon: _obscure
                       ? Icons.visibility_off_outlined
@@ -195,7 +198,7 @@ class _KiteInputState extends State<KiteInput> {
                   onTap: () => setState(() => _obscure = !_obscure),
                 ),
               ] else if (widget.suffix != null) ...[
-                Dimensions.gapH8,
+                Dimensions.hBox8,
                 IconTheme(
                   data: IconThemeData(
                     color: colors.icon,
@@ -208,13 +211,13 @@ class _KiteInputState extends State<KiteInput> {
           ),
         ),
         if (widget.errorText != null) ...[
-          Dimensions.gapV8,
+          Dimensions.vBox8,
           Text(
             widget.errorText!,
             style: type.caption.copyWith(color: colors.error),
           ),
         ] else if (widget.helper != null) ...[
-          Dimensions.gapV8,
+          Dimensions.vBox8,
           Text(
             widget.helper!,
             style: type.caption.copyWith(color: colors.textSecondary),
@@ -264,7 +267,7 @@ class _FieldAction extends StatelessWidget {
       onTap: onTap,
       child: SizedBox.square(
         dimension: Dimensions.s32,
-        child: Icon(icon, size: Dimensions.iconSm, color: context.kolors.icon),
+        child: Icon(icon, size: Dimensions.iconSm, color: context.colors.icon),
       ),
     );
   }
@@ -327,7 +330,7 @@ class _KiteOtpInputState extends State<KiteOtpInput> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return Row(
       children: List.generate(widget.length, (index) {

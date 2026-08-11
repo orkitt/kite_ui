@@ -4,7 +4,10 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
+import '../design/typography.dart';
 import 'internal/kite_interactive.dart';
 
 class KiteToggle extends StatelessWidget {
@@ -25,7 +28,7 @@ class KiteToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return KitePressable(
       onTap: enabled ? () => onChanged(!selected) : null,
@@ -64,7 +67,7 @@ class KiteToggle extends StatelessWidget {
             children: [
               if (icon != null) ...[
                 Icon(icon, size: Dimensions.iconSm, color: foreground),
-                if (label != null) Dimensions.gapH8,
+                if (label != null) Dimensions.hBox8,
               ],
               if (label != null)
                 Text(

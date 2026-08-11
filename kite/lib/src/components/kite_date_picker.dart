@@ -4,7 +4,9 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/typography.dart';
 import 'kite_button.dart';
 import 'kite_calendar.dart';
 
@@ -25,11 +27,11 @@ class KiteDatePicker {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      barrierColor: context.kolors.textPrimary.withValues(alpha: .32),
+      barrierColor: context.colors.textPrimary.withValues(alpha: .32),
       builder: (sheetContext) {
         return StatefulBuilder(
           builder: (context, setState) {
-            final colors = context.kolors;
+            final colors = context.colors;
             return SafeArea(
               top: false,
               child: Container(
@@ -54,12 +56,12 @@ class KiteDatePicker {
                         ),
                       ),
                     ),
-                    Dimensions.gapV20,
+                    Dimensions.vBox20,
                     Text(
                       helpText ?? 'Choose date',
-                      style: context.typography.h3,
+                      style: context.typography.section,
                     ),
-                    Dimensions.gapV16,
+                    Dimensions.vBox16,
                     KiteCalendar(
                       selectedDate: selected,
                       firstDate: firstDate ?? DateTime(now.year - 100),
@@ -67,7 +69,7 @@ class KiteDatePicker {
                       onDateChanged: (value) =>
                           setState(() => selected = value),
                     ),
-                    Dimensions.gapV16,
+                    Dimensions.vBox16,
                     Row(
                       children: [
                         Expanded(
@@ -77,7 +79,7 @@ class KiteDatePicker {
                             onPressed: () => Navigator.of(context).pop(),
                           ),
                         ),
-                        Dimensions.gapH8,
+                        Dimensions.hBox8,
                         Expanded(
                           child: KiteButton(
                             label: 'Select',

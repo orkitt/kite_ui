@@ -4,7 +4,10 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
+import '../design/typography.dart';
 import 'kite_button.dart';
 
 class KiteDialog {
@@ -19,7 +22,7 @@ class KiteDialog {
     bool barrierDismissible = true,
     String? description,
   }) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return showGeneralDialog<T>(
       context: context,
@@ -79,8 +82,8 @@ class KiteDialog {
       title: title,
       content: Text(
         message,
-        style: context.typography.bodySmall.copyWith(
-          color: context.kolors.textSecondary,
+        style: context.typography.paragraph.copyWith(
+          color: context.colors.textSecondary,
         ),
       ),
       actions: [
@@ -119,7 +122,7 @@ class _KiteDialogSurface extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
     final type = context.typography;
 
     return DecoratedBox(
@@ -159,25 +162,25 @@ class _KiteDialogSurface extends StatelessWidget {
                   child: icon!,
                 ),
               ),
-              Dimensions.gapV16,
+              Dimensions.vBox16,
             ],
-            Text(title, style: type.h3),
+            Text(title, style: type.section),
             if (description != null) ...[
-              Dimensions.gapV8,
+              Dimensions.vBox8,
               Text(
                 description!,
-                style: type.bodySmall.copyWith(color: colors.textSecondary),
+                style: type.paragraph.copyWith(color: colors.textSecondary),
               ),
             ],
-            Dimensions.gapV20,
+            Dimensions.vBox20,
             content,
             if (actions.isNotEmpty) ...[
-              Dimensions.gapV24,
+              Dimensions.vBox24,
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   for (var i = 0; i < actions.length; i++) ...[
-                    if (i != 0) Dimensions.gapH8,
+                    if (i != 0) Dimensions.hBox8,
                     actions[i],
                   ],
                 ],

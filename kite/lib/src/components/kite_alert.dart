@@ -4,7 +4,10 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
+import '../design/typography.dart';
 import 'internal/kite_interactive.dart';
 
 enum KiteAlertVariant { neutral, info, success, warning, error }
@@ -29,7 +32,7 @@ class KiteAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
     final type = context.typography;
     final accent = switch (variant) {
       KiteAlertVariant.info => colors.info,
@@ -72,27 +75,27 @@ class KiteAlert extends StatelessWidget {
                 size: Dimensions.iconSm,
               ),
             ),
-            Dimensions.gapH12,
+            Dimensions.hBox12,
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(title, style: type.title),
                   if (message != null) ...[
-                    Dimensions.gapV4,
+                    Dimensions.vBox4,
                     Text(
                       message!,
-                      style: type.bodySmall.copyWith(
+                      style: type.paragraph.copyWith(
                         color: colors.textSecondary,
                       ),
                     ),
                   ],
-                  if (action != null) ...[Dimensions.gapV12, action!],
+                  if (action != null) ...[Dimensions.vBox12, action!],
                 ],
               ),
             ),
             if (onClose != null) ...[
-              Dimensions.gapH8,
+              Dimensions.hBox8,
               KitePressable(
                 onTap: onClose,
                 semanticLabel: 'Close alert',

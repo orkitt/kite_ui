@@ -72,7 +72,7 @@ ThemeData _buildKiteTheme({
       centerTitle: false,
       toolbarHeight: Dimensions.appBarHeight,
       titleSpacing: Dimensions.screenPadding,
-      titleTextStyle: type.h3,
+      titleTextStyle: type.section,
       iconTheme: IconThemeData(color: colors.icon, size: Dimensions.iconMd),
       actionsIconTheme: IconThemeData(
         color: colors.icon,
@@ -335,7 +335,7 @@ ThemeData _buildKiteTheme({
       iconColor: colors.icon,
       textColor: colors.textPrimary,
       titleTextStyle: type.title,
-      subtitleTextStyle: type.bodySmall,
+      subtitleTextStyle: type.paragraph,
       leadingAndTrailingTextStyle: type.labelSmall,
       shape: Shapes.rounded12,
     ),
@@ -434,7 +434,7 @@ ThemeData _buildKiteTheme({
       surfaceTintColor: Colors.transparent,
       elevation: 0,
       iconColor: colors.primary,
-      titleTextStyle: type.h3,
+      titleTextStyle: type.section,
       contentTextStyle: type.body.copyWith(color: colors.textSecondary),
       shape: Shapes.rounded20.copyWith(
         side: BorderSide(color: colors.borderSoft),
@@ -461,7 +461,7 @@ ThemeData _buildKiteTheme({
     dataTableTheme: DataTableThemeData(
       headingRowColor: WidgetStatePropertyAll(colors.muted),
       headingTextStyle: type.labelSmall.copyWith(color: colors.textPrimary),
-      dataTextStyle: type.bodySmall.copyWith(color: colors.textPrimary),
+      dataTextStyle: type.paragraph.copyWith(color: colors.textPrimary),
       dividerThickness: 1,
     ),
 
@@ -470,7 +470,7 @@ ThemeData _buildKiteTheme({
     // =========================================================================
     snackBarTheme: SnackBarThemeData(
       backgroundColor: colors.textPrimary,
-      contentTextStyle: type.bodySmall.copyWith(color: colors.background),
+      contentTextStyle: type.paragraph.copyWith(color: colors.background),
       actionTextColor: colors.primary,
       behavior: SnackBarBehavior.floating,
       elevation: 0,

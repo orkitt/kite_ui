@@ -5,70 +5,6 @@ import 'package:flutter/material.dart';
 /// Learn more: https://kite.orkitt.dev
 @immutable
 class KiteColors extends ThemeExtension<KiteColors> {
-  // ---------------------------------------------------------------------------
-  // Brand
-  // ---------------------------------------------------------------------------
-
-  final Color primary;
-  final Color onPrimary;
-
-  final Color secondary;
-  final Color onSecondary;
-
-  // ---------------------------------------------------------------------------
-  // Base
-  // ---------------------------------------------------------------------------
-
-  /// Main application/page background.
-  final Color background;
-
-  /// Main card, sheet, dialog, and content container background.
-  final Color card;
-
-  /// Generic low-emphasis neutral background.
-  ///
-  /// Useful for:
-  /// - subtle sections
-  /// - inactive controls
-  /// - neutral badges
-  /// - table headers
-  /// - toolbars
-  final Color muted;
-
-  /// Dedicated fill color for form controls.
-  ///
-  /// Useful for:
-  /// - TextField
-  /// - Dropdown
-  /// - Search fields
-  /// - TextArea
-  final Color inputFill;
-
-  // ---------------------------------------------------------------------------
-  // Border
-  // ---------------------------------------------------------------------------
-
-  /// The single source of truth for the application's border family.
-  final Color border;
-
-  // ---------------------------------------------------------------------------
-  // Content
-  // ---------------------------------------------------------------------------
-
-  final Color textPrimary;
-  final Color textSecondary;
-  final Color textDisabled;
-  final Color icon;
-
-  // ---------------------------------------------------------------------------
-  // Status
-  // ---------------------------------------------------------------------------
-
-  final Color success;
-  final Color warning;
-  final Color error;
-  final Color info;
-
   const KiteColors({
     required this.primary,
     required this.onPrimary,
@@ -90,15 +26,88 @@ class KiteColors extends ThemeExtension<KiteColors> {
   });
 
   // ===========================================================================
-  // Generated Brand Colors
+  // Brand
   // ===========================================================================
 
+  /// Primary brand and interactive color.
+  final Color primary;
+
+  /// Content displayed on [primary].
+  final Color onPrimary;
+
+  /// Secondary brand or supporting accent.
+  final Color secondary;
+
+  /// Content displayed on [secondary].
+  final Color onSecondary;
+
+  // ===========================================================================
+  // Base
+  // ===========================================================================
+
+  /// Main page and scaffold background.
+  final Color background;
+
+  /// Cards, sheets, dialogs, and content containers.
+  final Color card;
+
+  /// Low-emphasis neutral background.
+  final Color muted;
+
+  /// Form control and editable field background.
+  final Color inputFill;
+
+  // ===========================================================================
+  // Border
+  // ===========================================================================
+
+  /// Base border color used to derive border variants.
+  final Color border;
+
+  // ===========================================================================
+  // Content
+  // ===========================================================================
+
+  /// Primary readable content.
+  final Color textPrimary;
+
+  /// Supporting and secondary content.
+  final Color textSecondary;
+
+  /// Disabled content.
+  final Color textDisabled;
+
+  /// Default icon color.
+  final Color icon;
+
+  // ===========================================================================
+  // Status
+  // ===========================================================================
+
+  /// Positive or completed state.
+  final Color success;
+
+  /// Warning or attention state.
+  final Color warning;
+
+  /// Error or destructive state.
+  final Color error;
+
+  /// Informational state.
+  final Color info;
+
+  // ===========================================================================
+  // Generated Brand
+  // ===========================================================================
+
+  /// Subtle primary background.
   Color get primarySoft => soft(primary);
 
+  /// Subtle secondary background.
   Color get secondarySoft => soft(secondary);
 
   // ===========================================================================
-  // Generated Status Colors
+  // Generated Status
   // ===========================================================================
 
   Color get successSoft => soft(success);
@@ -110,27 +119,39 @@ class KiteColors extends ThemeExtension<KiteColors> {
   Color get infoSoft => soft(info);
 
   // ===========================================================================
-  // Generated Border Family
+  // Generated Borders
   // ===========================================================================
 
-  /// Low-emphasis border.
-  ///
-  /// Derived from [border] toward [card] to preserve the same visual family.
+  /// Quiet border for cards and subtle separation.
   Color get borderSoft => _mix(card, border, 0.55);
 
-  /// High-emphasis neutral border.
-  ///
-  /// Derived from [border] toward [textPrimary].
+  /// Strong border for emphasized or interactive boundaries.
   Color get borderStrong => _mix(border, textPrimary, 0.22);
 
   // ===========================================================================
-  // Color Utilities
+  // Generated Semantic
   // ===========================================================================
 
-  /// Creates a fully opaque subtle version of [color].
-  ///
-  /// Unlike alpha/opacity, the resulting color doesn't depend on whatever
-  /// happens to be rendered behind it.
+  /// Standard divider and separator color.
+  Color get divider => borderSoft;
+
+  /// Keyboard and accessibility focus color.
+  Color get focusRing => primary;
+
+  /// Modal, drawer, and dialog backdrop.
+  Color get overlay => textPrimary.withValues(alpha: 0.55);
+
+  /// Disabled or inactive component background.
+  Color get disabledFill => muted;
+
+  /// Selected low-emphasis background.
+  Color get selectedFill => primarySoft;
+
+  // ===========================================================================
+  // Utilities
+  // ===========================================================================
+
+  /// Creates an opaque subtle version of [color].
   Color soft(Color color, {double amount = 0.12}) {
     return _mix(background, color, amount);
   }
@@ -219,12 +240,20 @@ class KiteColors extends ThemeExtension<KiteColors> {
 // =============================================================================
 
 extension KiteColorsX on BuildContext {
-  KiteColors get kolors {
-    final kolors = Theme.of(this).extension<KiteColors>();
-    assert(
-      kolors != null,
-      'KiteColors is not registered in ThemeData.extensions.',
-    );
-    return kolors!;
+  KiteColors get colors {
+    final colors = Theme.of(this).extension<KiteColors>();
+    if (colors != null) return colors;
+
+    throw FlutterError.fromParts([
+      ErrorSummary('KiteColors is not registered in ThemeData.extensions.'),
+      ErrorDescription(
+        'A widget requested context.colors, but the active ThemeData does not '
+        'contain a KiteColors extension.',
+      ),
+      ErrorHint(
+        'Build the app theme with KiteTheme.use(...) or register KiteColors '
+        'in ThemeData.extensions.',
+      ),
+    ]);
   }
 }

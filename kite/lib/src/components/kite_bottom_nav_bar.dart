@@ -4,7 +4,10 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/typography.dart';
+import '../extensions/num_extensions.dart';
 import 'internal/kite_interactive.dart';
 
 class KiteBottomNavItem {
@@ -33,7 +36,7 @@ class KiteBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -74,7 +77,7 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return KitePressable(
       onTap: onTap,
@@ -102,7 +105,7 @@ class _NavItem extends StatelessWidget {
                 size: Dimensions.iconMd,
                 color: foreground,
               ),
-              Dimensions.gapV4,
+              Dimensions.vBox4,
               Text(
                 item.label,
                 maxLines: 1,

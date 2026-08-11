@@ -4,7 +4,9 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/typography.dart';
 import 'internal/kite_interactive.dart';
 
 class KiteCheckbox extends StatelessWidget {
@@ -23,7 +25,7 @@ class KiteCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return KitePressable(
       onTap: onChanged == null ? null : () => onChanged!(!value),
@@ -72,7 +74,7 @@ class KiteCheckbox extends StatelessWidget {
                 ),
               ),
               if (label != null) ...[
-                Dimensions.gapH12,
+                Dimensions.hBox12,
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,10 +88,10 @@ class KiteCheckbox extends StatelessWidget {
                         ),
                       ),
                       if (description != null) ...[
-                        Dimensions.gapV4,
+                        Dimensions.vBox4,
                         Text(
                           description!,
-                          style: context.typography.bodySmall.copyWith(
+                          style: context.typography.paragraph.copyWith(
                             color: state.enabled
                                 ? colors.textSecondary
                                 : colors.textDisabled,

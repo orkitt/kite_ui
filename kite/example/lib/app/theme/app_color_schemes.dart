@@ -3,7 +3,6 @@ import 'package:kite/kite_ui.dart';
 
 abstract final class AppColors {
   AppColors._();
-
   // ---------------------------------------------------------------------------
   // Light Theme Palette
   // ---------------------------------------------------------------------------

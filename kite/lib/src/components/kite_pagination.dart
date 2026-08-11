@@ -4,7 +4,9 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/typography.dart';
 import 'internal/kite_interactive.dart';
 
 class KitePagination extends StatelessWidget {
@@ -32,16 +34,16 @@ class KitePagination extends StatelessWidget {
           enabled: page > 1,
           onTap: () => onPageChanged(page - 1),
         ),
-        Dimensions.gapH8,
+        Dimensions.hBox8,
         for (var i = 0; i < visible.length; i++) ...[
           _PageButton(
             label: '${visible[i]}',
             selected: visible[i] == page,
             onTap: () => onPageChanged(visible[i]),
           ),
-          if (i != visible.length - 1) Dimensions.gapH4,
+          if (i != visible.length - 1) Dimensions.hBox4,
         ],
-        Dimensions.gapH8,
+        Dimensions.hBox8,
         _PageButton(
           icon: Icons.chevron_right_rounded,
           enabled: page < totalPages,
@@ -75,7 +77,7 @@ class _PageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return KitePressable(
       onTap: enabled ? onTap : null,

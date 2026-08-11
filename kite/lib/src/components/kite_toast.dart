@@ -6,7 +6,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
+import '../design/typography.dart';
 
 enum KiteToastVariant { neutral, success, warning, error, info }
 
@@ -21,14 +24,17 @@ class KiteToast {
     required String message,
     String? title,
     KiteToastVariant variant = KiteToastVariant.neutral,
-    Duration duration = const Duration(seconds: 3),
+    Duration duration = const Duration(seconds: 4),
     VoidCallback? onTap,
+    VoidCallback? onAction,
+    String? actionLabel,
   }) {
     _activeEntry?.remove();
     _timer?.cancel();
 
     final overlay = Overlay.of(context);
     late OverlayEntry entry;
+
     entry = OverlayEntry(
       builder: (overlayContext) {
         return _ToastOverlay(
@@ -36,9 +42,14 @@ class KiteToast {
           message: message,
           variant: variant,
           onTap: onTap,
+          onAction: onAction,
+          actionLabel: actionLabel,
           onClose: () {
             if (entry.mounted) entry.remove();
-            if (identical(_activeEntry, entry)) _activeEntry = null;
+            if (identical(_activeEntry, entry)) {
+              _activeEntry = null;
+              _timer?.cancel();
+            }
           },
         );
       },
@@ -46,9 +57,12 @@ class KiteToast {
 
     _activeEntry = entry;
     overlay.insert(entry);
+
     _timer = Timer(duration, () {
-      if (entry.mounted) entry.remove();
-      if (identical(_activeEntry, entry)) _activeEntry = null;
+      if (entry.mounted) {
+        // Trigger reverse animation before removing
+        _ToastOverlayState.activeState?.dismiss();
+      }
     });
   }
 }
@@ -60,38 +74,87 @@ class _ToastOverlay extends StatefulWidget {
     required this.onClose,
     this.title,
     this.onTap,
+    this.onAction,
+    this.actionLabel,
   });
 
   final String? title;
   final String message;
   final KiteToastVariant variant;
   final VoidCallback? onTap;
+  final VoidCallback? onAction;
+  final String? actionLabel;
   final VoidCallback onClose;
 
   @override
   State<_ToastOverlay> createState() => _ToastOverlayState();
 }
 
-class _ToastOverlayState extends State<_ToastOverlay> {
-  bool _visible = false;
+class _ToastOverlayState extends State<_ToastOverlay>
+    with SingleTickerProviderStateMixin {
+  static _ToastOverlayState? activeState;
+  late final AnimationController _controller;
+  late final Animation<double> _fadeAnimation;
+  late final Animation<Offset> _slideAnimation;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) setState(() => _visible = true);
+    activeState = this;
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 220),
+      reverseDuration: const Duration(milliseconds: 180),
+    );
+
+    _fadeAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOutCubic,
+      reverseCurve: Curves.easeInCubic,
+    );
+
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.35),
+      end: Offset.zero,
+    ).animate(_fadeAnimation);
+
+    _controller.forward();
+  }
+
+  void dismiss() {
+    if (!mounted) return;
+    _controller.reverse().then((_) {
+      if (mounted) widget.onClose();
     });
   }
 
   @override
+  void dispose() {
+    if (identical(activeState, this)) activeState = null;
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
-    final accent = switch (widget.variant) {
-      KiteToastVariant.success => colors.success,
-      KiteToastVariant.warning => colors.warning,
-      KiteToastVariant.error => colors.error,
-      KiteToastVariant.info => colors.info,
-      KiteToastVariant.neutral => colors.primary,
+    final colors = context.colors;
+
+    final (accent, icon) = switch (widget.variant) {
+      KiteToastVariant.success => (
+        colors.success,
+        Icons.check_circle_outline_rounded,
+      ),
+      KiteToastVariant.warning => (colors.warning, Icons.error_outline_rounded),
+      KiteToastVariant.error => (
+        colors.error,
+        Icons.remove_circle_outline_rounded,
+      ),
+      KiteToastVariant.info => (colors.info, Icons.info_outline_rounded),
+      KiteToastVariant.neutral => (
+        colors.primary,
+        Icons.notifications_none_rounded,
+      ),
     };
 
     return Positioned(
@@ -100,73 +163,145 @@ class _ToastOverlayState extends State<_ToastOverlay> {
       bottom: Dimensions.s24 + MediaQuery.paddingOf(context).bottom,
       child: SafeArea(
         top: false,
-        child: AnimatedSlide(
-          duration: const Duration(milliseconds: 180),
-          curve: Curves.easeOutCubic,
-          offset: _visible ? Offset.zero : const Offset(0, .25),
-          child: AnimatedOpacity(
-            duration: const Duration(milliseconds: 160),
-            opacity: _visible ? 1 : 0,
-            child: GestureDetector(
-              onTap: widget.onTap,
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 520),
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 440),
+            child: SlideTransition(
+              position: _slideAnimation,
+              child: FadeTransition(
+                opacity: _fadeAnimation,
+                child: Dismissible(
+                  key: UniqueKey(),
+                  direction: DismissDirection.horizontal,
+                  onDismissed: (_) => widget.onClose(),
                   child: Material(
                     color: Colors.transparent,
-                    child: DecoratedBox(
-                      decoration: ShapeDecoration(
-                        color: colors.card,
-                        shape: Shapes.rounded16.copyWith(
-                          side: BorderSide(color: colors.borderSoft),
+                    child: InkWell(
+                      onTap: widget.onTap,
+                      borderRadius: Dimensions.rad16,
+                      highlightColor: Colors.transparent,
+                      splashColor: colors.primary.withValues(alpha: 0.04),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 12,
                         ),
-                        shadows: [
-                          BoxShadow(
-                            color: colors.textPrimary.withValues(alpha: .12),
-                            blurRadius: Dimensions.s24,
-                            offset: const Offset(0, Dimensions.s8),
+                        decoration: ShapeDecoration(
+                          color: colors.card,
+                          shape: Shapes.rounded16.copyWith(
+                            side: BorderSide(
+                              color:
+                                  colors.borderSoft ??
+                                  colors.textPrimary.withValues(alpha: 0.08),
+                              width: 1,
+                            ),
                           ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: Dimensions.p16,
+                          shadows: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.04),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.08),
+                              blurRadius: 24,
+                              offset: const Offset(0, 8),
+                            ),
+                          ],
+                        ),
                         child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            // Refined Variant Icon Container
                             Container(
-                              width: Dimensions.s8,
-                              height: Dimensions.s40,
+                              width: Dimensions.s32,
+                              height: Dimensions.s32,
+                              alignment: Alignment.center,
                               decoration: BoxDecoration(
+                                color: accent.withValues(alpha: 0.1),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                icon,
+                                size: Dimensions.iconSm,
                                 color: accent,
-                                borderRadius: Dimensions.radFull,
                               ),
                             ),
-                            Dimensions.gapH12,
+
+                            Dimensions.hBox12,
+
+                            // Message & Optional Title
                             Expanded(
                               child: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   if (widget.title != null) ...[
                                     Text(
                                       widget.title!,
-                                      style: context.typography.label,
+                                      style: context.typography.label.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: -0.1,
+                                      ),
                                     ),
-                                    Dimensions.gapV4,
+                                    const SizedBox(height: 2),
                                   ],
                                   Text(
                                     widget.message,
-                                    style: context.typography.bodySmall,
+                                    style: context.typography.paragraph
+                                        .copyWith(
+                                          color: widget.title != null
+                                              ? colors.textSecondary
+                                              : colors.textPrimary,
+                                          fontSize: 13,
+                                          height: 1.35,
+                                        ),
                                   ),
                                 ],
                               ),
                             ),
-                            Dimensions.gapH12,
-                            GestureDetector(
-                              onTap: widget.onClose,
-                              child: Icon(
-                                Icons.close_rounded,
-                                size: Dimensions.iconSm,
-                                color: colors.icon,
+
+                            // Optional Action Button
+                            if (widget.onAction != null &&
+                                widget.actionLabel != null) ...[
+                              Dimensions.hBox8,
+                              TextButton(
+                                onPressed: () {
+                                  widget.onAction?.call();
+                                  dismiss();
+                                },
+                                style: TextButton.styleFrom(
+                                  visualDensity: VisualDensity.compact,
+                                  foregroundColor: accent,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 4,
+                                  ),
+                                  textStyle: context.typography.label.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                                child: Text(widget.actionLabel!),
+                              ),
+                            ],
+
+                            Dimensions.hBox8,
+
+                            // Close Button
+                            InkWell(
+                              onTap: dismiss,
+                              borderRadius: Dimensions.radFull,
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Icon(
+                                  Icons.close_rounded,
+                                  size: Dimensions.iconSm,
+                                  color: colors.textSecondary.withValues(
+                                    alpha: 0.7,
+                                  ),
+                                ),
                               ),
                             ),
                           ],

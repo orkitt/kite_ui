@@ -4,7 +4,9 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/typography.dart';
 import 'internal/kite_interactive.dart';
 import 'kite_badge.dart';
 import 'kite_drawer.dart';
@@ -45,7 +47,7 @@ class KiteAppDrawer extends StatelessWidget {
       child: ListView.separated(
         padding: Dimensions.p12,
         itemCount: destinations.length,
-        separatorBuilder: (_, _) => Dimensions.gapV4,
+        separatorBuilder: (_, _) => Dimensions.vBox4,
         itemBuilder: (context, index) {
           final item = destinations[index];
           return _DrawerDestinationRow(
@@ -72,7 +74,7 @@ class _DrawerDestinationRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return KitePressable(
       onTap: onTap,
@@ -101,7 +103,7 @@ class _DrawerDestinationRow extends StatelessWidget {
                 size: Dimensions.iconMd,
                 color: selected ? colors.primary : colors.icon,
               ),
-              Dimensions.gapH12,
+              Dimensions.hBox12,
               Expanded(
                 child: Text(
                   item.label,
@@ -109,7 +111,7 @@ class _DrawerDestinationRow extends StatelessWidget {
                 ),
               ),
               if (item.badge != null) ...[
-                Dimensions.gapH8,
+                Dimensions.hBox8,
                 KiteBadge(
                   item.badge!,
                   variant: selected

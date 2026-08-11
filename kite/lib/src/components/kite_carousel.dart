@@ -2,9 +2,12 @@
 // Copyright (c) 2026 Kite UI Contributors.
 // Licensed under the MIT License. Keep this notice in substantial copies.
 // Learn more: https://kite.orkitt.dev
+
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../extensions/num_extensions.dart';
 
 class KiteCarousel extends StatefulWidget {
   const KiteCarousel({
@@ -42,7 +45,7 @@ class _KiteCarouselState extends State<KiteCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
     return Column(
       children: [
         SizedBox(
@@ -56,7 +59,7 @@ class _KiteCarouselState extends State<KiteCarousel> {
           ),
         ),
         if (widget.showIndicator && widget.children.length > 1) ...[
-          Dimensions.gapV12,
+          Dimensions.vBox12,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(widget.children.length, (index) {

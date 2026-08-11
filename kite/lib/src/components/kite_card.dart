@@ -4,14 +4,17 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
+import '../design/typography.dart';
 import 'internal/kite_interactive.dart';
 
 enum KiteCardVariant { surface, muted, outlined }
 
 class KiteCard extends StatelessWidget {
   const KiteCard({
-    required this.child,
+    this.child,
     super.key,
     this.title,
     this.subtitle,
@@ -23,7 +26,7 @@ class KiteCard extends StatelessWidget {
     this.variant = KiteCardVariant.surface,
   });
 
-  final Widget child;
+  final Widget? child;
   final String? title;
   final String? subtitle;
   final Widget? leading;
@@ -35,7 +38,7 @@ class KiteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     if (onTap == null) {
       return _surface(
@@ -53,7 +56,7 @@ class KiteCard extends StatelessWidget {
   }
 
   Widget _surface(BuildContext context, KiteInteractionState state) {
-    final colors = context.kolors;
+    final colors = context.colors;
     final type = context.typography;
     final baseColor = switch (variant) {
       KiteCardVariant.surface => colors.card,
@@ -95,29 +98,30 @@ class KiteCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (leading != null) ...[leading!, Dimensions.gapH12],
+                  if (leading != null) ...[leading!, Dimensions.hBox12],
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (title != null) Text(title!, style: type.title),
                         if (subtitle != null) ...[
-                          Dimensions.gapV4,
-                          Text(subtitle!, style: type.bodySmall),
+                          Dimensions.vBox4,
+                          Text(subtitle!, style: type.paragraph),
                         ],
                       ],
                     ),
                   ),
-                  if (trailing != null) ...[Dimensions.gapH12, trailing!],
+                  if (trailing != null) ...[Dimensions.hBox12, trailing!],
                 ],
               ),
-              Dimensions.gapV16,
+              Dimensions.vBox16,
             ],
-            child,
+
+            child ?? SizedBox(),
             if (footer != null) ...[
-              Dimensions.gapV16,
+              Dimensions.vBox16,
               Container(height: 1, color: colors.borderSoft),
-              Dimensions.gapV16,
+              Dimensions.vBox16,
               footer!,
             ],
           ],

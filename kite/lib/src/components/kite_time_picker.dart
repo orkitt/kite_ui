@@ -4,7 +4,10 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
+import '../design/typography.dart';
 import 'internal/kite_interactive.dart';
 import 'kite_button.dart';
 
@@ -19,7 +22,7 @@ class KiteTimePicker {
     return showModalBottomSheet<TimeOfDay>(
       context: context,
       backgroundColor: Colors.transparent,
-      barrierColor: context.kolors.textPrimary.withValues(alpha: .32),
+      barrierColor: context.colors.textPrimary.withValues(alpha: .32),
       builder: (context) => _TimePickerSheet(
         initialTime: initialTime ?? TimeOfDay.now(),
         title: helpText ?? 'Choose time',
@@ -55,7 +58,7 @@ class _TimePickerSheetState extends State<_TimePickerSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return SafeArea(
       top: false,
@@ -81,9 +84,9 @@ class _TimePickerSheetState extends State<_TimePickerSheet> {
                 ),
               ),
             ),
-            Dimensions.gapV20,
-            Text(widget.title, style: context.typography.h3),
-            Dimensions.gapV20,
+            Dimensions.vBox20,
+            Text(widget.title, style: context.typography.section),
+            Dimensions.vBox20,
             Row(
               children: [
                 Expanded(
@@ -98,7 +101,7 @@ class _TimePickerSheetState extends State<_TimePickerSheet> {
                 ),
                 Padding(
                   padding: Dimensions.px8,
-                  child: Text(':', style: context.typography.h1),
+                  child: Text(':', style: context.typography.heading),
                 ),
                 Expanded(
                   child: _TimeNumber(
@@ -111,7 +114,7 @@ class _TimePickerSheetState extends State<_TimePickerSheet> {
                 ),
               ],
             ),
-            Dimensions.gapV16,
+            Dimensions.vBox16,
             Container(
               padding: Dimensions.p4,
               decoration: ShapeDecoration(
@@ -127,7 +130,7 @@ class _TimePickerSheetState extends State<_TimePickerSheet> {
                       onTap: () => setState(() => _pm = false),
                     ),
                   ),
-                  Dimensions.gapH4,
+                  Dimensions.hBox4,
                   Expanded(
                     child: _PeriodButton(
                       label: 'PM',
@@ -138,7 +141,7 @@ class _TimePickerSheetState extends State<_TimePickerSheet> {
                 ],
               ),
             ),
-            Dimensions.gapV20,
+            Dimensions.vBox20,
             Row(
               children: [
                 Expanded(
@@ -148,7 +151,7 @@ class _TimePickerSheetState extends State<_TimePickerSheet> {
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ),
-                Dimensions.gapH8,
+                Dimensions.hBox8,
                 Expanded(
                   child: KiteButton(
                     label: 'Select',
@@ -188,7 +191,7 @@ class _TimeNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
     final text = twoDigits ? value.toString().padLeft(2, '0') : '$value';
 
     return DecoratedBox(
@@ -203,11 +206,11 @@ class _TimeNumber extends StatelessWidget {
         child: Column(
           children: [
             Text(label, style: context.typography.caption),
-            Dimensions.gapV8,
+            Dimensions.vBox8,
             _MiniControl(icon: Icons.keyboard_arrow_up_rounded, onTap: onPlus),
-            Dimensions.gapV8,
-            Text(text, style: context.typography.h1),
-            Dimensions.gapV8,
+            Dimensions.vBox8,
+            Text(text, style: context.typography.heading),
+            Dimensions.vBox8,
             _MiniControl(
               icon: Icons.keyboard_arrow_down_rounded,
               onTap: onMinus,
@@ -227,7 +230,7 @@ class _MiniControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
     return KitePressable(
       onTap: onTap,
       builder: (context, state) => AnimatedContainer(
@@ -259,7 +262,7 @@ class _PeriodButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
     return KitePressable(
       onTap: onTap,
       semanticLabel: label,

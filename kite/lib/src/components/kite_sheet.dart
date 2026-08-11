@@ -4,7 +4,9 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/typography.dart';
 
 class KiteSheet {
   KiteSheet._();
@@ -17,7 +19,7 @@ class KiteSheet {
     bool isScrollControlled = true,
     bool useSafeArea = true,
   }) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return showModalBottomSheet<T>(
       context: context,
@@ -26,7 +28,7 @@ class KiteSheet {
       backgroundColor: Colors.transparent,
       barrierColor: colors.textPrimary.withValues(alpha: .32),
       builder: (sheetContext) {
-        final sheetColors = sheetContext.kolors;
+        final sheetColors = sheetContext.colors;
         final type = sheetContext.typography;
 
         return Container(
@@ -48,7 +50,7 @@ class KiteSheet {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Dimensions.gapV12,
+                Dimensions.vBox12,
                 Align(
                   child: Container(
                     width: Dimensions.s40,
@@ -60,14 +62,14 @@ class KiteSheet {
                   ),
                 ),
                 if (title != null) ...[
-                  Dimensions.gapV20,
-                  Text(title, style: type.h3),
+                  Dimensions.vBox20,
+                  Text(title, style: type.section),
                   if (description != null) ...[
-                    Dimensions.gapV8,
-                    Text(description, style: type.bodySmall),
+                    Dimensions.vBox8,
+                    Text(description, style: type.paragraph),
                   ],
                 ],
-                Dimensions.gapV20,
+                Dimensions.vBox20,
                 child,
               ],
             ),

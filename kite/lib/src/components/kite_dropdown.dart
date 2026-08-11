@@ -4,7 +4,10 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
+import '../design/typography.dart';
 import 'internal/kite_interactive.dart';
 
 class KiteDropdown<T> extends StatelessWidget {
@@ -33,7 +36,7 @@ class KiteDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
     final type = context.typography;
     final selectedLabel = value == null ? null : itemLabel(value as T);
 
@@ -42,7 +45,7 @@ class KiteDropdown<T> extends StatelessWidget {
       children: [
         if (label != null) ...[
           Text(label!, style: type.labelSmall),
-          Dimensions.gapV8,
+          Dimensions.vBox8,
         ],
         KitePressable(
           semanticLabel: label ?? hint,
@@ -77,7 +80,7 @@ class KiteDropdown<T> extends StatelessWidget {
                       ),
                       child: prefixIcon!,
                     ),
-                    Dimensions.gapH12,
+                    Dimensions.hBox12,
                   ],
                   Expanded(
                     child: Text(
@@ -91,7 +94,7 @@ class KiteDropdown<T> extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Dimensions.gapH12,
+                  Dimensions.hBox12,
                   AnimatedRotation(
                     duration: const Duration(milliseconds: 140),
                     turns: state.pressed ? .5 : 0,
@@ -114,10 +117,10 @@ class KiteDropdown<T> extends StatelessWidget {
     final result = await showModalBottomSheet<T>(
       context: context,
       backgroundColor: Colors.transparent,
-      barrierColor: context.kolors.textPrimary.withValues(alpha: .32),
+      barrierColor: context.colors.textPrimary.withValues(alpha: .32),
       isScrollControlled: true,
       builder: (sheetContext) {
-        final colors = sheetContext.kolors;
+        final colors = sheetContext.colors;
         final type = sheetContext.typography;
 
         return SafeArea(
@@ -137,7 +140,7 @@ class KiteDropdown<T> extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Dimensions.gapV12,
+                Dimensions.vBox12,
                 Container(
                   width: Dimensions.s40,
                   height: Dimensions.s4,
@@ -153,7 +156,7 @@ class KiteDropdown<T> extends StatelessWidget {
                       Expanded(
                         child: Text(
                           sheetTitle ?? label ?? 'Select option',
-                          style: type.h3,
+                          style: type.section,
                         ),
                       ),
                       GestureDetector(
@@ -176,7 +179,7 @@ class KiteDropdown<T> extends StatelessWidget {
                     padding: Dimensions.p8,
                     shrinkWrap: true,
                     itemCount: items.length,
-                    separatorBuilder: (_, _) => Dimensions.gapV4,
+                    separatorBuilder: (_, _) => Dimensions.vBox4,
                     itemBuilder: (context, index) {
                       final item = items[index];
                       final selected = item == value;
@@ -224,7 +227,7 @@ class KiteDropdown<T> extends StatelessWidget {
                     },
                   ),
                 ),
-                Dimensions.gapV8,
+                Dimensions.vBox8,
               ],
             ),
           ),

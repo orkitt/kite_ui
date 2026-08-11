@@ -4,7 +4,7 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/kolors.dart';
 
 class KiteSeparator extends StatelessWidget {
   const KiteSeparator({super.key, this.vertical = false, this.space = 1});
@@ -14,7 +14,7 @@ class KiteSeparator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = context.kolors.borderSoft;
+    final color = context.colors.borderSoft;
     return SizedBox(
       width: vertical ? space : double.infinity,
       height: vertical ? double.infinity : space,

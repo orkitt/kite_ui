@@ -4,7 +4,10 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
+import '../design/typography.dart';
 import 'internal/kite_interactive.dart';
 
 class KiteContextMenuItem<T> {
@@ -133,7 +136,7 @@ class _MenuSurface<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return DecoratedBox(
       decoration: ShapeDecoration(
@@ -171,7 +174,7 @@ class _MenuItem<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
     final foreground = !item.enabled
         ? colors.textDisabled
         : item.destructive
@@ -198,7 +201,7 @@ class _MenuItem<T> extends StatelessWidget {
             children: [
               if (item.icon != null) ...[
                 Icon(item.icon, size: Dimensions.iconSm, color: foreground),
-                Dimensions.gapH12,
+                Dimensions.hBox12,
               ],
               Expanded(
                 child: Text(

@@ -4,7 +4,10 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
+import '../design/typography.dart';
 import 'internal/kite_interactive.dart';
 
 class KiteAccordionItem {
@@ -57,7 +60,7 @@ class _KiteAccordionState extends State<KiteAccordion> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return DecoratedBox(
       decoration: ShapeDecoration(
@@ -99,7 +102,7 @@ class _AccordionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return Column(
       children: [
@@ -121,12 +124,12 @@ class _AccordionRow extends StatelessWidget {
                       ),
                       child: item.leading!,
                     ),
-                    Dimensions.gapH12,
+                    Dimensions.hBox12,
                   ],
                   Expanded(
                     child: Text(item.title, style: context.typography.title),
                   ),
-                  Dimensions.gapH12,
+                  Dimensions.hBox12,
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 160),
                     width: Dimensions.s32,

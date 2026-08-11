@@ -4,7 +4,10 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
+import '../design/typography.dart';
 import 'internal/kite_interactive.dart';
 
 class KiteTabItem {
@@ -50,7 +53,7 @@ class _KiteTabsState extends State<KiteTabs> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     final controls = Container(
       padding: Dimensions.p4,
@@ -71,7 +74,7 @@ class _KiteTabsState extends State<KiteTabs> {
     return Column(
       children: [
         controls,
-        Dimensions.gapV16,
+        Dimensions.vBox16,
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 180),
           switchInCurve: Curves.easeOutCubic,
@@ -101,7 +104,7 @@ class _KiteTabsState extends State<KiteTabs> {
         onTap: () => _select(index),
       );
       return [
-        if (index != 0) Dimensions.gapH4,
+        if (index != 0) Dimensions.hBox4,
         expanded ? Expanded(child: tab) : tab,
       ];
     }).expand((element) => element).toList();
@@ -121,7 +124,7 @@ class _TabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return KitePressable(
       onTap: onTap,
@@ -167,7 +170,7 @@ class _TabButton extends StatelessWidget {
                   size: Dimensions.iconSm,
                   color: selected ? colors.primary : colors.icon,
                 ),
-                Dimensions.gapH8,
+                Dimensions.hBox8,
               ],
               Text(
                 item.label,

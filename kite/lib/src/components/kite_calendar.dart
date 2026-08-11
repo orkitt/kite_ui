@@ -4,7 +4,10 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
+import '../design/typography.dart';
 import 'internal/kite_interactive.dart';
 
 class KiteCalendar extends StatefulWidget {
@@ -55,7 +58,7 @@ class _KiteCalendarState extends State<KiteCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return DecoratedBox(
       decoration: ShapeDecoration(
@@ -76,9 +79,9 @@ class _KiteCalendarState extends State<KiteCalendar> {
               onPrevious: _previousMonth,
               onNext: _nextMonth,
             ),
-            Dimensions.gapV16,
+            Dimensions.vBox16,
             const _WeekHeader(),
-            Dimensions.gapV8,
+            Dimensions.vBox8,
             _MonthGrid(
               month: _visibleMonth,
               selectedDate: widget.selectedDate,
@@ -165,7 +168,7 @@ class _CalendarHeader extends StatelessWidget {
           enabled: canGoPrevious,
           onTap: onPrevious,
         ),
-        Dimensions.gapH8,
+        Dimensions.hBox8,
         _CalendarArrow(
           icon: Icons.chevron_right_rounded,
           enabled: canGoNext,
@@ -189,7 +192,7 @@ class _CalendarArrow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return KitePressable(
       onTap: enabled ? onTap : null,
@@ -316,7 +319,7 @@ class _DayCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return KitePressable(
       onTap: enabled ? onTap : null,

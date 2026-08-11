@@ -40,7 +40,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -62,7 +62,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
               },
             ),
           ),
-          Dimensions.gapH4,
+          Dimensions.hBox4,
           KiteIconButton(
             icon: Icons.notifications_none_rounded,
             tooltip: 'Notifications',
@@ -75,7 +75,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
               );
             },
           ),
-          Dimensions.gapH8,
+          Dimensions.hBox8,
         ],
       ),
       body: SafeArea(
@@ -89,9 +89,9 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
               sliver: SliverList.list(
                 children: [
                   _buildIntro(context),
-                  Dimensions.gapV24,
+                  Dimensions.vBox24,
                   _buildBreadcrumb(context),
-                  Dimensions.gapV24,
+                  Dimensions.vBox24,
                   if (_showAlert) ...[
                     KiteAlert(
                       title: 'Design system connected',
@@ -106,7 +106,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
                         onPressed: () => _showGuidanceSheet(context),
                       ),
                     ),
-                    Dimensions.gapV24,
+                    Dimensions.vBox24,
                   ],
                   _SectionTitle(
                     title: 'Quick actions',
@@ -125,29 +125,29 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
               padding: Dimensions.p16,
               sliver: SliverList.list(
                 children: [
-                  Dimensions.gapV8,
+                  Dimensions.vBox8,
                   _buildButtonsCard(context),
-                  Dimensions.gapV24,
+                  Dimensions.vBox24,
                   _buildIdentityCard(context),
-                  Dimensions.gapV24,
+                  Dimensions.vBox24,
                   _buildFormCard(context),
-                  Dimensions.gapV24,
+                  Dimensions.vBox24,
                   _buildSelectionCard(context),
-                  Dimensions.gapV24,
+                  Dimensions.vBox24,
                   _buildProgressCard(context),
-                  Dimensions.gapV24,
+                  Dimensions.vBox24,
                   _buildCarouselSection(context),
-                  Dimensions.gapV24,
+                  Dimensions.vBox24,
                   _buildCalendarCard(context),
-                  Dimensions.gapV24,
+                  Dimensions.vBox24,
                   _buildAccordionSection(context),
-                  Dimensions.gapV24,
+                  Dimensions.vBox24,
                   _buildTabsSection(context),
-                  Dimensions.gapV24,
+                  Dimensions.vBox24,
                   _buildContextMenuSection(context),
-                  Dimensions.gapV24,
+                  Dimensions.vBox24,
                   _buildPaginationCard(context),
-                  Dimensions.gapV32,
+                  Dimensions.vBox32,
                 ],
               ),
             ),
@@ -193,13 +193,13 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
       header: Row(
         children: [
           const KiteAvatar(name: 'Kite UI'),
-          Dimensions.gapH12,
+          Dimensions.hBox12,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Kite Design System', style: context.typography.title),
-                Dimensions.gapV4,
+                Dimensions.vBox4,
                 Text('Component showcase', style: context.typography.caption),
               ],
             ),
@@ -209,7 +209,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
       footer: Row(
         children: [
           const KiteAvatar(name: 'AR Rahman'),
-          Dimensions.gapH12,
+          Dimensions.hBox12,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,7 +241,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
   }
 
   Widget _buildIntro(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return KiteCard(
       padding: Dimensions.p20,
@@ -264,7 +264,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
                   size: Dimensions.iconMd,
                 ),
               ),
-              Dimensions.gapH12,
+              Dimensions.hBox12,
               const Expanded(
                 child: Wrap(
                   spacing: Dimensions.s8,
@@ -278,16 +278,19 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
               ),
             ],
           ),
-          Dimensions.gapV20,
-          Text('Build calm, premium interfaces.', style: context.typography.h1),
-          Dimensions.gapV8,
+          Dimensions.vBox20,
+          Text(
+            'Build calm, premium interfaces.',
+            style: context.typography.heading,
+          ),
+          Dimensions.vBox8,
           Text(
             'A practical preview of how Kite components work together without local colors, spacing systems, or one-off component styling.',
             style: context.typography.body.copyWith(
               color: colors.textSecondary,
             ),
           ),
-          Dimensions.gapV20,
+          Dimensions.vBox20,
           Row(
             children: [
               Expanded(
@@ -298,7 +301,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
                   onPressed: () => _showGuidanceSheet(context),
                 ),
               ),
-              Dimensions.gapH12,
+              Dimensions.hBox12,
               KiteIconButton(
                 icon: Icons.ios_share_rounded,
                 tooltip: 'Share',
@@ -400,7 +403,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
   }
 
   Widget _buildIdentityCard(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return KiteCard(
       title: 'Identity & status',
@@ -425,16 +428,16 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
                   ),
                 ),
               ),
-              Dimensions.gapH16,
+              Dimensions.hBox16,
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Maya Chen', style: context.typography.title),
-                    Dimensions.gapV4,
+                    Dimensions.vBox4,
                     Text(
                       'Product designer · Online now',
-                      style: context.typography.bodySmall,
+                      style: context.typography.paragraph,
                     ),
                   ],
                 ),
@@ -446,9 +449,9 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
               ),
             ],
           ),
-          Dimensions.gapV16,
+          Dimensions.vBox16,
           const KiteSeparator(),
-          Dimensions.gapV16,
+          Dimensions.vBox16,
           const Wrap(
             spacing: Dimensions.s8,
             runSpacing: Dimensions.s8,
@@ -478,14 +481,14 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
             type: KiteInputType.email,
             prefixIcon: Icon(Icons.mail_outline_rounded),
           ),
-          Dimensions.gapV12,
+          Dimensions.vBox12,
           const KiteInput(
             label: 'Password',
             hint: 'Enter your password',
             type: KiteInputType.password,
             prefixIcon: Icon(Icons.lock_outline_rounded),
           ),
-          Dimensions.gapV12,
+          Dimensions.vBox12,
           KiteDropdown<String>(
             label: 'Role',
             value: _role,
@@ -494,19 +497,19 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
             prefixIcon: const Icon(Icons.work_outline_rounded),
             onChanged: (value) => setState(() => _role = value),
           ),
-          Dimensions.gapV12,
+          Dimensions.vBox12,
           KiteTextArea(
             controller: _messageController,
             label: 'About you',
             hint: 'Write a short profile description...',
             maxLength: 180,
           ),
-          Dimensions.gapV16,
+          Dimensions.vBox16,
           Align(
             alignment: Alignment.centerLeft,
             child: Text('OTP preview', style: context.typography.label),
           ),
-          Dimensions.gapV8,
+          Dimensions.vBox8,
           KiteOtpInput(
             length: 4,
             autofocus: false,
@@ -534,7 +537,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
               },
             ),
           ),
-          Dimensions.gapH12,
+          Dimensions.hBox12,
           Expanded(
             child: KiteButton(
               label: 'Save changes',
@@ -567,7 +570,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
             description: 'Receive important product and account updates.',
             onChanged: (value) => setState(() => _notifications = value),
           ),
-          Dimensions.gapV4,
+          Dimensions.vBox4,
           KiteCheckbox(
             value: _acceptedTerms,
             label: 'Accept product updates',
@@ -575,7 +578,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
             onChanged: (value) =>
                 setState(() => _acceptedTerms = value ?? false),
           ),
-          Dimensions.gapV16,
+          Dimensions.vBox16,
           KiteSlider(
             label: 'Notification volume',
             value: _volume,
@@ -584,9 +587,9 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
 
             onChanged: (value) => setState(() => _volume = value),
           ),
-          Dimensions.gapV16,
+          Dimensions.vBox16,
           Text('Plan', style: context.typography.label),
-          Dimensions.gapV8,
+          Dimensions.vBox8,
           KiteRadioGroup<String>(
             value: _plan,
             onChanged: (value) => setState(() => _plan = value),
@@ -603,9 +606,9 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
               ),
             ],
           ),
-          Dimensions.gapV16,
+          Dimensions.vBox16,
           Text('Filters', style: context.typography.label),
-          Dimensions.gapV8,
+          Dimensions.vBox8,
           KiteToggleGroup<String>(
             selected: _filters,
             multiSelect: true,
@@ -628,7 +631,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
               ),
             ],
           ),
-          Dimensions.gapV12,
+          Dimensions.vBox12,
           KiteToggle(
             selected: _compactMode,
             label: 'Compact mode',
@@ -652,20 +655,20 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
             value: .82,
             showValue: true,
           ),
-          Dimensions.gapV20,
+          Dimensions.vBox20,
           Row(
             children: [
               const KiteCircularProgress(value: .72),
-              Dimensions.gapH16,
+              Dimensions.hBox16,
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Theme validation', style: context.typography.title),
-                    Dimensions.gapV4,
+                    Dimensions.vBox4,
                     Text(
                       'Light and dark mode component states.',
-                      style: context.typography.bodySmall,
+                      style: context.typography.paragraph,
                     ),
                   ],
                 ),
@@ -673,9 +676,9 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
               const KiteBadge('72%', variant: KiteBadgeVariant.info),
             ],
           ),
-          Dimensions.gapV20,
+          Dimensions.vBox20,
           const KiteSeparator(),
-          Dimensions.gapV20,
+          Dimensions.vBox20,
           const KiteSkeletonText(lines: 3),
         ],
       ),
@@ -690,7 +693,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
           title: 'Carousel',
           description: 'Product-style cards with restrained visual emphasis.',
         ),
-        Dimensions.gapV12,
+        Dimensions.vBox12,
         KiteCarousel(
           children: [
             _CarouselCard(
@@ -737,7 +740,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
             selectedDate: _selectedDate,
             onDateChanged: (date) => setState(() => _selectedDate = date),
           ),
-          Dimensions.gapV16,
+          Dimensions.vBox16,
           Row(
             children: [
               Expanded(
@@ -749,7 +752,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
                   onPressed: () => _pickDate(context),
                 ),
               ),
-              Dimensions.gapH12,
+              Dimensions.hBox12,
               Expanded(
                 child: KiteButton(
                   label: _selectedTime.format(context),
@@ -774,7 +777,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
           title: 'Accordion',
           description: 'Progressively disclose secondary information.',
         ),
-        Dimensions.gapV12,
+        Dimensions.vBox12,
         KiteAccordion(
           initiallyExpandedIndex: 0,
           items: [
@@ -782,30 +785,30 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
               title: 'Why semantic colors?',
               leading: Icon(
                 Icons.palette_outlined,
-                color: context.kolors.primary,
+                color: context.colors.primary,
               ),
               content: Text(
                 'Semantic names keep feature code focused on purpose instead of Material surface levels or raw hex values.',
-                style: context.typography.bodySmall,
+                style: context.typography.paragraph,
               ),
             ),
             KiteAccordionItem(
               title: 'Why centralized dimensions?',
               leading: Icon(
                 Icons.straighten_rounded,
-                color: context.kolors.primary,
+                color: context.colors.primary,
               ),
               content: Text(
                 'A shared spacing grid prevents each feature from inventing its own visual rhythm.',
-                style: context.typography.bodySmall,
+                style: context.typography.paragraph,
               ),
             ),
             KiteAccordionItem(
               title: 'When should I customize a component?',
-              leading: Icon(Icons.tune_rounded, color: context.kolors.primary),
+              leading: Icon(Icons.tune_rounded, color: context.colors.primary),
               content: Text(
                 'Customize behavior and content first. Only introduce a new visual rule when it is reusable across the product.',
-                style: context.typography.bodySmall,
+                style: context.typography.paragraph,
               ),
             ),
           ],
@@ -831,12 +834,12 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Component health', style: context.typography.title),
-                    Dimensions.gapV8,
+                    Dimensions.vBox8,
                     const KiteProgress(value: .88, showValue: true),
-                    Dimensions.gapV16,
+                    Dimensions.vBox16,
                     Text(
                       'The theme is carrying most visual decisions, leaving components focused on behavior and composition.',
-                      style: context.typography.bodySmall,
+                      style: context.typography.paragraph,
                     ),
                   ],
                 ),
@@ -880,7 +883,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
           title: 'Context menu',
           description: 'Long press the card on mobile to reveal actions.',
         ),
-        Dimensions.gapV12,
+        Dimensions.vBox12,
         KiteContextMenu<String>(
           items: const [
             KiteContextMenuItem(
@@ -916,7 +919,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
             trailing: const KiteBadge('Interactive'),
             child: Text(
               'The context menu remains outside the card implementation, so cards stay reusable and behavior stays composable.',
-              style: context.typography.bodySmall,
+              style: context.typography.paragraph,
             ),
           ),
         ),
@@ -938,7 +941,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
       footer: Row(
         children: [
           const KiteBadge('Ready', variant: KiteBadgeVariant.success),
-          Dimensions.gapH8,
+          Dimensions.hBox8,
           Expanded(
             child: Text('Page $_page of 8', style: context.typography.caption),
           ),
@@ -1012,13 +1015,13 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
                 'Use card and muted surfaces for structure. Reserve primary and status colors for meaning.',
             variant: KiteAlertVariant.info,
           ),
-          Dimensions.gapV16,
+          Dimensions.vBox16,
           const KiteProgress(
             label: 'Design-system adoption',
             value: .86,
             showValue: true,
           ),
-          Dimensions.gapV20,
+          Dimensions.vBox20,
           KiteButton(
             label: 'Looks good',
             expand: true,
@@ -1062,13 +1065,13 @@ class _SectionTitle extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: context.typography.h2),
-              Dimensions.gapV4,
-              Text(description, style: context.typography.bodySmall),
+              Text(title, style: context.typography.section),
+              Dimensions.vBox4,
+              Text(description, style: context.typography.paragraph),
             ],
           ),
         ),
-        if (trailing != null) ...[Dimensions.gapH12, trailing!],
+        if (trailing != null) ...[Dimensions.hBox12, trailing!],
       ],
     );
   }
@@ -1089,7 +1092,7 @@ class _QuickActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return SizedBox(
       width: Dimensions.s64 * 2 + Dimensions.s48,
@@ -1108,9 +1111,9 @@ class _QuickActionCard extends StatelessWidget {
               ),
               child: Icon(icon, color: colors.primary, size: Dimensions.iconMd),
             ),
-            Dimensions.gapV16,
+            Dimensions.vBox16,
             Text(title, style: context.typography.title),
-            Dimensions.gapV4,
+            Dimensions.vBox4,
             Text(subtitle, style: context.typography.caption),
           ],
         ),
@@ -1136,7 +1139,7 @@ class _CarouselCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return KiteCard(
       padding: Dimensions.p20,
@@ -1160,9 +1163,9 @@ class _CarouselCard extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          Text(title, style: context.typography.h3),
-          Dimensions.gapV8,
-          Text(description, style: context.typography.bodySmall),
+          Text(title, style: context.typography.section),
+          Dimensions.vBox8,
+          Text(description, style: context.typography.paragraph),
         ],
       ),
     );
@@ -1182,7 +1185,7 @@ class _ActivityRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return Padding(
       padding: Dimensions.py8,
@@ -1198,9 +1201,9 @@ class _ActivityRow extends StatelessWidget {
             ),
             child: Icon(icon, color: colors.primary, size: Dimensions.iconSm),
           ),
-          Dimensions.gapH12,
-          Expanded(child: Text(title, style: context.typography.bodySmall)),
-          Dimensions.gapH12,
+          Dimensions.hBox12,
+          Expanded(child: Text(title, style: context.typography.paragraph)),
+          Dimensions.hBox12,
           Text(time, style: context.typography.caption),
         ],
       ),

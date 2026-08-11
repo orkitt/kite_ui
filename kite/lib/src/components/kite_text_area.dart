@@ -4,7 +4,10 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
+import '../design/typography.dart';
 
 class KiteTextArea extends StatefulWidget {
   const KiteTextArea({
@@ -58,7 +61,7 @@ class _KiteTextAreaState extends State<KiteTextArea> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
     final type = context.typography;
     final hasError = widget.errorText != null;
 
@@ -67,7 +70,7 @@ class _KiteTextAreaState extends State<KiteTextArea> {
       children: [
         if (widget.label != null) ...[
           Text(widget.label!, style: type.labelSmall),
-          Dimensions.gapV8,
+          Dimensions.vBox8,
         ],
         AnimatedContainer(
           duration: const Duration(milliseconds: 150),
@@ -109,13 +112,13 @@ class _KiteTextAreaState extends State<KiteTextArea> {
           ),
         ),
         if (hasError) ...[
-          Dimensions.gapV8,
+          Dimensions.vBox8,
           Text(
             widget.errorText!,
             style: type.caption.copyWith(color: colors.error),
           ),
         ] else if (widget.helper != null) ...[
-          Dimensions.gapV8,
+          Dimensions.vBox8,
           Text(widget.helper!, style: type.caption),
         ],
       ],

@@ -4,7 +4,9 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
 import 'internal/kite_interactive.dart';
 
 enum KiteIconButtonVariant { ghost, soft, outline, filled, danger }
@@ -27,7 +29,7 @@ class KiteIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     final button = KitePressable(
       semanticLabel: tooltip,

@@ -6,7 +6,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/typography.dart';
 
 class KiteProgress extends StatefulWidget {
   const KiteProgress({
@@ -63,7 +65,7 @@ class _KiteProgressState extends State<KiteProgress>
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
     final normalized = widget.value?.clamp(0.0, 1.0).toDouble();
 
     final bar = ClipRRect(
@@ -139,7 +141,7 @@ class _KiteProgressState extends State<KiteProgress>
                 ),
             ],
           ),
-          Dimensions.gapV8,
+          Dimensions.vBox8,
         ],
         bar,
       ],
@@ -182,7 +184,7 @@ class _KiteCircularProgressState extends State<KiteCircularProgress>
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
     return SizedBox.square(
       dimension: widget.size,
       child: AnimatedBuilder(

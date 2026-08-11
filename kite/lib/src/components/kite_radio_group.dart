@@ -4,7 +4,10 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/shapes.dart';
+import '../design/typography.dart';
 import 'internal/kite_interactive.dart';
 
 class KiteRadioOption<T> {
@@ -41,7 +44,7 @@ class KiteRadioGroup<T> extends StatelessWidget {
             selected: options[index].value == value,
             onTap: () => onChanged(options[index].value),
           ),
-          if (index != options.length - 1) Dimensions.gapV8,
+          if (index != options.length - 1) Dimensions.vBox8,
         ],
       ],
     );
@@ -61,7 +64,7 @@ class _RadioRow<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return KitePressable(
       onTap: onTap,
@@ -110,17 +113,17 @@ class _RadioRow<T> extends StatelessWidget {
                   ),
                 ),
               ),
-              Dimensions.gapH12,
+              Dimensions.hBox12,
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(option.label, style: context.typography.label),
                     if (option.description != null) ...[
-                      Dimensions.gapV4,
+                      Dimensions.vBox4,
                       Text(
                         option.description!,
-                        style: context.typography.bodySmall,
+                        style: context.typography.paragraph,
                       ),
                     ],
                   ],

@@ -4,7 +4,9 @@
 // Learn more: https://kite.orkitt.dev
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/typography.dart';
 
 class KiteSlider extends StatelessWidget {
   const KiteSlider({
@@ -49,7 +51,7 @@ class KiteSlider extends StatelessWidget {
                 ),
             ],
           ),
-          Dimensions.gapV8,
+          Dimensions.vBox8,
         ],
         Semantics(
           slider: true,
@@ -113,7 +115,7 @@ class _SliderTrack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
 
     return LayoutBuilder(
       builder: (context, constraints) {

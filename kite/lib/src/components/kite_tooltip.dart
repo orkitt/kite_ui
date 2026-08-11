@@ -6,7 +6,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../design/dimension.dart';
+import '../design/kolors.dart';
+import '../design/typography.dart';
 
 class KiteTooltip extends StatefulWidget {
   const KiteTooltip({
@@ -88,7 +90,7 @@ class _TooltipBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.kolors;
+    final colors = context.colors;
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: colors.textPrimary,
