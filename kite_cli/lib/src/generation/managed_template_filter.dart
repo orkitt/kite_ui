@@ -36,8 +36,7 @@ final class ManagedTemplateFilter {
       }
 
       final plan = await planner.build(template, variables);
-      final alreadyManaged =
-          plan.files.isNotEmpty &&
+      final alreadyManaged = plan.files.isNotEmpty &&
           plan.files.every((file) => managedPaths.contains(file.relativePath));
       if (!alreadyManaged) {
         result.add(template);

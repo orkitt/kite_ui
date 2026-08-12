@@ -7,7 +7,10 @@ import 'package:yaml/yaml.dart';
 import '../naming/name_converter.dart';
 
 final class KiteShellNavigationConfig {
-  const KiteShellNavigationConfig({this.visible = true, this.label});
+  const KiteShellNavigationConfig({
+    this.visible = true,
+    this.label,
+  });
 
   final bool visible;
   final String? label;
@@ -22,9 +25,9 @@ final class KiteShellNavigationConfig {
   }
 
   Map<String, Object?> toYamlMap() => <String, Object?>{
-    'visible': visible,
-    if (label != null) 'label': label,
-  };
+        'visible': visible,
+        if (label != null) 'label': label,
+      };
 }
 
 final class KiteShellBranchConfig {
@@ -42,14 +45,20 @@ final class KiteShellBranchConfig {
   final String architecture;
   final KiteShellNavigationConfig navigation;
 
-  factory KiteShellBranchConfig.fromYaml(Object? value) {
+  factory KiteShellBranchConfig.fromYaml(
+    Object? value, {
+    required String defaultArchitecture,
+  }) {
     final map = KiteConfig._map(value);
     final name = KiteConfig._string(map['name'], '');
     final path = KiteConfig._string(map['path'], '');
     final explicitFeature = KiteConfig._nullableString(map['feature']);
-    final feature =
-        explicitFeature ?? (name.isEmpty ? '' : NameConverter(name).snakeCase);
-    final architecture = KiteConfig._string(map['architecture'], 'clean');
+    final feature = explicitFeature ??
+        (name.isEmpty ? '' : NameConverter(name).snakeCase);
+    final architecture = KiteConfig._string(
+      map['architecture'],
+      defaultArchitecture,
+    );
     if (name.isEmpty ||
         feature.isEmpty ||
         path.isEmpty ||
@@ -83,12 +92,12 @@ final class KiteShellBranchConfig {
   }
 
   Map<String, Object?> toYamlMap() => <String, Object?>{
-    'name': name,
-    'path': path,
-    'feature': feature,
-    'architecture': architecture,
-    'navigation': navigation.toYamlMap(),
-  };
+        'name': name,
+        'path': path,
+        'feature': feature,
+        'architecture': architecture,
+        'navigation': navigation.toYamlMap(),
+      };
 }
 
 final class KiteShellConfig {
@@ -100,11 +109,19 @@ final class KiteShellConfig {
   final bool enabled;
   final List<KiteShellBranchConfig> branches;
 
-  factory KiteShellConfig.fromYaml(Object? value) {
+  factory KiteShellConfig.fromYaml(
+    Object? value, {
+    required String defaultArchitecture,
+  }) {
     final map = KiteConfig._map(value);
-    final branches = KiteConfig._list(
-      map['branches'],
-    ).map(KiteShellBranchConfig.fromYaml).toList(growable: false);
+    final branches = KiteConfig._list(map['branches'])
+        .map(
+          (item) => KiteShellBranchConfig.fromYaml(
+            item,
+            defaultArchitecture: defaultArchitecture,
+          ),
+        )
+        .toList(growable: false);
     return KiteShellConfig(
       enabled: KiteConfig._boolean(map['enabled'], false),
       branches: List<KiteShellBranchConfig>.unmodifiable(branches),
@@ -112,11 +129,94 @@ final class KiteShellConfig {
   }
 
   Map<String, Object?> toYamlMap() => <String, Object?>{
-    'enabled': enabled,
-    'branches': branches
-        .map((item) => item.toYamlMap())
-        .toList(growable: false),
+        'enabled': enabled,
+        'branches': branches
+            .map((item) => item.toYamlMap())
+            .toList(growable: false),
+      };
+}
+
+final class KiteRouteParameterConfig {
+  const KiteRouteParameterConfig({
+    required this.name,
+    required this.type,
+    this.required = true,
+  });
+
+  static const Set<String> supportedTypes = <String>{
+    'String',
+    'int',
+    'double',
+    'bool',
   };
+
+  final String name;
+  final String type;
+  final bool required;
+
+  factory KiteRouteParameterConfig.fromYaml(Object? value) {
+    final map = KiteConfig._map(value);
+    final name = KiteConfig._string(map['name'], '');
+    final type = KiteConfig._string(map['type'], 'String');
+    final required = KiteConfig._boolean(map['required'], true);
+    final validName = RegExp(r'^[A-Za-z_][A-Za-z0-9_]*$').hasMatch(name);
+    if (!validName || !supportedTypes.contains(type)) {
+      throw FormatException(
+        'Invalid route parameter `$name:$type` in kite.yaml. Supported '
+        'types: ${supportedTypes.join(', ')}.',
+      );
+    }
+    return KiteRouteParameterConfig(
+      name: name,
+      type: type,
+      required: required,
+    );
+  }
+
+  Map<String, Object?> toYamlMap() => <String, Object?>{
+        'name': name,
+        'type': type,
+        'required': required,
+      };
+}
+
+final class KiteRouteParametersConfig {
+  const KiteRouteParametersConfig({
+    this.path = const <KiteRouteParameterConfig>[],
+  });
+
+  final List<KiteRouteParameterConfig> path;
+
+  factory KiteRouteParametersConfig.fromYaml(Object? value) {
+    final map = KiteConfig._map(value);
+    final pathParameters = KiteConfig._list(map['path'])
+        .map(KiteRouteParameterConfig.fromYaml)
+        .toList(growable: false);
+    final names = <String>{};
+    for (final parameter in pathParameters) {
+      if (!parameter.required) {
+        throw FormatException(
+          'Path parameter `${parameter.name}` must be required. Optional URL '
+          'state should use query parameters in a future Kite release.',
+        );
+      }
+      if (!names.add(parameter.name)) {
+        throw FormatException(
+          'Duplicate route path parameter `${parameter.name}` in kite.yaml.',
+        );
+      }
+    }
+    return KiteRouteParametersConfig(
+      path: List<KiteRouteParameterConfig>.unmodifiable(pathParameters),
+    );
+  }
+
+  bool get hasPathParameters => path.isNotEmpty;
+
+  Map<String, Object?> toYamlMap() => <String, Object?>{
+        if (path.isNotEmpty)
+          'path': path.map((item) => item.toYamlMap()).toList(growable: false),
+      };
 }
 
 final class KiteRouteConfig {
@@ -126,6 +226,7 @@ final class KiteRouteConfig {
     required this.segment,
     required this.branch,
     this.architecture = 'clean',
+    this.parameters = const KiteRouteParametersConfig(),
   });
 
   final String feature;
@@ -133,14 +234,21 @@ final class KiteRouteConfig {
   final String segment;
   final String branch;
   final String architecture;
+  final KiteRouteParametersConfig parameters;
 
-  factory KiteRouteConfig.fromYaml(Object? value) {
+  factory KiteRouteConfig.fromYaml(
+    Object? value, {
+    required String defaultArchitecture,
+  }) {
     final map = KiteConfig._map(value);
     final feature = KiteConfig._string(map['feature'], '');
     final path = KiteConfig._string(map['path'], '');
     final segment = KiteConfig._string(map['segment'], '');
     final branch = KiteConfig._string(map['branch'], 'root');
-    final architecture = KiteConfig._string(map['architecture'], 'clean');
+    final architecture = KiteConfig._string(
+      map['architecture'],
+      defaultArchitecture,
+    );
     if (feature.isEmpty ||
         segment.isEmpty ||
         path.isEmpty ||
@@ -154,6 +262,7 @@ final class KiteRouteConfig {
       segment: segment,
       branch: branch,
       architecture: architecture,
+      parameters: KiteRouteParametersConfig.fromYaml(map['parameters']),
     );
   }
 
@@ -163,6 +272,7 @@ final class KiteRouteConfig {
     String? segment,
     String? branch,
     String? architecture,
+    KiteRouteParametersConfig? parameters,
   }) {
     return KiteRouteConfig(
       feature: feature ?? this.feature,
@@ -170,16 +280,18 @@ final class KiteRouteConfig {
       segment: segment ?? this.segment,
       branch: branch ?? this.branch,
       architecture: architecture ?? this.architecture,
+      parameters: parameters ?? this.parameters,
     );
   }
 
   Map<String, Object?> toYamlMap() => <String, Object?>{
-    'feature': feature,
-    'path': path,
-    'segment': segment,
-    'branch': branch,
-    'architecture': architecture,
-  };
+        'feature': feature,
+        'path': path,
+        'segment': segment,
+        'branch': branch,
+        'architecture': architecture,
+        if (parameters.path.isNotEmpty) 'parameters': parameters.toYamlMap(),
+      };
 }
 
 final class KiteRoutingConfig {
@@ -195,18 +307,29 @@ final class KiteRoutingConfig {
   final KiteShellConfig shell;
   final List<KiteRouteConfig> routes;
 
-  factory KiteRoutingConfig.fromYaml(Object? value) {
+  factory KiteRoutingConfig.fromYaml(
+    Object? value, {
+    required String defaultArchitecture,
+  }) {
     final map = KiteConfig._map(value);
-    final routes = KiteConfig._list(
-      map['routes'],
-    ).map(KiteRouteConfig.fromYaml).toList(growable: false);
+    final routes = KiteConfig._list(map['routes'])
+        .map(
+          (item) => KiteRouteConfig.fromYaml(
+            item,
+            defaultArchitecture: defaultArchitecture,
+          ),
+        )
+        .toList(growable: false);
     return KiteRoutingConfig(
       type: KiteConfig._string(map['type'], 'go_router'),
       autoRegisterFeatures: KiteConfig._boolean(
         map['auto_register_features'],
         true,
       ),
-      shell: KiteShellConfig.fromYaml(map['shell']),
+      shell: KiteShellConfig.fromYaml(
+        map['shell'],
+        defaultArchitecture: defaultArchitecture,
+      ),
       routes: List<KiteRouteConfig>.unmodifiable(routes),
     );
   }
@@ -226,11 +349,40 @@ final class KiteRoutingConfig {
   }
 
   Map<String, Object?> toYamlMap() => <String, Object?>{
-    'type': type,
-    'auto_register_features': autoRegisterFeatures,
-    'shell': shell.toYamlMap(),
-    'routes': routes.map((item) => item.toYamlMap()).toList(growable: false),
-  };
+        'type': type,
+        'auto_register_features': autoRegisterFeatures,
+        'shell': shell.toYamlMap(),
+        'routes': routes
+            .map((item) => item.toYamlMap())
+            .toList(growable: false),
+      };
+}
+
+final class KiteDatabaseConfig {
+  const KiteDatabaseConfig({
+    this.enabled = false,
+    this.type = 'none',
+  });
+
+  final bool enabled;
+  final String type;
+
+  factory KiteDatabaseConfig.fromYaml(Object? value) {
+    final map = KiteConfig._map(value);
+    final enabled = KiteConfig._boolean(map['enabled'], false);
+    final type = KiteConfig._string(map['type'], enabled ? 'isar' : 'none');
+    if (enabled && type != 'isar') {
+      throw FormatException(
+        'Unsupported database type `$type` in kite.yaml. Available: isar.',
+      );
+    }
+    return KiteDatabaseConfig(enabled: enabled, type: type);
+  }
+
+  Map<String, Object?> toYamlMap() => <String, Object?>{
+        'enabled': enabled,
+        'type': type,
+      };
 }
 
 final class KiteConfig {
@@ -240,6 +392,7 @@ final class KiteConfig {
     this.featureDirectory = 'lib/features',
     this.architecture = 'clean',
     this.routing = const KiteRoutingConfig(),
+    this.database = const KiteDatabaseConfig(),
     this.stateManagement = 'riverpod',
     this.formatAfterGeneration = true,
     this.installDependencies = true,
@@ -251,6 +404,7 @@ final class KiteConfig {
   final String featureDirectory;
   final String architecture;
   final KiteRoutingConfig routing;
+  final KiteDatabaseConfig database;
   final String stateManagement;
   final bool formatAfterGeneration;
   final bool installDependencies;
@@ -270,7 +424,8 @@ final class KiteConfig {
     }
 
     final project = _map(document['project']);
-    final architecture = _map(document['architecture']);
+    final architectureMap = _map(document['architecture']);
+    final architectureType = _string(architectureMap['type'], 'clean');
     final stateManagement = _map(document['state_management']);
     final generation = _map(document['generation']);
 
@@ -278,11 +433,15 @@ final class KiteConfig {
       projectPreset: _string(project['preset'], 'clean'),
       sourceDirectory: _string(project['source_directory'], 'lib'),
       featureDirectory: _string(
-        architecture['feature_directory'],
+        architectureMap['feature_directory'],
         'lib/features',
       ),
-      architecture: _string(architecture['type'], 'clean'),
-      routing: KiteRoutingConfig.fromYaml(document['routing']),
+      architecture: architectureType,
+      routing: KiteRoutingConfig.fromYaml(
+        document['routing'],
+        defaultArchitecture: architectureType,
+      ),
+      database: KiteDatabaseConfig.fromYaml(document['database']),
       stateManagement: _string(stateManagement['type'], 'riverpod'),
       formatAfterGeneration: _boolean(
         generation['format_after_generation'],
@@ -299,6 +458,7 @@ final class KiteConfig {
     String? featureDirectory,
     String? architecture,
     KiteRoutingConfig? routing,
+    KiteDatabaseConfig? database,
     String? stateManagement,
     bool? formatAfterGeneration,
     bool? installDependencies,
@@ -310,6 +470,7 @@ final class KiteConfig {
       featureDirectory: featureDirectory ?? this.featureDirectory,
       architecture: architecture ?? this.architecture,
       routing: routing ?? this.routing,
+      database: database ?? this.database,
       stateManagement: stateManagement ?? this.stateManagement,
       formatAfterGeneration:
           formatAfterGeneration ?? this.formatAfterGeneration,
@@ -319,12 +480,12 @@ final class KiteConfig {
   }
 
   Map<String, Object?> toTemplateValues() => <String, Object?>{
-    'sourceDirectory': sourceDirectory,
-    'featureDirectory': featureDirectory,
-    'architecture': architecture,
-    'router': routing.type,
-    'stateManagement': stateManagement,
-  };
+        'sourceDirectory': sourceDirectory,
+        'featureDirectory': featureDirectory,
+        'architecture': architecture,
+        'router': routing.type,
+        'stateManagement': stateManagement,
+      };
 
   static Map<Object?, Object?> _map(Object? value) {
     return value is YamlMap ? value : const <Object?, Object?>{};
@@ -378,6 +539,25 @@ final class KiteConfigStore {
           .toList(growable: false);
     root['routing'] = routingMap;
 
+    await file.writeAsString('${_YamlWriter().write(root)}\n');
+  }
+
+  Future<void> writeDatabase({
+    required Directory projectRoot,
+    required KiteDatabaseConfig database,
+  }) async {
+    final file = File(p.join(projectRoot.path, 'kite.yaml'));
+    if (!file.existsSync()) {
+      throw StateError('kite.yaml not found. Run `kite init` first.');
+    }
+
+    final Object? document = loadYaml(await file.readAsString());
+    if (document is! YamlMap) {
+      throw const FormatException('kite.yaml is not valid YAML.');
+    }
+
+    final root = _toMutableMap(document);
+    root['database'] = database.toYamlMap();
     await file.writeAsString('${_YamlWriter().write(root)}\n');
   }
 
@@ -477,15 +657,10 @@ final class _YamlWriter {
       return value.toString();
     }
     final text = value.toString();
-    final plain =
-        RegExp(r'^[A-Za-z0-9_./-]+$').hasMatch(text) &&
-        !const <String>{
-          'true',
-          'false',
-          'null',
-          'yes',
-          'no',
-        }.contains(text.toLowerCase());
+    final plain = RegExp(r'^[A-Za-z0-9_./-]+$').hasMatch(text) &&
+        !const <String>{'true', 'false', 'null', 'yes', 'no'}.contains(
+          text.toLowerCase(),
+        );
     return plain ? text : jsonEncode(text);
   }
 }

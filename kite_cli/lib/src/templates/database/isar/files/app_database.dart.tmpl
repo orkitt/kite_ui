@@ -1,0 +1,32 @@
+import 'package:isar_community/isar.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'generated/isar_schemas.dart';
+
+/// Built with Kite 🪁
+/// Flutter foundations, architecture, and developer tooling.
+/// Learn more: https://kite.orkitt.dev
+///
+abstract final class AppDatabase {
+  static const String name = '{{project.name}}';
+
+  static Future<Isar> open({
+    List<CollectionSchema<dynamic>>? schemas,
+  }) async {
+    final resolvedSchemas = schemas ?? appIsarSchemas;
+
+    if (resolvedSchemas.isEmpty) {
+      throw StateError(
+        'No Isar schemas are registered. Add generated collection schemas to '
+        'core/database/generated/isar_schemas.dart before opening the database.',
+      );
+    }
+
+    final directory = await getApplicationDocumentsDirectory();
+    return Isar.open(
+      resolvedSchemas,
+      directory: directory.path,
+      name: name,
+    );
+  }
+}

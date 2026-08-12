@@ -99,8 +99,7 @@ final class RouteGenerator {
     required bool dryRun,
   }) async {
     final config = KiteConfig.load(project.root);
-    if (config.projectPreset == 'vanilla' ||
-        config.routing.type != 'go_router') {
+    if (config.projectPreset == 'vanilla' || config.routing.type != 'go_router') {
       throw StateError(
         '`kite sync` currently supports Kite clean GoRouter projects only.',
       );
@@ -166,21 +165,19 @@ final class RouteGenerator {
       if (routing.shell.enabled)
         for (final branch in routing.shell.branches) branch.name: branch,
     };
-    final routes = routing.routes
-        .map((route) {
-          if (route.branch == 'root') {
-            return route.copyWith(path: '/${route.segment}');
-          }
-          final branch = branches[route.branch];
-          if (branch == null) {
-            return route;
-          }
-          final path = branch.path == '/'
-              ? '/${route.segment}'
-              : '${branch.path}/${route.segment}';
-          return route.copyWith(path: path);
-        })
-        .toList(growable: false);
+    final routes = routing.routes.map((route) {
+      if (route.branch == 'root') {
+        return route.copyWith(path: '/${route.segment}');
+      }
+      final branch = branches[route.branch];
+      if (branch == null) {
+        return route;
+      }
+      final path = branch.path == '/'
+          ? '/${route.segment}'
+          : '${branch.path}/${route.segment}';
+      return route.copyWith(path: path);
+    }).toList(growable: false);
     return routing.copyWith(routes: routes);
   }
 
@@ -485,6 +482,14 @@ final class RouteGenerator {
     final routePaths = <String>{};
     final routeFeatures = <String>{};
     for (final route in routing.routes) {
+      final normalizedFeature = NameConverter(route.feature).snakeCase;
+      if (normalizedFeature != route.feature) {
+        throw StateError(
+          'Route feature `${route.feature}` is not normalized. Use '
+          '`$normalizedFeature` in kite.yaml.',
+        );
+      }
+      _validateRouteSegment(route);
       if (activeBranchFeatures.contains(route.feature)) {
         throw StateError(
           'Feature `${route.feature}` is already used as a shell branch root '
@@ -510,6 +515,7 @@ final class RouteGenerator {
           '`${route.feature}`.',
         );
       }
+      _validatePathParameters(route);
       if (route.branch == 'root') {
         final expected = '/${route.segment}';
         if (route.path != expected) {
@@ -544,6 +550,55 @@ final class RouteGenerator {
     }
 
     await routerWriter.buildGeneratedFiles(config: config, routing: routing);
+  }
+
+
+  void _validateRouteSegment(KiteRouteConfig route) {
+    final parts = route.segment.split('/');
+    if (parts.isEmpty || parts.any((part) => part.isEmpty)) {
+      throw StateError(
+        'Route `${route.feature}` has invalid segment `${route.segment}`.',
+      );
+    }
+
+    final literalPattern = RegExp(r'^[a-z0-9]+(?:-[a-z0-9]+)*$');
+    final parameterPattern = RegExp(r'^:[A-Za-z_][A-Za-z0-9_]*$');
+    for (final part in parts) {
+      if (!literalPattern.hasMatch(part) && !parameterPattern.hasMatch(part)) {
+        throw StateError(
+          'Route `${route.feature}` has invalid segment `${route.segment}`. '
+          'Use kebab-case literal segments and `:parameter` placeholders.',
+        );
+      }
+    }
+  }
+
+  void _validatePathParameters(KiteRouteConfig route) {
+    final placeholderPattern = RegExp(r':([A-Za-z_][A-Za-z0-9_]*)');
+    final placeholders = placeholderPattern
+        .allMatches(route.segment)
+        .map((match) => match.group(1)!)
+        .toList(growable: false);
+    final declared = route.parameters.path.map((item) => item.name).toList();
+
+    final placeholderSet = placeholders.toSet();
+    final declaredSet = declared.toSet();
+    if (placeholderSet.length != placeholders.length) {
+      throw StateError(
+        'Route `${route.feature}` repeats a path parameter in segment '
+        '`${route.segment}`.',
+      );
+    }
+    if (placeholderSet.length != declaredSet.length ||
+        !placeholderSet.containsAll(declaredSet)) {
+      throw StateError(
+        'Route `${route.feature}` path parameters must match its segment. '
+        'Segment `${route.segment}` declares '
+        '${placeholders.isEmpty ? 'none' : placeholders.join(', ')}, while '
+        'kite.yaml parameters.path declares '
+        '${declared.isEmpty ? 'none' : declared.join(', ')}.',
+      );
+    }
   }
 
   Future<void> _writeRoutingConfig(

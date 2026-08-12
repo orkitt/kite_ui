@@ -3,8 +3,6 @@ import 'package:flutter/foundation.dart';
 
 import '../api_config.dart';
 import '../api_exception.dart';
-import '../auth_token_store.dart';
-import 'bearer_token_interceptor.dart';
 import 'dio_exception_mapper.dart';
 
 typedef ApiDecoder<T> = T Function(Object? data);
@@ -12,29 +10,17 @@ typedef ApiDecoder<T> = T Function(Object? data);
 final class DioApiClient {
   DioApiClient({
     required ApiConfig config,
-    AuthTokenStore? tokenStore,
     Iterable<Interceptor> interceptors = const <Interceptor>[],
     bool enableLogging = kDebugMode,
     Dio? dio,
-  }) : _dio = dio ??
-            Dio(
-              BaseOptions(
-                baseUrl: config.baseUrl,
-                connectTimeout: config.connectTimeout,
-                receiveTimeout: config.receiveTimeout,
-                sendTimeout: config.sendTimeout,
-                headers: config.headers,
-                responseType: ResponseType.json,
-              ),
-            ) {
-    if (tokenStore != null) {
-      _dio.interceptors.add(BearerTokenInterceptor(tokenStore));
-    }
+  }) : _dio = dio ?? Dio(_baseOptions(config)) {
     _dio.interceptors.addAll(interceptors);
     if (enableLogging) {
       _dio.interceptors.add(
         LogInterceptor(
+          requestHeader: false,
           requestBody: false,
+          responseHeader: false,
           responseBody: false,
           logPrint: (value) => debugPrint(value.toString()),
         ),
@@ -45,6 +31,17 @@ final class DioApiClient {
   final Dio _dio;
 
   Dio get raw => _dio;
+
+  static BaseOptions _baseOptions(ApiConfig config) {
+    return BaseOptions(
+      baseUrl: config.baseUrl,
+      connectTimeout: config.connectTimeout,
+      receiveTimeout: config.receiveTimeout,
+      sendTimeout: config.sendTimeout,
+      headers: config.headers,
+      responseType: ResponseType.json,
+    );
+  }
 
   Future<T> request<T>({
     required String path,
@@ -171,6 +168,7 @@ final class DioApiClient {
       cancelToken: cancelToken,
     );
   }
+
 
   void close({bool force = false}) {
     _dio.close(force: force);

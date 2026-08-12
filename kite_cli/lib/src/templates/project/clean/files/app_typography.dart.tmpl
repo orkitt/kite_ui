@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kite/kite_ui.dart';
 
-/// Centralized Kite typography configuration for the application.
+/// Application typography built on Kite.
 ///
 /// Usage:
 /// ```dart
@@ -10,72 +10,74 @@ import 'package:kite/kite_ui.dart';
 abstract final class AppTypography {
   AppTypography._();
 
-  static final KiteTypography textStyle = KiteTypography(
-    display: const TextStyle(
+  static const KiteTypography typography = KiteTypography(
+    // Hero and high-emphasis display text.
+    display: TextStyle(
       fontSize: 32,
       fontWeight: FontWeight.w700,
-      height: 1.2,
-      letterSpacing: -0.8,
+      height: 1.20,
+      letterSpacing: -0.80,
     ),
-    h1: const TextStyle(
+
+    // Primary page or screen heading.
+    heading: TextStyle(
       fontSize: 24,
       fontWeight: FontWeight.w700,
       height: 1.25,
-      letterSpacing: -0.5,
+      letterSpacing: -0.50,
     ),
-    h2: const TextStyle(
-      fontSize: 20,
-      fontWeight: FontWeight.w600,
-      height: 1.3,
-      letterSpacing: -0.3,
-    ),
-    h3: const TextStyle(
+
+    // Section, dialog, and sheet heading.
+    section: TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w600,
       height: 1.35,
-      letterSpacing: -0.2,
+      letterSpacing: -0.20,
     ),
-    title: const TextStyle(
+
+    // Card, list, and component title.
+    title: TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w600,
-      height: 1.4,
-      letterSpacing: -0.1,
+      height: 1.40,
+      letterSpacing: -0.10,
     ),
-    bodyLarge: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w400,
-      height: 1.5,
-      letterSpacing: 0.0,
-    ),
-    body: const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      height: 1.45,
-      letterSpacing: 0.0,
-    ),
-    bodySmall: const TextStyle(
+
+    // Prominent descriptive content.
+    lead: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1.50),
+
+    // Default readable application content.
+    body: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.45),
+
+    // Compact supporting content.
+    paragraph: TextStyle(
       fontSize: 13,
       fontWeight: FontWeight.w400,
-      height: 1.4,
-      letterSpacing: 0.0,
+      height: 1.40,
     ),
-    label: const TextStyle(
+
+    // Buttons, fields, navigation, and controls.
+    label: TextStyle(
       fontSize: 14,
-      fontWeight: FontWeight.w500,
-      height: 1.2,
-      letterSpacing: 0.1,
+      fontWeight: FontWeight.w600,
+      height: 1.20,
+      letterSpacing: 0.10,
     ),
-    labelSmall: const TextStyle(
+
+    // Tabs, chips, badges, and compact controls.
+    labelSmall: TextStyle(
       fontSize: 12,
-      fontWeight: FontWeight.w500,
-      height: 1.2,
-      letterSpacing: 0.2,
+      fontWeight: FontWeight.w600,
+      height: 1.20,
+      letterSpacing: 0.10,
     ),
-    caption: const TextStyle(
-      fontSize: 12,
+
+    // Metadata, timestamps, and helper text.
+    caption: TextStyle(
+      fontSize: 11,
       fontWeight: FontWeight.w400,
-      height: 1.3,
-      letterSpacing: 0.0,
+      height: 1.30,
+      letterSpacing: 0.15,
     ),
   );
 }

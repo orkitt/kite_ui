@@ -17,6 +17,12 @@ final class ApiCommand extends Command<int> {
        _logger = logger {
     addProjectPathOption(argParser);
     addGenerationOptions(argParser);
+    argParser.addOption(
+      'auth',
+      allowed: const <String>['none', 'bearer'],
+      defaultsTo: 'none',
+      help: 'Optional API authentication foundation.',
+    );
   }
 
   final ProjectDetector _projectDetector;
@@ -46,10 +52,15 @@ final class ApiCommand extends Command<int> {
 
     try {
       final project = _projectDetector.detect(results.option('path')!);
+      final auth = results.option('auth')!;
       await _generator.generate(
         project: project,
-        templateIds: const <String>['api.dio'],
-        label: 'Dio API foundation',
+        templateIds: <String>[
+          if (auth == 'bearer') 'api.auth.bearer' else 'api.dio',
+        ],
+        label: auth == 'bearer'
+            ? 'Dio API foundation with secure bearer authentication'
+            : 'Dio API foundation',
         options: GenerationOptions(
           conflictStrategy: resolveConflictStrategy(results),
           dryRun: results.flag('dry-run'),

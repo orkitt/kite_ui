@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 2,
+  "id": "db.isar",
+  "version": "1.0.0",
+  "description": "Isar Community offline database foundation with schema registry and Riverpod provider.",
+  "requires": [
+    "state.riverpod"
+  ],
+  "dependencies": [
+    "isar_community",
+    "isar_community_flutter_libs",
+    "path_provider"
+  ],
+  "devDependencies": [
+    "build_runner",
+    "isar_community_generator"
+  ],
+  "files": [
+    {
+      "template": "files/app_database.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/database/app_database.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/app_database_provider.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/database/app_database_provider.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/generated/isar_schemas.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/database/generated/isar_schemas.dart",
+      "upgradePolicy": "preserve"
+    }
+  ]
+}

@@ -4,15 +4,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../core/preferences/app_preferences_provider.dart';
 import '../core/state/riverpod_bootstrap.dart';
 
+/// Bootstraps the application before mounting the root widget.
+///
+/// Initializes Flutter bindings, loads shared preferences, configures
+/// application-wide Riverpod overrides, and starts the widget tree.
 Future<void> bootstrap(Widget Function() builder) async {
   WidgetsFlutterBinding.ensureInitialized();
+
   final preferences = await SharedPreferences.getInstance();
 
   runApp(
     buildProviderScope(
-      overrides: [
-        sharedPreferencesProvider.overrideWithValue(preferences),
-      ],
+      overrides: [sharedPreferencesProvider.overrideWithValue(preferences)],
       child: builder(),
     ),
   );

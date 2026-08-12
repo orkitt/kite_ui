@@ -19,7 +19,7 @@ final String generatedInitialLocation = AppRoutes.{{shell.initialRouteConstant}}
 final List<RouteBase> generatedRoutes = <RouteBase>[
   StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
-      return AppShell(navigationShell: navigationShell);
+      return KiteShell(navigationShell: navigationShell);
     },
     branches: <StatefulShellBranch>[
 {{shell.entries}}

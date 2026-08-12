@@ -10,17 +10,20 @@ import '../project/kite_config.dart';
 import '../routing/route_generator.dart';
 import 'feature_generator.dart';
 import 'generation_options.dart';
+import 'preset_generator.dart';
 
 final class SyncGenerator {
   const SyncGenerator({
     this.featureGenerator = const FeatureGenerator(),
     this.routeGenerator = const RouteGenerator(),
+    this.presetGenerator = const PresetGenerator(),
     this.formatter = const DartFormatter(),
     this.logger = const KiteLogger(),
   });
 
   final FeatureGenerator featureGenerator;
   final RouteGenerator routeGenerator;
+  final PresetGenerator presetGenerator;
   final DartFormatter formatter;
   final KiteLogger logger;
 
@@ -46,18 +49,38 @@ final class SyncGenerator {
       );
     }
 
-    final reconciled = routeGenerator.reconcilePaths(config.routing);
+    // Validate the complete routing topology before creating any missing
+    // infrastructure. This keeps sync transaction-like when kite.yaml is invalid.
+    final routing = await routeGenerator.syncProject(
+      project: project,
+      conflictStrategy: options.conflictStrategy,
+      dryRun: true,
+    );
+    final reconciledConfig = config.copyWith(routing: routing);
+
+    await _ensureDatabaseFoundation(
+      project: project,
+      config: reconciledConfig,
+      options: options,
+    );
     await _ensureShellRootFeatures(
       project: project,
-      config: config.copyWith(routing: reconciled),
+      config: reconciledConfig,
+      options: options,
+    );
+    await _ensureRouteFeatures(
+      project: project,
+      config: reconciledConfig,
       options: options,
     );
 
-    await routeGenerator.syncProject(
-      project: project,
-      conflictStrategy: options.conflictStrategy,
-      dryRun: options.dryRun,
-    );
+    if (!options.dryRun) {
+      await routeGenerator.syncProject(
+        project: project,
+        conflictStrategy: options.conflictStrategy,
+        dryRun: false,
+      );
+    }
 
     if (options.format && !options.dryRun) {
       await formatter.format(project.root.path);
@@ -67,6 +90,34 @@ final class SyncGenerator {
       options.dryRun
           ? 'Kite sync preview completed without modifying the project.'
           : 'Kite project synchronized from kite.yaml.',
+    );
+  }
+
+  Future<void> _ensureDatabaseFoundation({
+    required FlutterProject project,
+    required KiteConfig config,
+    required GenerationOptions options,
+  }) async {
+    if (!config.database.enabled) {
+      return;
+    }
+    if (config.database.type != 'isar') {
+      throw StateError(
+        'Unsupported configured database `${config.database.type}`. '
+        'Available: isar.',
+      );
+    }
+
+    await presetGenerator.generate(
+      project: project,
+      templateIds: const <String>['db.isar'],
+      label: 'configured Isar database foundation',
+      options: GenerationOptions(
+        conflictStrategy: options.conflictStrategy,
+        dryRun: options.dryRun,
+        installDependencies: options.installDependencies,
+        format: false,
+      ),
     );
   }
 
@@ -80,47 +131,97 @@ final class SyncGenerator {
     }
 
     for (final branch in config.routing.shell.branches) {
-      final featureDirectory = Directory(
-        p.joinAll(<String>[
-          project.root.path,
-          ...p.posix.split(config.featureDirectory),
-          branch.feature,
-        ]),
-      );
-      final screen = File(
-        p.joinAll(<String>[
-          featureDirectory.path,
-          ...p.posix.split(
-            branch.architecture == 'mvc'
-                ? 'views/screens/${branch.feature}_screen.dart'
-                : 'presentation/screens/${branch.feature}_screen.dart',
-          ),
-        ]),
-      );
-      if (screen.existsSync()) {
-        continue;
-      }
-
-      logger.info(
-        'Creating shell root feature `${branch.feature}` for `${branch.name}`...',
-      );
-      await featureGenerator.generate(
+      await _ensureFeature(
         project: project,
+        config: config,
         featureName: branch.feature,
         architecture: branch.architecture,
-        includeRoute: false,
-        includeJsonSerialization: false,
-        options: GenerationOptions(
-          // Sync owns routing, not feature source. If a partial feature already
-          // exists, fill only missing generated files and preserve its code.
-          conflictStrategy: featureDirectory.existsSync()
-              ? ConflictStrategy.skip
-              : options.conflictStrategy,
-          dryRun: options.dryRun,
-          installDependencies: false,
-          format: false,
-        ),
+        reason: 'shell branch `${branch.name}`',
+        options: options,
       );
     }
   }
+  Future<void> _ensureRouteFeatures({
+    required FlutterProject project,
+    required KiteConfig config,
+    required GenerationOptions options,
+  }) async {
+    for (final route in config.routing.routes) {
+      await _ensureFeature(
+        project: project,
+        config: config,
+        featureName: route.feature,
+        architecture: route.architecture,
+        reason: 'route `${route.path}`',
+        options: options,
+      );
+    }
+  }
+
+  Future<void> _ensureFeature({
+    required FlutterProject project,
+    required KiteConfig config,
+    required String featureName,
+    required String architecture,
+    required String reason,
+    required GenerationOptions options,
+  }) async {
+    final featureDirectory = Directory(
+      p.joinAll(<String>[
+        project.root.path,
+        ...p.posix.split(config.featureDirectory),
+        featureName,
+      ]),
+    );
+    final expectedScreen = File(
+      p.joinAll(<String>[
+        featureDirectory.path,
+        ...p.posix.split(
+          architecture == 'mvc'
+              ? 'views/screens/${featureName}_screen.dart'
+              : 'presentation/screens/${featureName}_screen.dart',
+        ),
+      ]),
+    );
+    if (expectedScreen.existsSync()) {
+      return;
+    }
+
+    final alternateScreen = File(
+      p.joinAll(<String>[
+        featureDirectory.path,
+        ...p.posix.split(
+          architecture == 'mvc'
+              ? 'presentation/screens/${featureName}_screen.dart'
+              : 'views/screens/${featureName}_screen.dart',
+        ),
+      ]),
+    );
+    if (alternateScreen.existsSync()) {
+      final existingArchitecture = architecture == 'mvc' ? 'clean' : 'mvc';
+      throw StateError(
+        'Feature `$featureName` already exists as $existingArchitecture, but '
+        '$reason declares architecture `$architecture`. Update kite.yaml or '
+        'migrate the feature explicitly before syncing.',
+      );
+    }
+
+    logger.info('Creating missing `$featureName` feature for $reason...');
+    await featureGenerator.generate(
+      project: project,
+      featureName: featureName,
+      architecture: architecture,
+      includeRoute: false,
+      includeJsonSerialization: false,
+      options: GenerationOptions(
+        conflictStrategy: featureDirectory.existsSync()
+            ? ConflictStrategy.skip
+            : options.conflictStrategy,
+        dryRun: options.dryRun,
+        installDependencies: false,
+        format: false,
+      ),
+    );
+  }
+
 }

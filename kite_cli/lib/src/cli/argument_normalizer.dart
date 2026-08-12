@@ -53,6 +53,15 @@ List<String> normalizeArguments(List<String> arguments) {
     return <String>['api', apiShorthand.group(1)!, ...arguments.skip(1)];
   }
 
+  if (first == '--db') {
+    return <String>['db', ...arguments.skip(1)];
+  }
+
+  final dbShorthand = RegExp(r'^--db:([a-z][a-z0-9_-]*)$').firstMatch(first);
+  if (dbShorthand != null) {
+    return <String>['db', dbShorthand.group(1)!, ...arguments.skip(1)];
+  }
+
   if (first == 'feat') {
     return <String>['feature', ...arguments.skip(1)];
   }

@@ -12,9 +12,9 @@ final class SyncCommand extends Command<int> {
     ProjectDetector projectDetector = const ProjectDetector(),
     SyncGenerator generator = const SyncGenerator(),
     KiteLogger logger = const KiteLogger(),
-  }) : _projectDetector = projectDetector,
-       _generator = generator,
-       _logger = logger {
+  })  : _projectDetector = projectDetector,
+        _generator = generator,
+        _logger = logger {
     addProjectPathOption(argParser);
     addGenerationOptions(argParser);
   }

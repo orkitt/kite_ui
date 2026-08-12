@@ -1,29 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kite/kite_ui.dart';
 
 import '../core/constants/app_constants.dart';
-import '../core/theme/theme_mode_provider.dart';
 import 'router/app_router.dart';
 import 'theme/app_theme.dart';
+import 'theme/theme_provider.dart';
 
+/// The root widget of the application.
+///
+/// [KiteBootstrap] configures the application-level dependencies that
+/// determine how the app is presented and navigated, including:
+///
+/// - Application routing through [appRouterProvider].
+/// - Light and dark themes provided by [AppTheme].
+/// - Runtime theme selection through [themeModeProvider].
+/// - Global application metadata such as [AppConstants.appName].
+///
 /// Built with Kite 🪁
 /// Flutter foundations, architecture, and developer tooling.
-/// Learn more: https://kite.orkitt.dev
-class KiteApp extends ConsumerWidget {
-  const KiteApp({super.key});
+/// See: https://kite.orkitt.dev
 
+class KiteBootstrap extends ConsumerWidget {
+  const KiteBootstrap({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(appRouterProvider);
     final themeMode = ref.watch(themeModeProvider);
 
-    return MaterialApp.router(
+    return KiteApp.router(
       title: AppConstants.appName,
-      debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: themeMode,
       routerConfig: router,
+      // Development tools:
+      // debugShowCheckedModeBanner: false,
+      // debugGrid: true,
+      // debugShowKiteBanner: true,
     );
   }
 }

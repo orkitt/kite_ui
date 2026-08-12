@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../design/dimension.dart';
 import '../design/kolors.dart';
-import '../extensions/num_extensions.dart';
+import '../extensions/extensions.dart';
 
 class KiteCarousel extends StatefulWidget {
   const KiteCarousel({

@@ -179,10 +179,8 @@ final class GeneratedRouterWriter {
           await _buildFeatureRoute(template, config, route, feature);
     }
 
-    files[p.posix.join(base, 'root_routes.dart')] = await _buildRootRoutes(
-      template,
-      routing,
-    );
+    files[p.posix.join(base, 'root_routes.dart')] =
+        await _buildRootRoutes(template, routing);
 
     if (routing.shell.enabled) {
       for (final branch in routing.shell.branches) {
@@ -213,9 +211,7 @@ final class GeneratedRouterWriter {
         if (shell.branches[index].navigation.visible)
           MapEntry<int, KiteShellBranchConfig>(index, shell.branches[index]),
     ];
-    final visibleIndexes = visible
-        .map((entry) => '    ${entry.key},')
-        .join('\n');
+    final visibleIndexes = visible.map((entry) => '    ${entry.key},').join('\n');
     final navigationDestinations = <String>[];
     final railDestinations = <String>[];
     for (final entry in visible) {
@@ -243,14 +239,18 @@ final class GeneratedRouterWriter {
       );
     }
 
-    return _render(template, 'files/app_shell.dart.tmpl', <String, Object?>{
-      'shell': <String, Object?>{
-        'visibleIndexes': visibleIndexes,
-        'showNavigation': visible.length >= 2,
-        'navigationDestinations': navigationDestinations.join(),
-        'railDestinations': railDestinations.join(),
+    return _render(
+      template,
+      'files/app_shell.dart.tmpl',
+      <String, Object?>{
+        'shell': <String, Object?>{
+          'visibleIndexes': visibleIndexes,
+          'showNavigation': visible.length >= 2,
+          'navigationDestinations': navigationDestinations.join(),
+          'railDestinations': railDestinations.join(),
+        },
       },
-    });
+    );
   }
 
   Future<String> _buildFeatureRoute(
@@ -274,13 +274,17 @@ final class GeneratedRouterWriter {
     );
     final importPath = _relativeImport(featureRoutePath, screenPath);
 
-    return _render(template, 'files/feature_route.dart.tmpl', <String, Object?>{
-      'route': <String, Object?>{
-        'screenImport': importPath,
-        'functionName': '${feature.camelCase}Route',
-        'screenClass': '${feature.pascalCase}Screen',
+    return _render(
+      template,
+      'files/feature_route.dart.tmpl',
+      <String, Object?>{
+        'route': <String, Object?>{
+          'screenImport': importPath,
+          'functionName': '${feature.camelCase}Route',
+          'screenClass': '${feature.pascalCase}Screen',
+        },
       },
-    });
+    );
   }
 
   Future<String> _buildRootRoutes(
@@ -290,25 +294,25 @@ final class GeneratedRouterWriter {
     final routes = routing.routes
         .where((route) => route.branch == 'root')
         .toList(growable: false);
-    final imports = routes
-        .map((route) {
-          final feature = NameConverter(route.feature);
-          return "import 'features/${feature.snakeCase}_route.dart';";
-        })
-        .join('\n');
-    final entries = routes
-        .map((route) {
-          final feature = NameConverter(route.feature);
-          return '  ${feature.camelCase}Route(path: AppRoutes.${feature.camelCase}),';
-        })
-        .join('\n');
+    final imports = routes.map((route) {
+      final feature = NameConverter(route.feature);
+      return "import 'features/${feature.snakeCase}_route.dart';";
+    }).join('\n');
+    final entries = routes.map((route) {
+      final feature = NameConverter(route.feature);
+      return '  ${feature.camelCase}Route(path: AppRoutes.${feature.camelCase}),';
+    }).join('\n');
 
-    return _render(template, 'files/root_routes.dart.tmpl', <String, Object?>{
-      'routes': <String, Object?>{
-        'imports': imports.isEmpty ? '' : '$imports\n',
-        'entries': entries.isEmpty ? '' : '$entries\n',
+    return _render(
+      template,
+      'files/root_routes.dart.tmpl',
+      <String, Object?>{
+        'routes': <String, Object?>{
+          'imports': imports.isEmpty ? '' : '$imports\n',
+          'entries': entries.isEmpty ? '' : '$entries\n',
+        },
       },
-    });
+    );
   }
 
   Future<String> _buildBranch(
@@ -321,12 +325,10 @@ final class GeneratedRouterWriter {
     final routes = routing.routes
         .where((route) => route.branch == branch.name)
         .toList(growable: false);
-    final imports = routes
-        .map((route) {
-          final feature = NameConverter(route.feature);
-          return "import '../features/${feature.snakeCase}_route.dart';";
-        })
-        .join('\n');
+    final imports = routes.map((route) {
+      final feature = NameConverter(route.feature);
+      return "import '../features/${feature.snakeCase}_route.dart';";
+    }).join('\n');
     final children = <String>[];
     for (final route in routes) {
       final feature = NameConverter(route.feature);
@@ -338,7 +340,8 @@ final class GeneratedRouterWriter {
             'child': <String, Object?>{
               'routeFunction': '${feature.camelCase}Route',
               'parentConstant': branchName.camelCase,
-              'routeConstant': '${branchName.camelCase}${feature.pascalCase}',
+              'routeConstant':
+                  '${branchName.camelCase}${feature.pascalCase}',
             },
           },
         ),
@@ -360,16 +363,20 @@ final class GeneratedRouterWriter {
       architecture: branch.architecture,
     );
 
-    return _render(template, 'files/branch.dart.tmpl', <String, Object?>{
-      'branch': <String, Object?>{
-        'screenImport': _relativeImport(branchFilePath, screenPath),
-        'screenClass': '${branchFeature.pascalCase}Screen',
-        'childImports': imports.isEmpty ? '' : '$imports\n',
-        'variableName': '${branchName.camelCase}Branch',
-        'routeConstant': branchName.camelCase,
-        'children': children.join(),
+    return _render(
+      template,
+      'files/branch.dart.tmpl',
+      <String, Object?>{
+        'branch': <String, Object?>{
+          'screenImport': _relativeImport(branchFilePath, screenPath),
+          'screenClass': '${branchFeature.pascalCase}Screen',
+          'childImports': imports.isEmpty ? '' : '$imports\n',
+          'variableName': '${branchName.camelCase}Branch',
+          'routeConstant': branchName.camelCase,
+          'children': children.join(),
+        },
       },
-    });
+    );
   }
 
   Future<String> _buildGeneratedRoutes(
@@ -385,18 +392,14 @@ final class GeneratedRouterWriter {
     }
 
     final branches = routing.shell.branches;
-    final imports = branches
-        .map((branch) {
-          final name = NameConverter(branch.name);
-          return "import 'branches/${name.snakeCase}_branch.dart';";
-        })
-        .join('\n');
-    final entries = branches
-        .map((branch) {
-          final name = NameConverter(branch.name);
-          return '      ${name.camelCase}Branch,';
-        })
-        .join('\n');
+    final imports = branches.map((branch) {
+      final name = NameConverter(branch.name);
+      return "import 'branches/${name.snakeCase}_branch.dart';";
+    }).join('\n');
+    final entries = branches.map((branch) {
+      final name = NameConverter(branch.name);
+      return '      ${name.camelCase}Branch,';
+    }).join('\n');
     final firstBranch = NameConverter(branches.first.name);
 
     return _render(
@@ -419,23 +422,23 @@ final class GeneratedRouterWriter {
   }) {
     return switch (architecture) {
       'clean' => p.posix.join(
-        _portable(config.featureDirectory),
-        feature.snakeCase,
-        'presentation',
-        'screens',
-        '${feature.snakeCase}_screen.dart',
-      ),
+          _portable(config.featureDirectory),
+          feature.snakeCase,
+          'presentation',
+          'screens',
+          '${feature.snakeCase}_screen.dart',
+        ),
       'mvc' => p.posix.join(
-        _portable(config.featureDirectory),
-        feature.snakeCase,
-        'views',
-        'screens',
-        '${feature.snakeCase}_screen.dart',
-      ),
+          _portable(config.featureDirectory),
+          feature.snakeCase,
+          'views',
+          'screens',
+          '${feature.snakeCase}_screen.dart',
+        ),
       _ => throw StateError(
-        'Unsupported route architecture `$architecture` for '
-        '`${feature.snakeCase}`.',
-      ),
+          'Unsupported route architecture `$architecture` for '
+          '`${feature.snakeCase}`.',
+        ),
     };
   }
 

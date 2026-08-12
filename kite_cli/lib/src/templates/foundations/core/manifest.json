@@ -23,7 +23,7 @@
     },
     {
       "template": "files/app_environment.dart.tmpl",
-      "target": "{{config.sourceDirectory}}/core/constants/app_environment.dart",
+      "target": "{{config.sourceDirectory}}/core/config/app_environment.dart",
       "upgradePolicy": "replace"
     },
     {
@@ -43,7 +43,7 @@
     },
     {
       "template": "files/theme_mode_provider.dart.tmpl",
-      "target": "{{config.sourceDirectory}}/core/theme/theme_mode_provider.dart",
+      "target": "{{config.sourceDirectory}}/app/theme/theme_provider.dart",
       "upgradePolicy": "replace"
     },
     {

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 2,
+  "id": "api.auth.bearer",
+  "version": "1.0.0",
+  "description": "Secure bearer-token session storage and authenticated Dio provider.",
+  "requires": [
+    "api.dio"
+  ],
+  "dependencies": [
+    "flutter_secure_storage"
+  ],
+  "devDependencies": [],
+  "files": [
+    {
+      "template": "files/auth_session.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/secret/auth_session.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/storage/auth_token_storage.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/secret/storage/auth_token_storage.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/storage/secure_auth_token_storage.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/secret/storage/secure_auth_token_storage.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/providers/auth_storage_providers.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/secret/providers/auth_storage_providers.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/bearer_token_interceptor.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/network/dio/bearer_token_interceptor.dart",
+      "upgradePolicy": "replace"
+    },
+    {
+      "template": "files/authenticated_dio_provider.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/network/dio/authenticated_dio_provider.dart",
+      "upgradePolicy": "replace"
+    }
+  ]
+}

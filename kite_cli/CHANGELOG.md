@@ -1,16 +1,19 @@
-## 0.4.0
+## 1.0.0
 
-* Added some `Action` `Listener` patterns.
-* Improved `Functions` for pattern matching.
-* Added some extensions and overall improvement
-
-## 0.3.0
-
+* `kite sync` now creates missing Clean/MVC features declared under `routing.routes`.
+* Added typed and validated route path-parameter metadata (`String`, `int`, `double`, `bool`).
+* Added template-driven `kite --db:isar` with Isar Community, Riverpod database provider, schema registry, YAML state, and sync reconciliation.
+* Upgraded the Dio foundation with reusable interceptor injection, safer logging, cancellation/progress handling, and automatic disposal.
+* Added optional `kite --api:dio --auth bearer` with `AuthSession`, `AuthTokenStorage`, `flutter_secure_storage`, and an authenticated Dio provider.
+* Fixed bearer requests to use the standard `Authorization` header.
+* Dependency installation now skips packages already declared in `pubspec.yaml`, reducing repeated `flutter pub add` work during sync/generation.
 * Added `kite sync` to reconcile clean GoRouter infrastructure from `kite.yaml`.
+* Shell branches now bootstrap real root features instead of `AppStartupView`.
 * Added per-branch navigation visibility so shell branches can stay out of the navbar/rail.
 * Moved generated GoRouter Dart bodies to reusable routing templates.
 * Added clean-project constants, SharedPreferences providers, persisted theme mode, and `ThemeChanger`.
-
+* `AppConstants.appName` now derives from the Flutter project name.
+* Kept the vanilla project template unchanged.
 
 ## 0.2.0
 

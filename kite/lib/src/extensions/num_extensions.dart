@@ -1,52 +1,104 @@
-import 'package:flutter/widgets.dart';
+import 'dart:math' as math;
 
-/// Built with Kite 🪁
-/// Flutter foundations, architecture, and developer tooling.
-/// Learn more: https://kite.orkitt.dev
-extension NumSpacingX on num {
-  // Dynamic SizedBox spacing
-  SizedBox get vBox => SizedBox(height: toDouble());
-  SizedBox get hBox => SizedBox(width: toDouble());
-  SizedBox get box => SizedBox(height: toDouble());
+import 'package:intl/intl.dart';
 
-  // Dynamic EdgeInsets
-  EdgeInsets get padAll => EdgeInsets.all(toDouble());
-  EdgeInsets get padH => EdgeInsets.symmetric(horizontal: toDouble());
-  EdgeInsets get padV => EdgeInsets.symmetric(vertical: toDouble());
-  EdgeInsets get padTop => EdgeInsets.only(top: toDouble());
-  EdgeInsets get padBottom => EdgeInsets.only(bottom: toDouble());
-  EdgeInsets get padLeft => EdgeInsets.only(left: toDouble());
-  EdgeInsets get padRight => EdgeInsets.only(right: toDouble());
+extension NumExtensions on num {
+  String formatted({
+    String? locale,
+    int? decimalDigits,
+  }) {
+    final formatter = NumberFormat.decimalPattern(locale);
 
-  // Radius Shortcut
-  Radius get radius => Radius.circular(toDouble());
-  BorderRadius get borderRadius => BorderRadius.circular(toDouble());
-  // ── Padding (EdgeInsets) ───────────────────────────────────────────────────
-  /// All-side padding (`EdgeInsets.all(value)`)
-  EdgeInsets get p => EdgeInsets.all(toDouble());
+    if (decimalDigits != null) {
+      formatter.minimumFractionDigits = decimalDigits;
+      formatter.maximumFractionDigits = decimalDigits;
+    }
 
-  /// Horizontal padding (`EdgeInsets.symmetric(horizontal: value)`)
-  EdgeInsets get px => EdgeInsets.symmetric(horizontal: toDouble());
+    return formatter.format(this);
+  }
 
-  /// Vertical padding (`EdgeInsets.symmetric(vertical: value)`)
-  EdgeInsets get py => EdgeInsets.symmetric(vertical: toDouble());
+  String currency({
+    String symbol = '৳',
+    String? locale,
+    int decimalDigits = 0,
+  }) {
+    return NumberFormat.currency(
+      locale: locale,
+      symbol: symbol,
+      decimalDigits: decimalDigits,
+    ).format(this);
+  }
 
-  // ── Radius & BorderRadius ─────────────────────────────────────────────────
-  /// Single `Radius` object (`Radius.circular(value)`)
-  Radius get r => Radius.circular(toDouble());
+  String get bdt {
+    return NumberFormat.currency(
+      symbol: '৳',
+      decimalDigits: 0,
+    ).format(this);
+  }
 
-  /// Complete `BorderRadius` object (`BorderRadius.circular(value)`)
-  BorderRadius get rad => BorderRadius.circular(toDouble());
-}
+  String percent({
+    int decimalDigits = 0,
+  }) {
+    return '${toStringAsFixed(decimalDigits)}%';
+  }
 
-extension EdgeInsetsX on EdgeInsets {
-  /// Combine paddings: `16.px + 8.py`
-  EdgeInsets operator +(EdgeInsets other) {
-    return EdgeInsets.only(
-      left: left + other.left,
-      top: top + other.top,
-      right: right + other.right,
-      bottom: bottom + other.bottom,
-    );
+  num clampBetween(
+    num minimum,
+    num maximum,
+  ) {
+    assert(minimum <= maximum, 'minimum must be <= maximum');
+    return math.max(minimum, math.min(maximum, this));
+  }
+
+  bool isBetween(
+    num minimum,
+    num maximum, {
+    bool inclusive = true,
+  }) {
+    if (inclusive) {
+      return this >= minimum && this <= maximum;
+    }
+
+    return this > minimum && this < maximum;
+  }
+
+  String get compact => NumberFormat.compact().format(this);
+
+  String compactCurrency({
+    String symbol = '৳',
+    String? locale,
+    int decimalDigits = 1,
+  }) {
+    return NumberFormat.compactCurrency(
+      locale: locale,
+      symbol: symbol,
+      decimalDigits: decimalDigits,
+    ).format(this);
+  }
+
+  /// Formats this number as a binary file size.
+  ///
+  /// Treats the current numeric value as bytes.
+  String fileSize({
+    int decimalDigits = 1,
+  }) {
+    if (this <= 0) return '0 B';
+
+    const units = <String>[
+      'B',
+      'KB',
+      'MB',
+      'GB',
+      'TB',
+      'PB',
+    ];
+
+    final calculatedIndex =
+        (math.log(this) / math.log(1024)).floor();
+
+    final index = calculatedIndex.clamp(0, units.length - 1).toInt();
+    final value = this / math.pow(1024, index);
+
+    return '${value.toStringAsFixed(decimalDigits)} ${units[index]}';
   }
 }

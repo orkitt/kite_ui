@@ -1,11 +1,14 @@
-import 'package:flutter/widgets.dart';
-
 import 'app/app.dart';
 import 'app/bootstrap.dart';
 
+/// Application entry point.
+///
+/// Bootstraps the required application dependencies before mounting
+/// the root Kite application widget.
+///
 /// Built with Kite 🪁
 /// Flutter foundations, architecture, and developer tooling.
 /// Learn more: https://kite.orkitt.dev
 Future<void> main() async {
-  await bootstrap(() => const KiteApp());
+  await bootstrap(() => const KiteBootstrap());
 }

@@ -8,7 +8,9 @@ import '../naming/name_converter.dart';
 import '../project/kite_config.dart';
 
 final class AppRoutesUpdater {
-  const AppRoutesUpdater({this.manifestStore = const ProjectManifestStore()});
+  const AppRoutesUpdater({
+    this.manifestStore = const ProjectManifestStore(),
+  });
 
   static const String startMarker = '// kite:routes:start';
   static const String endMarker = '// kite:routes:end';
@@ -50,7 +52,9 @@ final class AppRoutesUpdater {
     }
 
     final lines = desired.entries
-        .map((entry) => '  static const String ${entry.key} = ${entry.value};')
+        .map(
+          (entry) => '  static const String ${entry.key} = ${entry.value};',
+        )
         .toList(growable: false);
     final replacement = lines.isEmpty ? '\n  ' : '\n${lines.join('\n')}\n  ';
     return currentContent.replaceRange(managedStart, end, replacement);
@@ -152,8 +156,7 @@ final class AppRoutesUpdater {
     required String source,
   }) {
     final previous = constants[name];
-    if (previous != null &&
-        _normalizeExpression(previous) != _normalizeExpression(expression)) {
+    if (previous != null && _normalizeExpression(previous) != _normalizeExpression(expression)) {
       throw StateError(
         'Route constant `$name` collides while generating $source.',
       );

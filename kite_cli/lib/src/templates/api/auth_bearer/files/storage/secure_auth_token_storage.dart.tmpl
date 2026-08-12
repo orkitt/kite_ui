@@ -1,0 +1,49 @@
+import 'dart:convert';
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../auth_session.dart';
+import 'auth_token_storage.dart';
+
+final class SecureAuthTokenStorage implements AuthTokenStorage {
+  SecureAuthTokenStorage(this._storage);
+
+  static const String _sessionKey = 'kite.auth.session';
+
+  final FlutterSecureStorage _storage;
+
+  @override
+  Future<AuthSession?> read() async {
+    final encoded = await _storage.read(key: _sessionKey);
+    if (encoded == null || encoded.trim().isEmpty) {
+      return null;
+    }
+
+    try {
+      final decoded = jsonDecode(encoded);
+      if (decoded is! Map<Object?, Object?>) {
+        await clear();
+        return null;
+      }
+      return AuthSession.fromJson(
+        decoded.map((key, value) => MapEntry(key.toString(), value)),
+      );
+    } on FormatException {
+      await clear();
+      return null;
+    }
+  }
+
+  @override
+  Future<void> write(AuthSession session) {
+    return _storage.write(
+      key: _sessionKey,
+      value: jsonEncode(session.toJson()),
+    );
+  }
+
+  @override
+  Future<void> clear() {
+    return _storage.delete(key: _sessionKey);
+  }
+}

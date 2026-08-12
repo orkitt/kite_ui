@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../constants/app_colors.dart';
-
+import '../../design/kolors.dart';
 
 /// Built with Kite 🪁
 /// Flutter foundations, architecture, and developer tooling.
 /// Learn more: https://kite.orkitt.dev
 extension BuildContextX on BuildContext {
-
-
   // Screen Metrics & MediaQuery
   Size get screenSize => MediaQuery.sizeOf(this);
   double get width => screenSize.width;
@@ -23,7 +20,6 @@ extension BuildContextX on BuildContext {
 
   // Quick Actions
   void unfocus() => FocusScope.of(this).unfocus();
-
   void showSnackBar(
     String message, {
     bool isError = false,

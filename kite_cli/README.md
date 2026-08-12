@@ -1,16 +1,14 @@
 # Kite CLI 🪁
 
-Kite is a Flutter scaffolding CLI for quickly setting up clean and scalable  project foundations, features, routing, reusable components, state management, and API infrastructure.
+Kite CLI is part of the **Kite ecosystem** — a set of Flutter tools designed to help developers build clean, scalable, and consistent applications with less boilerplate.
 
-> Built for Flutter developers who want less boilerplate and more consistency.
+Use Kite CLI to scaffold project foundations, features, routing, state management, API layers, and reusable application structure.
 
 ## Installation
 
 ```bash
 dart pub global activate kite_cli
 ```
-
-Verify installation:
 
 ```bash
 kite --version
@@ -27,17 +25,16 @@ kite init
 
 ## Kite Ecosystem
 
-- **Kite CLI** — project and feature generation
-- **Kite** — Flutter UI, theme, responsive utilities, extensions, and reusable developer tooling
+* **Kite CLI** — project setup, scaffolding, and code generation
+* **Kite** — Flutter UI foundations, themes, responsive utilities, extensions, and developer tooling
 
-## Documentation
+## Complete Documentation
 
-Full documentation, examples, architecture guides, and updates:
-**https://pub.dev/kite** and 
-**https://kite.orkitt.dev**
+* [kite.orkitt.dev](https://kite.orkitt.dev)
+* [pub.dev/kite](https://pub.dev/kite)
 
 ## License
 
 MIT License.
 
-Kite 🪁 | Built with care. Powered by **Orkitt**.
+**Kite 🪁 — Powered by Orkitt.dev.**

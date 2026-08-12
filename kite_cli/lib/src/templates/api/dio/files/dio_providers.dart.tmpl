@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../api_config.dart';
-import '../auth_token_store.dart';
 import 'dio_api_client.dart';
 
 final apiConfigProvider = Provider<ApiConfig>((ref) {
@@ -11,8 +10,6 @@ final apiConfigProvider = Provider<ApiConfig>((ref) {
   );
 });
 
-final authTokenStoreProvider = Provider<AuthTokenStore?>((ref) => null);
-
 final dioInterceptorsProvider = Provider<List<Interceptor>>(
   (ref) => const <Interceptor>[],
 );
@@ -20,7 +17,6 @@ final dioInterceptorsProvider = Provider<List<Interceptor>>(
 final dioApiClientProvider = Provider<DioApiClient>((ref) {
   final client = DioApiClient(
     config: ref.watch(apiConfigProvider),
-    tokenStore: ref.watch(authTokenStoreProvider),
     interceptors: ref.watch(dioInterceptorsProvider),
   );
   ref.onDispose(() => client.close());

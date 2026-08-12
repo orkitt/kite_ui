@@ -1,0 +1,78 @@
+import 'package:flutter/widgets.dart';
+
+
+/// Built with Kite 🪁
+/// Flutter foundations, architecture, and developer tooling.
+/// Learn more: https://kite.orkitt.dev
+
+// example
+// final user = repository
+//   .fetchUser()
+//   .tap((user) => logger.info('Loaded ${user.id}'));
+
+
+extension FutureFunctionalExtensions<T> on Future<T> {
+  /// Transforms the successful result of this future.
+  Future<R> map<R>(
+    R Function(T value) transform,
+  ) async {
+    return transform(await this);
+  }
+
+  /// Chains another asynchronous transformation.
+  Future<R> flatMap<R>(
+    Future<R> Function(T value) transform,
+  ) async {
+    return transform(await this);
+  }
+
+  /// Performs a side effect without changing the future result.
+  Future<T> tap(
+    void Function(T value) action,
+  ) async {
+    final value = await this;
+
+    action(value);
+
+    return value;
+  }
+
+  /// Performs an asynchronous side effect without changing the result.
+  Future<T> tapAsync(
+    Future<void> Function(T value) action,
+  ) async {
+    final value = await this;
+
+    await action(value);
+
+    return value;
+  }
+
+  /// Recovers from an exception by returning another value.
+  Future<T> recover(
+    T Function(
+      Object error,
+      StackTrace stackTrace,
+    ) handler,
+  ) async {
+    try {
+      return await this;
+    } catch (error, stackTrace) {
+      return handler(error, stackTrace);
+    }
+  }
+
+  /// Recovers from an exception asynchronously.
+  Future<T> recoverAsync(
+    Future<T> Function(
+      Object error,
+      StackTrace stackTrace,
+    ) handler,
+  ) async {
+    try {
+      return await this;
+    } catch (error, stackTrace) {
+      return handler(error, stackTrace);
+    }
+  }
+}

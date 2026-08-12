@@ -2,6 +2,7 @@ import 'package:args/command_runner.dart';
 
 import '../commands/api_command.dart';
 import '../commands/component_command.dart';
+import '../commands/database_command.dart';
 import '../commands/doctor_command.dart';
 import '../commands/feature_command.dart';
 import '../commands/init_command.dart';
@@ -20,7 +21,7 @@ final class KiteCommandRunner extends CommandRunner<int> {
       super(
         'kite cli',
         'Initialize professional Flutter foundations and generate '
-            'features, components, state, and API infrastructure.',
+            'features, components, state, API, and database infrastructure.',
       ) {
     argParser.addFlag(
       'version',
@@ -34,6 +35,7 @@ final class KiteCommandRunner extends CommandRunner<int> {
     addCommand(ComponentCommand(logger: logger));
     addCommand(StateCommand(logger: logger));
     addCommand(ApiCommand(logger: logger));
+    addCommand(DatabaseCommand(logger: logger));
     addCommand(DoctorCommand(logger: logger));
     addCommand(TemplatesCommand(logger: logger));
     addCommand(UpgradeCommand(logger: logger));

@@ -1,0 +1,72 @@
+
+/// Built with Kite 🪁
+/// Flutter foundations, architecture, and developer tooling.
+/// Learn more: https://kite.orkitt.dev
+///
+final class AuthSession {
+  const AuthSession({
+    required this.accessToken,
+    this.refreshToken,
+    this.accessTokenExpiresAt,
+  });
+
+  final String accessToken;
+  final String? refreshToken;
+  final DateTime? accessTokenExpiresAt;
+
+  bool get hasRefreshToken => refreshToken?.trim().isNotEmpty ?? false;
+
+  bool isAccessTokenExpired({
+    Duration clockSkew = const Duration(seconds: 30),
+    DateTime? now,
+  }) {
+    final expiresAt = accessTokenExpiresAt;
+    if (expiresAt == null) {
+      return false;
+    }
+    return !(now ?? DateTime.now()).add(clockSkew).isBefore(expiresAt);
+  }
+
+  AuthSession copyWith({
+    String? accessToken,
+    String? refreshToken,
+    DateTime? accessTokenExpiresAt,
+    bool clearRefreshToken = false,
+    bool clearAccessTokenExpiresAt = false,
+  }) {
+    return AuthSession(
+      accessToken: accessToken ?? this.accessToken,
+      refreshToken:
+          clearRefreshToken ? null : refreshToken ?? this.refreshToken,
+      accessTokenExpiresAt: clearAccessTokenExpiresAt
+          ? null
+          : accessTokenExpiresAt ?? this.accessTokenExpiresAt,
+    );
+  }
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'access_token': accessToken,
+        if (refreshToken != null) 'refresh_token': refreshToken,
+        if (accessTokenExpiresAt != null)
+          'access_token_expires_at': accessTokenExpiresAt!.toIso8601String(),
+      };
+
+  factory AuthSession.fromJson(Map<String, Object?> json) {
+    final accessToken = json['access_token'];
+    if (accessToken is! String || accessToken.trim().isEmpty) {
+      throw const FormatException('Stored auth session has no access token.');
+    }
+
+    final refreshToken = json['refresh_token'];
+    final expiresAt = json['access_token_expires_at'];
+    return AuthSession(
+      accessToken: accessToken,
+      refreshToken: refreshToken is String && refreshToken.trim().isNotEmpty
+          ? refreshToken
+          : null,
+      accessTokenExpiresAt: expiresAt is String
+          ? DateTime.tryParse(expiresAt)
+          : null,
+    );
+  }
+}

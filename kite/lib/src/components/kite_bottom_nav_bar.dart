@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../design/dimension.dart';
 import '../design/kolors.dart';
 import '../design/typography.dart';
-import '../extensions/num_extensions.dart';
+import '../extensions/core_pack/num_extensions.dart';
 import 'internal/kite_interactive.dart';
 
 class KiteBottomNavItem {

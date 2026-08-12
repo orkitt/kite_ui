@@ -40,10 +40,7 @@ final class ShellDefinitionParser {
       throw const FormatException('--shell requires at least one branch.');
     }
 
-    final rawBranches = normalized
-        .split(',')
-        .map((item) => item.trim())
-        .toList();
+    final rawBranches = normalized.split(',').map((item) => item.trim()).toList();
     if (rawBranches.any((item) => item.isEmpty)) {
       throw const FormatException('Shell branch names cannot be empty.');
     }

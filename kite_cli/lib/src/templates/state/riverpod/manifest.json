@@ -15,8 +15,8 @@
       "upgradePolicy": "replace"
     },
     {
-      "template": "files/async_helpers.dart.tmpl",
-      "target": "{{config.sourceDirectory}}/core/state/async_helpers.dart",
+      "template": "files/async_notifier_guard.dart.tmpl",
+      "target": "{{config.sourceDirectory}}/core/state/async_notifier_guard.dart",
       "upgradePolicy": "replace"
     },
     {

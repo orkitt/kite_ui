@@ -14,7 +14,9 @@ import '../routing/route_target.dart';
 /// feature-owned route files.
 @Deprecated('Use RouteGenerator instead.')
 final class RouteRegistryUpdater {
-  const RouteRegistryUpdater({this.routeGenerator = const RouteGenerator()});
+  const RouteRegistryUpdater({
+    this.routeGenerator = const RouteGenerator(),
+  });
 
   final RouteGenerator routeGenerator;
 
@@ -35,7 +37,10 @@ final class RouteRegistryUpdater {
     required String featureDirectory,
     required String architecture,
   }) async {
-    ensureAvailable(projectRoot: projectRoot, sourceDirectory: sourceDirectory);
+    ensureAvailable(
+      projectRoot: projectRoot,
+      sourceDirectory: sourceDirectory,
+    );
 
     await routeGenerator.registerFeature(
       project: FlutterProject(

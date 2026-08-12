@@ -1,0 +1,17 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../storage/auth_token_storage.dart';
+import '../storage/secure_auth_token_storage.dart';
+
+/// Built with Kite 🪁
+/// Flutter foundations, architecture, and developer tooling.
+/// Learn more: https://kite.orkitt.dev
+///
+final flutterSecureStorageProvider = Provider<FlutterSecureStorage>((ref) {
+  return FlutterSecureStorage();
+});
+
+final authTokenStorageProvider = Provider<AuthTokenStorage>((ref) {
+  return SecureAuthTokenStorage(ref.watch(flutterSecureStorageProvider));
+});
