@@ -1,4 +1,4 @@
-## 0.0.1
+## 1.0.0
 
 * Added a complete Kite UI design system.
 * Added 37 reusable Flutter UI components.
