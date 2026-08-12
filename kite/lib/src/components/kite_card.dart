@@ -38,7 +38,6 @@ class KiteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
 
     if (onTap == null) {
       return _surface(

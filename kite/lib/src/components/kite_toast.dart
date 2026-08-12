@@ -192,8 +192,7 @@ class _ToastOverlayState extends State<_ToastOverlay>
                           shape: Shapes.rounded16.copyWith(
                             side: BorderSide(
                               color:
-                                  colors.borderSoft ??
-                                  colors.textPrimary.withValues(alpha: 0.08),
+                                  colors.borderSoft,
                               width: 1,
                             ),
                           ),
