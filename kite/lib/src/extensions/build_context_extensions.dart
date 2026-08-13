@@ -87,13 +87,4 @@ extension BuildContextExtensions on BuildContext {
         ),
       );
   }
-
-  /// Compact window breakpoint.
-  bool get isCompact => screenWidth < 600;
-
-  /// Medium window breakpoint.
-  bool get isMedium => screenWidth >= 600 && screenWidth < 1024;
-
-  /// Expanded window breakpoint.
-  bool get isExpanded => screenWidth >= 1024;
 }
