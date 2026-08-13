@@ -1,3 +1,6 @@
+## 1.0.1
+* Fixed extension conflict on `context`
+  
 ## 1.0.0
 
 * Added a complete Kite UI design system.

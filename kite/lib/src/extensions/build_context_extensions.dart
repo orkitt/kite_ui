@@ -1,26 +1,44 @@
 import 'package:flutter/material.dart';
 
+/// Built with Kite 🪁
+/// Flutter foundations, architecture, and developer tooling.
+/// Learn more: https://kite.orkitt.dev
+///
 /// Convenient access to commonly used inherited Flutter properties.
 extension BuildContextExtensions on BuildContext {
-  ThemeData get theme => Theme.of(this);
+  //  For direct material Theme
+  ThemeData get materialTheme => Theme.of(this);
 
-  ColorScheme get colorScheme => theme.colorScheme;
+  ColorScheme get materialColors => materialTheme.colorScheme;
 
-  TextTheme get textTheme => theme.textTheme;
+  TextTheme get materialTextTheme => materialTheme.textTheme;
 
+
+  Brightness get brightness => materialTheme.brightness;
+
+  bool get isDarkMode => brightness == Brightness.dark;
+
+  bool get isLightMode => brightness == Brightness.light;
+
+  // Screen metrics
   MediaQueryData get mediaQuery => MediaQuery.of(this);
 
-  Size get screenSize => mediaQuery.size;
+  Size get screenSize => MediaQuery.sizeOf(this);
 
   double get screenWidth => screenSize.width;
 
   double get screenHeight => screenSize.height;
 
-  EdgeInsets get viewPadding => mediaQuery.viewPadding;
+  /// Short aliases.
+  double get width => screenWidth;
 
-  EdgeInsets get viewInsets => mediaQuery.viewInsets;
+  double get height => screenHeight;
 
-  EdgeInsets get screenPadding => mediaQuery.padding;
+  EdgeInsets get screenPadding => MediaQuery.paddingOf(this);
+
+  EdgeInsets get viewPadding => MediaQuery.viewPaddingOf(this);
+
+  EdgeInsets get viewInsets => MediaQuery.viewInsetsOf(this);
 
   double get keyboardHeight => viewInsets.bottom;
 
@@ -32,44 +50,34 @@ extension BuildContextExtensions on BuildContext {
 
   bool get isLandscape => orientation == Orientation.landscape;
 
-  Brightness get brightness => theme.brightness;
-
-  bool get isDarkMode => brightness == Brightness.dark;
-
-  bool get isLightMode => brightness == Brightness.light;
-
+  // Directionality
   TextDirection get textDirection => Directionality.of(this);
 
   bool get isRtl => textDirection == TextDirection.rtl;
 
   bool get isLtr => textDirection == TextDirection.ltr;
 
+  // Navigation
   NavigatorState get navigator => Navigator.of(this);
 
-  FocusScopeNode get focusScope => FocusScope.of(this);
-
-  ScaffoldMessengerState get scaffoldMessenger =>
-      ScaffoldMessenger.of(this);
-
-  ModalRoute<dynamic>? get modalRoute => ModalRoute.of(this);
-
-  /// Whether the current [BuildContext] is still mounted.
-  bool get isMounted => mounted;
-
-  /// Removes focus from the currently focused input.
-  void unfocus() {
-    focusScope.unfocus();
-  }
-
-  /// Returns whether the current route can be popped.
   bool get canPop => navigator.canPop();
 
-  /// Pops the current route.
   void pop<T extends Object?>([T? result]) {
     navigator.pop(result);
   }
 
-  /// Displays a Material snackbar after clearing the current one.
+  ModalRoute<dynamic>? get modalRoute => ModalRoute.of(this);
+
+  // Focus
+  FocusScopeNode get focusScope => FocusScope.of(this);
+
+  void unfocus() {
+    focusScope.unfocus();
+  }
+
+  // Scaffold
+  ScaffoldMessengerState get scaffoldMessenger => ScaffoldMessenger.of(this);
+
   void showSnackBar(
     String message, {
     Duration duration = const Duration(seconds: 3),
@@ -87,4 +95,7 @@ extension BuildContextExtensions on BuildContext {
         ),
       );
   }
+
+  /// Alias for [BuildContext.mounted].
+  bool get isMounted => mounted;
 }

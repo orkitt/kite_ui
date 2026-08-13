@@ -41,6 +41,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final isCom = context.isCompact;
 
     return Scaffold(
       backgroundColor: colors.background,
