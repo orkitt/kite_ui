@@ -77,8 +77,8 @@ class _RadioRow<T> extends StatelessWidget {
             color: selected
                 ? colors.primarySoft
                 : state.hovered
-                ? colors.muted
-                : colors.card,
+                    ? colors.muted
+                    : colors.card,
             shape: Shapes.rounded12.copyWith(
               side: BorderSide(
                 color: state.focused || selected

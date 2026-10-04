@@ -16,9 +16,9 @@ class KiteSplit extends StatelessWidget {
     this.gap = Dimensions.s16,
     this.stackOnCompact = true,
     super.key,
-  }) : assert(leftFlex > 0, 'leftFlex must be greater than zero.'),
-       assert(rightFlex > 0, 'rightFlex must be greater than zero.'),
-       assert(gap >= 0, 'gap cannot be negative.');
+  })  : assert(leftFlex > 0, 'leftFlex must be greater than zero.'),
+        assert(rightFlex > 0, 'rightFlex must be greater than zero.'),
+        assert(gap >= 0, 'gap cannot be negative.');
 
   final Widget left;
   final Widget right;

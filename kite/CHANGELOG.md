@@ -1,5 +1,6 @@
-## 1.0.1
+## 1.1.0
 * Fixed extension conflict on `context`
+* Added widget extensions
   
 ## 1.0.0
 

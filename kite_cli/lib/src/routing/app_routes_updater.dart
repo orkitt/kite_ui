@@ -156,7 +156,8 @@ final class AppRoutesUpdater {
     required String source,
   }) {
     final previous = constants[name];
-    if (previous != null && _normalizeExpression(previous) != _normalizeExpression(expression)) {
+    if (previous != null &&
+        _normalizeExpression(previous) != _normalizeExpression(expression)) {
       throw StateError(
         'Route constant `$name` collides while generating $source.',
       );

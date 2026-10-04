@@ -55,9 +55,7 @@ extension DateTimeExtensions on DateTime {
   bool get isWeekday => !isWeekend;
 
   bool isSameDate(DateTime other) {
-    return year == other.year &&
-        month == other.month &&
-        day == other.day;
+    return year == other.year && month == other.month && day == other.day;
   }
 
   bool isSameMonth(DateTime other) {
@@ -121,8 +119,7 @@ extension DateTimeExtensions on DateTime {
 
     var value = now.year - year;
 
-    if (now.month < month ||
-        (now.month == month && now.day < day)) {
+    if (now.month < month || (now.month == month && now.day < day)) {
       value--;
     }
 
@@ -164,11 +161,9 @@ extension DateTimeExtensions on DateTime {
 
   String get time24Hour => DateFormat('HH:mm').format(this);
 
-  String get dateTime12Hour =>
-      DateFormat('dd MMM yyyy, hh:mm a').format(this);
+  String get dateTime12Hour => DateFormat('dd MMM yyyy, hh:mm a').format(this);
 
-  String get dateTime24Hour =>
-      DateFormat('dd MMM yyyy, HH:mm').format(this);
+  String get dateTime24Hour => DateFormat('dd MMM yyyy, HH:mm').format(this);
 
   String get isoDateTime => toIso8601String();
 

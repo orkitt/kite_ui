@@ -93,8 +93,8 @@ class _NavItem extends StatelessWidget {
             color: selected
                 ? colors.primarySoft
                 : state.hovered
-                ? colors.muted
-                : Colors.transparent,
+                    ? colors.muted
+                    : Colors.transparent,
             borderRadius: Dimensions.rad12,
           ),
           child: Column(

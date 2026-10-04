@@ -211,7 +211,8 @@ final class GeneratedRouterWriter {
         if (shell.branches[index].navigation.visible)
           MapEntry<int, KiteShellBranchConfig>(index, shell.branches[index]),
     ];
-    final visibleIndexes = visible.map((entry) => '    ${entry.key},').join('\n');
+    final visibleIndexes =
+        visible.map((entry) => '    ${entry.key},').join('\n');
     final navigationDestinations = <String>[];
     final railDestinations = <String>[];
     for (final entry in visible) {
@@ -340,8 +341,7 @@ final class GeneratedRouterWriter {
             'child': <String, Object?>{
               'routeFunction': '${feature.camelCase}Route',
               'parentConstant': branchName.camelCase,
-              'routeConstant':
-                  '${branchName.camelCase}${feature.pascalCase}',
+              'routeConstant': '${branchName.camelCase}${feature.pascalCase}',
             },
           },
         ),

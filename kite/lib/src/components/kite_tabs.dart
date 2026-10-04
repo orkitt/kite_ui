@@ -142,8 +142,8 @@ class _TabButton extends StatelessWidget {
             color: selected
                 ? colors.card
                 : state.hovered
-                ? colors.soft(colors.textPrimary, amount: .04)
-                : Colors.transparent,
+                    ? colors.soft(colors.textPrimary, amount: .04)
+                    : Colors.transparent,
             shape: RoundedRectangleBorder(
               borderRadius: Dimensions.rad8,
               side: BorderSide(

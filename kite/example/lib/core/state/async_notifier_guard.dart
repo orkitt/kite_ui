@@ -175,8 +175,7 @@ class AsyncActionListener<T> extends ConsumerWidget {
     BuildContext context,
     Object error,
     StackTrace stackTrace,
-  )?
-  onError;
+  )? onError;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

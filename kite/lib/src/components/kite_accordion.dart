@@ -171,9 +171,8 @@ class _AccordionRow extends StatelessWidget {
               child: item.content,
             ),
           ),
-          crossFadeState: expanded
-              ? CrossFadeState.showSecond
-              : CrossFadeState.showFirst,
+          crossFadeState:
+              expanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
           duration: const Duration(milliseconds: 180),
           sizeCurve: Curves.easeOutCubic,
         ),

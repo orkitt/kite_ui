@@ -22,10 +22,8 @@ extension StringExtensions on String {
   String get singleSpace => trim().replaceAll(RegExp(r'\s+'), ' ');
 
   String get initials {
-    final words = trim()
-        .split(RegExp(r'\s+'))
-        .where((word) => word.isNotEmpty)
-        .toList();
+    final words =
+        trim().split(RegExp(r'\s+')).where((word) => word.isNotEmpty).toList();
 
     if (words.isEmpty) return '';
 

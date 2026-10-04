@@ -41,10 +41,10 @@ class KiteSwitch extends StatelessWidget {
             color: !state.enabled
                 ? colors.muted
                 : value
-                ? colors.primary
-                : state.hovered
-                ? colors.borderStrong
-                : colors.border,
+                    ? colors.primary
+                    : state.hovered
+                        ? colors.borderStrong
+                        : colors.border,
             borderRadius: Dimensions.radFull,
             border: Border.all(
               color: state.focused ? colors.primary : Colors.transparent,

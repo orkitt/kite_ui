@@ -41,7 +41,8 @@ dependencies:
     return project;
   }
 
-  test('shell init persists branches and generates StatefulShellRoute', () async {
+  test('shell init persists branches and generates StatefulShellRoute',
+      () async {
     final project = await createProject();
     final config = KiteConfig.load(project.root);
 
@@ -158,8 +159,8 @@ dependencies:
         predicate(
           (error) =>
               error.toString().contains(
-                'Shell branch "missing" does not exist',
-              ) &&
+                    'Shell branch "missing" does not exist',
+                  ) &&
               error.toString().contains('home') &&
               error.toString().contains('blog') &&
               error.toString().contains('profile'),

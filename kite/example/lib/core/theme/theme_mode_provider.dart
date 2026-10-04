@@ -11,9 +11,8 @@ final themeModeProvider = NotifierProvider<ThemeModeNotifier, ThemeMode>(
 final class ThemeModeNotifier extends Notifier<ThemeMode> {
   @override
   ThemeMode build() {
-    final stored = ref
-        .watch(appPreferencesProvider)
-        .getString(AppStorageKeys.themeMode);
+    final stored =
+        ref.watch(appPreferencesProvider).getString(AppStorageKeys.themeMode);
     for (final mode in ThemeMode.values) {
       if (mode.name == stored) {
         return mode;

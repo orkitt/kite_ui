@@ -278,8 +278,7 @@ class _MonthGrid extends StatelessWidget {
         }
 
         final date = DateTime(month.year, month.month, dayNumber);
-        final enabled =
-            !date.isBefore(_dateOnly(firstDate)) &&
+        final enabled = !date.isBefore(_dateOnly(firstDate)) &&
             !date.isAfter(_dateOnly(lastDate));
         final selected = _sameDate(date, selectedDate);
         final today = _sameDate(date, DateTime.now());
@@ -328,13 +327,13 @@ class _DayCell extends StatelessWidget {
         final background = selected
             ? colors.primary
             : state.hovered
-            ? colors.muted
-            : Colors.transparent;
+                ? colors.muted
+                : Colors.transparent;
         final foreground = !enabled
             ? colors.textDisabled
             : selected
-            ? colors.onPrimary
-            : colors.textPrimary;
+                ? colors.onPrimary
+                : colors.textPrimary;
 
         return AnimatedContainer(
           duration: const Duration(milliseconds: 120),
@@ -346,10 +345,10 @@ class _DayCell extends StatelessWidget {
               color: selected
                   ? colors.primary
                   : state.focused
-                  ? colors.primary
-                  : today
-                  ? colors.borderStrong
-                  : Colors.transparent,
+                      ? colors.primary
+                      : today
+                          ? colors.borderStrong
+                          : Colors.transparent,
             ),
           ),
           child: Text(

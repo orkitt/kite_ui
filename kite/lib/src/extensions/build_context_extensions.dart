@@ -13,7 +13,6 @@ extension BuildContextExtensions on BuildContext {
 
   TextTheme get mTextStyle => mTheme.textTheme;
 
-
   // Screen metrics
   MediaQueryData get mediaQuery => MediaQuery.of(this);
 
@@ -22,7 +21,6 @@ extension BuildContextExtensions on BuildContext {
   double get width => screenSize.width;
 
   double get height => screenSize.height;
-
 
   EdgeInsets get screenPadding => MediaQuery.paddingOf(this);
 
@@ -46,7 +44,6 @@ extension BuildContextExtensions on BuildContext {
   bool get isRtl => textDirection == TextDirection.rtl;
 
   bool get isLtr => textDirection == TextDirection.ltr;
-
 
   ModalRoute<dynamic>? get modalRoute => ModalRoute.of(this);
 

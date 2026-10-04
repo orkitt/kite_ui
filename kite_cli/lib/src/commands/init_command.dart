@@ -15,10 +15,10 @@ final class InitCommand extends Command<int> {
     ProjectGenerator generator = const ProjectGenerator(),
     ShellDefinitionParser shellParser = const ShellDefinitionParser(),
     KiteLogger logger = const KiteLogger(),
-  }) : _projectDetector = projectDetector,
-       _generator = generator,
-       _shellParser = shellParser,
-       _logger = logger {
+  })  : _projectDetector = projectDetector,
+        _generator = generator,
+        _shellParser = shellParser,
+        _logger = logger {
     addProjectPathOption(argParser);
     addGenerationOptions(argParser);
     argParser
@@ -31,8 +31,7 @@ final class InitCommand extends Command<int> {
       ..addFlag('vanila', negatable: false, hide: true)
       ..addOption(
         'shell',
-        help:
-            'Configure independent GoRouter shell branches, for example '
+        help: 'Configure independent GoRouter shell branches, for example '
             '"[home,blog,profile]".',
       );
   }

@@ -45,18 +45,18 @@ class KiteCheckbox extends StatelessWidget {
                   color: !state.enabled
                       ? colors.muted
                       : value
-                      ? colors.primary
-                      : state.hovered
-                      ? colors.muted
-                      : colors.card,
+                          ? colors.primary
+                          : state.hovered
+                              ? colors.muted
+                              : colors.card,
                   shape: RoundedRectangleBorder(
                     borderRadius: Dimensions.rad4,
                     side: BorderSide(
                       color: state.focused
                           ? colors.primary
                           : value
-                          ? colors.primary
-                          : colors.borderStrong,
+                              ? colors.primary
+                              : colors.borderStrong,
                       width: state.focused ? 1.5 : 1,
                     ),
                   ),

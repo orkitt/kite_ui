@@ -99,7 +99,8 @@ final class RouteGenerator {
     required bool dryRun,
   }) async {
     final config = KiteConfig.load(project.root);
-    if (config.projectPreset == 'vanilla' || config.routing.type != 'go_router') {
+    if (config.projectPreset == 'vanilla' ||
+        config.routing.type != 'go_router') {
       throw StateError(
         '`kite sync` currently supports Kite clean GoRouter projects only.',
       );
@@ -361,9 +362,8 @@ final class RouteGenerator {
           .where((item) => item.name == requested)
           .firstOrNull;
       if (branch == null) {
-        final available = routing.shell.branches
-            .map((item) => '  ${item.name}')
-            .join('\n');
+        final available =
+            routing.shell.branches.map((item) => '  ${item.name}').join('\n');
         throw StateError(
           'Shell branch "$requested" does not exist.\n\n'
           'Available branches:\n$available',
@@ -472,12 +472,10 @@ final class RouteGenerator {
       );
     }
 
-    final activeBranchPaths = routing.shell.enabled
-        ? branchPaths
-        : const <String>{};
-    final activeBranchFeatures = routing.shell.enabled
-        ? branchFeatures
-        : const <String>{};
+    final activeBranchPaths =
+        routing.shell.enabled ? branchPaths : const <String>{};
+    final activeBranchFeatures =
+        routing.shell.enabled ? branchFeatures : const <String>{};
 
     final routePaths = <String>{};
     final routeFeatures = <String>{};
@@ -551,7 +549,6 @@ final class RouteGenerator {
 
     await routerWriter.buildGeneratedFiles(config: config, routing: routing);
   }
-
 
   void _validateRouteSegment(KiteRouteConfig route) {
     final parts = route.segment.split('/');

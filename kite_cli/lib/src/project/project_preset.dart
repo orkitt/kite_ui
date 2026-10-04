@@ -3,9 +3,9 @@ enum ProjectPreset {
   vanilla;
 
   String get templateId => switch (this) {
-    ProjectPreset.clean => 'project.clean',
-    ProjectPreset.vanilla => 'project.vanilla',
-  };
+        ProjectPreset.clean => 'project.clean',
+        ProjectPreset.vanilla => 'project.vanilla',
+      };
 
   // String get architecture => switch (this) {
   //   ProjectPreset.clean => 'clean',

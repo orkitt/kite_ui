@@ -13,9 +13,9 @@ final class FeatureCommand extends Command<int> {
     ProjectDetector projectDetector = const ProjectDetector(),
     FeatureGenerator generator = const FeatureGenerator(),
     KiteLogger logger = const KiteLogger(),
-  }) : _projectDetector = projectDetector,
-       _generator = generator,
-       _logger = logger {
+  })  : _projectDetector = projectDetector,
+        _generator = generator,
+        _logger = logger {
     addProjectPathOption(argParser);
     addGenerationOptions(argParser);
     argParser
@@ -89,9 +89,8 @@ final class FeatureCommand extends Command<int> {
       (true, _) => 'clean',
       _ => results.option('architecture')!,
     };
-    final routeTarget = into == null
-        ? const RouteTarget.root()
-        : RouteTarget.branch(into);
+    final routeTarget =
+        into == null ? const RouteTarget.root() : RouteTarget.branch(into);
 
     try {
       final project = _projectDetector.detect(results.option('path')!);

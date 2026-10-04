@@ -38,7 +38,6 @@ class KiteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     if (onTap == null) {
       return _surface(
         context,
@@ -65,8 +64,8 @@ class KiteCard extends StatelessWidget {
     final fill = state.pressed
         ? Color.lerp(baseColor, colors.textPrimary, .035)!
         : state.hovered
-        ? Color.lerp(baseColor, colors.textPrimary, .02)!
-        : baseColor;
+            ? Color.lerp(baseColor, colors.textPrimary, .02)!
+            : baseColor;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 160),
@@ -115,7 +114,6 @@ class KiteCard extends StatelessWidget {
               ),
               Dimensions.vBox16,
             ],
-
             child ?? SizedBox(),
             if (footer != null) ...[
               Dimensions.vBox16,

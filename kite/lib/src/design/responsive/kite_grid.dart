@@ -12,13 +12,13 @@ class KiteGrid extends StatelessWidget {
     this.expandedColumns = 3,
     this.gap = Dimensions.s16,
     super.key,
-  }) : assert(compactColumns > 0, 'compactColumns must be greater than zero.'),
-       assert(mediumColumns > 0, 'mediumColumns must be greater than zero.'),
-       assert(
-         expandedColumns > 0,
-         'expandedColumns must be greater than zero.',
-       ),
-       assert(gap >= 0, 'gap cannot be negative.');
+  })  : assert(compactColumns > 0, 'compactColumns must be greater than zero.'),
+        assert(mediumColumns > 0, 'mediumColumns must be greater than zero.'),
+        assert(
+          expandedColumns > 0,
+          'expandedColumns must be greater than zero.',
+        ),
+        assert(gap >= 0, 'gap cannot be negative.');
 
   final List<Widget> children;
   final int compactColumns;
@@ -113,27 +113,27 @@ class KiteGridItem extends StatelessWidget {
     this.mediumSpan,
     this.expandedSpan,
     super.key,
-  }) : assert(span > 0, 'span must be greater than zero.'),
-       assert(
-         compactSpan == null || compactSpan > 0,
-         'compactSpan must be greater than zero when provided.',
-       ),
-       assert(
-         mediumSpan == null || mediumSpan > 0,
-         'mediumSpan must be greater than zero when provided.',
-       ),
-       assert(
-         expandedSpan == null || expandedSpan > 0,
-         'expandedSpan must be greater than zero when provided.',
-       ),
-       full = false;
+  })  : assert(span > 0, 'span must be greater than zero.'),
+        assert(
+          compactSpan == null || compactSpan > 0,
+          'compactSpan must be greater than zero when provided.',
+        ),
+        assert(
+          mediumSpan == null || mediumSpan > 0,
+          'mediumSpan must be greater than zero when provided.',
+        ),
+        assert(
+          expandedSpan == null || expandedSpan > 0,
+          'expandedSpan must be greater than zero when provided.',
+        ),
+        full = false;
 
   const KiteGridItem.full({required this.child, super.key})
-    : span = 1,
-      compactSpan = null,
-      mediumSpan = null,
-      expandedSpan = null,
-      full = true;
+      : span = 1,
+        compactSpan = null,
+        mediumSpan = null,
+        expandedSpan = null,
+        full = true;
 
   final Widget child;
   final int span;

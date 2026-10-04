@@ -502,34 +502,20 @@ InputDecorationThemeData _buildInputTheme({
     filled: true,
     fillColor: colors.inputFill,
     isDense: true,
-
     contentPadding: Dimensions.px16 + Dimensions.py12,
-
     hintStyle: typography.body.copyWith(color: colors.textDisabled),
-
     labelStyle: typography.body.copyWith(color: colors.textSecondary),
-
     floatingLabelStyle: typography.labelSmall.copyWith(color: colors.primary),
-
     helperStyle: typography.caption.copyWith(color: colors.textSecondary),
-
     errorStyle: typography.caption.copyWith(color: colors.error),
-
     counterStyle: typography.caption.copyWith(color: colors.textSecondary),
-
     prefixIconColor: colors.icon,
     suffixIconColor: colors.icon,
-
     border: Shapes.inputBorder(color: colors.border),
-
     enabledBorder: Shapes.inputBorder(color: colors.border),
-
     focusedBorder: Shapes.inputBorder(color: colors.primary, width: 1.5),
-
     errorBorder: Shapes.inputBorder(color: colors.error),
-
     focusedErrorBorder: Shapes.inputBorder(color: colors.error, width: 1.5),
-
     disabledBorder: Shapes.inputBorder(color: colors.borderSoft),
   );
 }

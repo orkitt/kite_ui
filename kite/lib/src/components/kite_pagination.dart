@@ -86,8 +86,8 @@ class _PageButton extends StatelessWidget {
         final foreground = !state.enabled
             ? colors.textDisabled
             : selected
-            ? colors.primary
-            : colors.textSecondary;
+                ? colors.primary
+                : colors.textSecondary;
         return AnimatedContainer(
           duration: const Duration(milliseconds: 120),
           width: Dimensions.s40,
@@ -97,15 +97,15 @@ class _PageButton extends StatelessWidget {
             color: selected
                 ? colors.primarySoft
                 : state.hovered
-                ? colors.muted
-                : Colors.transparent,
+                    ? colors.muted
+                    : Colors.transparent,
             borderRadius: Dimensions.rad12,
             border: Border.all(
               color: state.focused
                   ? colors.primary
                   : selected
-                  ? colors.primarySoft
-                  : colors.borderSoft,
+                      ? colors.primarySoft
+                      : colors.borderSoft,
             ),
           ),
           child: icon != null

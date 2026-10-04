@@ -79,16 +79,16 @@ class KiteApp extends StatefulWidget {
     this.actions,
     this.restorationScopeId,
     this.scrollBehavior = const MaterialScrollBehavior(),
-  }) : assert(
-         home != null ||
-             onGenerateRoute != null ||
-             onUnknownRoute != null ||
-             builder != null,
-         'KiteApp requires home, routes, onGenerateRoute, '
-         'onUnknownRoute, or builder.',
-       ),
-       routerConfig = null,
-       _type = _KiteAppType.navigator;
+  })  : assert(
+          home != null ||
+              onGenerateRoute != null ||
+              onUnknownRoute != null ||
+              builder != null,
+          'KiteApp requires home, routes, onGenerateRoute, '
+          'onUnknownRoute, or builder.',
+        ),
+        routerConfig = null,
+        _type = _KiteAppType.navigator;
 
   /// Creates a Router 2.0 Kite application.
   ///
@@ -125,16 +125,16 @@ class KiteApp extends StatefulWidget {
     this.actions,
     this.restorationScopeId,
     this.scrollBehavior = const MaterialScrollBehavior(),
-  }) : navigatorKey = null,
-       home = null,
-       routes = const <String, WidgetBuilder>{},
-       initialRoute = null,
-       onGenerateRoute = null,
-       onGenerateInitialRoutes = null,
-       onUnknownRoute = null,
-       navigatorObservers = const <NavigatorObserver>[],
-       pageRouteBuilder = null,
-       _type = _KiteAppType.router;
+  })  : navigatorKey = null,
+        home = null,
+        routes = const <String, WidgetBuilder>{},
+        initialRoute = null,
+        onGenerateRoute = null,
+        onGenerateInitialRoutes = null,
+        onUnknownRoute = null,
+        navigatorObservers = const <NavigatorObserver>[],
+        pageRouteBuilder = null,
+        _type = _KiteAppType.router;
 
   final _KiteAppType _type;
 
@@ -182,7 +182,7 @@ class KiteApp extends StatefulWidget {
   final GenerateAppTitle? onGenerateTitle;
 
   final NotificationListenerCallback<NavigationNotification>?
-  onNavigationNotification;
+      onNavigationNotification;
 
   final Color? color;
 
@@ -279,8 +279,7 @@ class _KiteAppState extends State<KiteApp> {
   ThemeData _resolveTheme(BuildContext context) {
     final platformBrightness = MediaQuery.platformBrightnessOf(context);
 
-    final useDarkTheme =
-        widget.themeMode == ThemeMode.dark ||
+    final useDarkTheme = widget.themeMode == ThemeMode.dark ||
         (widget.themeMode == ThemeMode.system &&
             platformBrightness == Brightness.dark);
 
@@ -301,8 +300,7 @@ class _KiteAppState extends State<KiteApp> {
   Widget _kiteBuilder(BuildContext context, Widget? child) {
     final theme = _resolveTheme(context);
 
-    final selectionColor =
-        theme.textSelectionTheme.selectionColor ??
+    final selectionColor = theme.textSelectionTheme.selectionColor ??
         theme.colorScheme.primary.withValues(alpha: 0.40);
 
     final cursorColor =
@@ -415,8 +413,7 @@ class _KiteAppState extends State<KiteApp> {
       onGenerateInitialRoutes: widget.onGenerateInitialRoutes,
       onUnknownRoute: widget.onUnknownRoute,
       onNavigationNotification: widget.onNavigationNotification,
-      pageRouteBuilder:
-          widget.pageRouteBuilder ??
+      pageRouteBuilder: widget.pageRouteBuilder ??
           <T>(RouteSettings settings, WidgetBuilder builder) {
             return MaterialPageRoute<T>(settings: settings, builder: builder);
           },
@@ -476,8 +473,7 @@ class _KiteAppState extends State<KiteApp> {
 
   @override
   Widget build(BuildContext context) {
-    final lightTheme =
-        widget.theme ??
+    final lightTheme = widget.theme ??
         ThemeData(brightness: Brightness.light, useMaterial3: true);
 
     final appColor = widget.color ?? lightTheme.colorScheme.primary;

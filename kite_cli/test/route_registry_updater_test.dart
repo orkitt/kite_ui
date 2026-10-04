@@ -22,8 +22,8 @@ void main() {
           predicate(
             (error) =>
                 error.toString().contains(
-                  'legacy feature-owned routing layout',
-                ) &&
+                      'legacy feature-owned routing layout',
+                    ) &&
                 error.toString().contains('will not delete existing'),
           ),
         ),

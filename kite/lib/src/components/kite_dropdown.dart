@@ -64,8 +64,8 @@ class KiteDropdown<T> extends StatelessWidget {
                     color: state.focused
                         ? colors.primary
                         : state.hovered
-                        ? colors.borderStrong
-                        : colors.border,
+                            ? colors.borderStrong
+                            : colors.border,
                     width: state.focused ? 1.5 : 1,
                   ),
                 ),
@@ -194,8 +194,8 @@ class KiteDropdown<T> extends StatelessWidget {
                               color: selected
                                   ? colors.primarySoft
                                   : state.hovered
-                                  ? colors.muted
-                                  : Colors.transparent,
+                                      ? colors.muted
+                                      : Colors.transparent,
                               borderRadius: Dimensions.rad12,
                             ),
                             child: Row(

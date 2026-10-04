@@ -53,8 +53,8 @@ final class KiteShellBranchConfig {
     final name = KiteConfig._string(map['name'], '');
     final path = KiteConfig._string(map['path'], '');
     final explicitFeature = KiteConfig._nullableString(map['feature']);
-    final feature = explicitFeature ??
-        (name.isEmpty ? '' : NameConverter(name).snakeCase);
+    final feature =
+        explicitFeature ?? (name.isEmpty ? '' : NameConverter(name).snakeCase);
     final architecture = KiteConfig._string(
       map['architecture'],
       defaultArchitecture,
@@ -130,9 +130,8 @@ final class KiteShellConfig {
 
   Map<String, Object?> toYamlMap() => <String, Object?>{
         'enabled': enabled,
-        'branches': branches
-            .map((item) => item.toYamlMap())
-            .toList(growable: false),
+        'branches':
+            branches.map((item) => item.toYamlMap()).toList(growable: false),
       };
 }
 
@@ -352,9 +351,8 @@ final class KiteRoutingConfig {
         'type': type,
         'auto_register_features': autoRegisterFeatures,
         'shell': shell.toYamlMap(),
-        'routes': routes
-            .map((item) => item.toYamlMap())
-            .toList(growable: false),
+        'routes':
+            routes.map((item) => item.toYamlMap()).toList(growable: false),
       };
 }
 

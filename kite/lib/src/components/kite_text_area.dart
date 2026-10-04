@@ -82,8 +82,8 @@ class _KiteTextAreaState extends State<KiteTextArea> {
                 color: hasError
                     ? colors.error
                     : _focused
-                    ? colors.primary
-                    : colors.border,
+                        ? colors.primary
+                        : colors.border,
                 width: hasError || _focused ? 1.5 : 1,
               ),
             ),

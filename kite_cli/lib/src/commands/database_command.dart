@@ -12,9 +12,9 @@ final class DatabaseCommand extends Command<int> {
     ProjectDetector projectDetector = const ProjectDetector(),
     DatabaseGenerator generator = const DatabaseGenerator(),
     KiteLogger logger = const KiteLogger(),
-  }) : _projectDetector = projectDetector,
-       _generator = generator,
-       _logger = logger {
+  })  : _projectDetector = projectDetector,
+        _generator = generator,
+        _logger = logger {
     addProjectPathOption(argParser);
     addGenerationOptions(argParser);
   }
@@ -33,7 +33,8 @@ final class DatabaseCommand extends Command<int> {
   Future<int> run() async {
     final results = argResults!;
     if (results.rest.length != 1) {
-      throw UsageException('Provide a database preset. Available: isar.', usage);
+      throw UsageException(
+          'Provide a database preset. Available: isar.', usage);
     }
 
     final preset = results.rest.single.toLowerCase();

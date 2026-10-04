@@ -92,13 +92,13 @@ final class FeatureGenerator {
         'date': DateTime.now().toUtc().toIso8601String(),
       },
     };
-    final generationTemplates = await managedTemplateFilter
-        .excludeInstalledDependencies(
-          projectRoot: project.root,
-          rootTemplateId: templateId,
-          templates: templates,
-          variables: variables,
-        );
+    final generationTemplates =
+        await managedTemplateFilter.excludeInstalledDependencies(
+      projectRoot: project.root,
+      rootTemplateId: templateId,
+      templates: templates,
+      variables: variables,
+    );
     final plan = await planner.buildResolved(
       rootTemplateId: templateId,
       templates: generationTemplates,

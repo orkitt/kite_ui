@@ -25,15 +25,15 @@ sealed class Result<T> {
 
   /// Returns the underlying value if [Success], otherwise returns `null`.
   T? get valueOrNull => switch (this) {
-    Success(:final value) => value,
-    Failure() => null,
-  };
+        Success(:final value) => value,
+        Failure() => null,
+      };
 
   /// Returns the underlying [AppFailure] if [Failure], otherwise returns `null`.
   AppFailure? get failureOrNull => switch (this) {
-    Success() => null,
-    Failure(:final failure) => failure,
-  };
+        Success() => null,
+        Failure(:final failure) => failure,
+      };
 
   /// Executes [onSuccess] if the result is [Success], or [onFailure] if it is [Failure].
   R fold<R>({

@@ -33,15 +33,15 @@ extension KiteLayoutSizeX on KiteLayoutSize {
   bool get wide => medium || expanded;
 
   double get pagePadding => switch (this) {
-    KiteLayoutSize.compact => Dimensions.s16,
-    KiteLayoutSize.medium => Dimensions.s24,
-    KiteLayoutSize.expanded => Dimensions.s32,
-  };
+        KiteLayoutSize.compact => Dimensions.s16,
+        KiteLayoutSize.medium => Dimensions.s24,
+        KiteLayoutSize.expanded => Dimensions.s32,
+      };
 
   EdgeInsets get pageInsets => EdgeInsets.symmetric(
-    horizontal: pagePadding,
-    vertical: Dimensions.s24,
-  );
+        horizontal: pagePadding,
+        vertical: Dimensions.s24,
+      );
 
   T value<T>({required T compact, T? medium, T? expanded}) {
     return switch (this) {
@@ -251,9 +251,7 @@ class _ResponsiveKiteState extends State<ResponsiveKite>
 
       final next = _resolve(mediaWidth!);
       final shouldRebuild =
-          !_ready ||
-          next.size != _data.size ||
-          next.width != _data.width;
+          !_ready || next.size != _data.size || next.width != _data.width;
 
       _ready = true;
 

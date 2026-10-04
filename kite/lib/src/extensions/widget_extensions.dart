@@ -33,14 +33,15 @@ extension WidgetListExtensions on List<Widget> {
     TextDirection? textDirection,
     StackFit fit = StackFit.loose,
     Clip clipBehavior = Clip.hardEdge,
-  }) => Stack(
-    key: key,
-    alignment: alignment,
-    textDirection: textDirection,
-    fit: fit,
-    clipBehavior: clipBehavior,
-    children: this,
-  );
+  }) =>
+      Stack(
+        key: key,
+        alignment: alignment,
+        textDirection: textDirection,
+        fit: fit,
+        clipBehavior: clipBehavior,
+        children: this,
+      );
 
   /// Arranges these widgets vertically without scrolling.
   ///
@@ -55,16 +56,17 @@ extension WidgetListExtensions on List<Widget> {
     TextDirection? textDirection,
     VerticalDirection verticalDirection = VerticalDirection.down,
     TextBaseline? textBaseline,
-  }) => Column(
-    key: key,
-    mainAxisAlignment: mainAxisAlignment,
-    crossAxisAlignment: crossAxisAlignment,
-    mainAxisSize: mainAxisSize,
-    textDirection: textDirection,
-    verticalDirection: verticalDirection,
-    textBaseline: textBaseline,
-    children: this,
-  );
+  }) =>
+      Column(
+        key: key,
+        mainAxisAlignment: mainAxisAlignment,
+        crossAxisAlignment: crossAxisAlignment,
+        mainAxisSize: mainAxisSize,
+        textDirection: textDirection,
+        verticalDirection: verticalDirection,
+        textBaseline: textBaseline,
+        children: this,
+      );
 
   /// Arranges these widgets horizontally without scrolling.
   ///
@@ -78,16 +80,17 @@ extension WidgetListExtensions on List<Widget> {
     TextDirection? textDirection,
     VerticalDirection verticalDirection = VerticalDirection.down,
     TextBaseline? textBaseline,
-  }) => Row(
-    key: key,
-    mainAxisAlignment: mainAxisAlignment,
-    crossAxisAlignment: crossAxisAlignment,
-    mainAxisSize: mainAxisSize,
-    textDirection: textDirection,
-    verticalDirection: verticalDirection,
-    textBaseline: textBaseline,
-    children: this,
-  );
+  }) =>
+      Row(
+        key: key,
+        mainAxisAlignment: mainAxisAlignment,
+        crossAxisAlignment: crossAxisAlignment,
+        mainAxisSize: mainAxisSize,
+        textDirection: textDirection,
+        verticalDirection: verticalDirection,
+        textBaseline: textBaseline,
+        children: this,
+      );
 
   /// Arranges these widgets in runs when available space is exhausted.
   ///
@@ -104,19 +107,20 @@ extension WidgetListExtensions on List<Widget> {
     TextDirection? textDirection,
     VerticalDirection verticalDirection = VerticalDirection.down,
     Clip clipBehavior = Clip.none,
-  }) => Wrap(
-    key: key,
-    direction: direction,
-    alignment: alignment,
-    spacing: spacing,
-    runAlignment: runAlignment,
-    runSpacing: runSpacing,
-    crossAxisAlignment: crossAxisAlignment,
-    textDirection: textDirection,
-    verticalDirection: verticalDirection,
-    clipBehavior: clipBehavior,
-    children: this,
-  );
+  }) =>
+      Wrap(
+        key: key,
+        direction: direction,
+        alignment: alignment,
+        spacing: spacing,
+        runAlignment: runAlignment,
+        runSpacing: runSpacing,
+        crossAxisAlignment: crossAxisAlignment,
+        textDirection: textDirection,
+        verticalDirection: verticalDirection,
+        clipBehavior: clipBehavior,
+        children: this,
+      );
 }
 
 /// Adds explicit layout and decoration wrappers to a widget.
@@ -152,13 +156,14 @@ extension WidgetLayoutExtensions on Widget {
     Key? key,
     double? widthFactor,
     double? heightFactor,
-  }) => Align(
-    key: key,
-    alignment: alignment,
-    widthFactor: widthFactor,
-    heightFactor: heightFactor,
-    child: this,
-  );
+  }) =>
+      Align(
+        key: key,
+        alignment: alignment,
+        widthFactor: widthFactor,
+        heightFactor: heightFactor,
+        child: this,
+      );
 
   /// Fills a share of remaining space in a [Row], [Column], or [Flex].
   ///
@@ -201,16 +206,17 @@ extension WidgetLayoutExtensions on Widget {
     double? bottom,
     double? width,
     double? height,
-  }) => Positioned(
-    key: key,
-    left: left,
-    top: top,
-    right: right,
-    bottom: bottom,
-    width: width,
-    height: height,
-    child: this,
-  );
+  }) =>
+      Positioned(
+        key: key,
+        left: left,
+        top: top,
+        right: right,
+        bottom: bottom,
+        width: width,
+        height: height,
+        child: this,
+      );
 
   /// Stretches this widget between a [Stack]'s edges.
   ///
@@ -223,14 +229,15 @@ extension WidgetLayoutExtensions on Widget {
     double? top = 0,
     double? right = 0,
     double? bottom = 0,
-  }) => Positioned.fill(
-    key: key,
-    left: left,
-    top: top,
-    right: right,
-    bottom: bottom,
-    child: this,
-  );
+  }) =>
+      Positioned.fill(
+        key: key,
+        left: left,
+        top: top,
+        right: right,
+        bottom: bottom,
+        child: this,
+      );
 
   /// Paints a caller-provided box decoration behind or in front of this widget.
   ///
@@ -240,12 +247,13 @@ extension WidgetLayoutExtensions on Widget {
     BoxDecoration decoration, {
     Key? key,
     DecorationPosition position = DecorationPosition.background,
-  }) => DecoratedBox(
-    key: key,
-    decoration: decoration,
-    position: position,
-    child: this,
-  );
+  }) =>
+      DecoratedBox(
+        key: key,
+        decoration: decoration,
+        position: position,
+        child: this,
+      );
 
   /// Clips this widget to a rounded rectangle using the supplied radius.
   ///
@@ -255,12 +263,13 @@ extension WidgetLayoutExtensions on Widget {
     BorderRadiusGeometry borderRadius, {
     Key? key,
     Clip clipBehavior = Clip.antiAlias,
-  }) => ClipRRect(
-    key: key,
-    borderRadius: borderRadius,
-    clipBehavior: clipBehavior,
-    child: this,
-  );
+  }) =>
+      ClipRRect(
+        key: key,
+        borderRadius: borderRadius,
+        clipBehavior: clipBehavior,
+        child: this,
+      );
 }
 
 /// Convenience helpers for composing Flutter widgets.

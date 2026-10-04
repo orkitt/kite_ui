@@ -93,8 +93,7 @@ extension NumExtensions on num {
       'PB',
     ];
 
-    final calculatedIndex =
-        (math.log(this) / math.log(1024)).floor();
+    final calculatedIndex = (math.log(this) / math.log(1024)).floor();
 
     final index = calculatedIndex.clamp(0, units.length - 1).toInt();
     final value = this / math.pow(1024, index);

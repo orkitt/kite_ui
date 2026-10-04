@@ -94,9 +94,8 @@ class KiteDialog {
         ),
         KiteButton(
           label: confirmLabel,
-          variant: destructive
-              ? KiteButtonVariant.danger
-              : KiteButtonVariant.filled,
+          variant:
+              destructive ? KiteButtonVariant.danger : KiteButtonVariant.filled,
           onPressed: () => Navigator.of(context).pop(true),
         ),
       ],

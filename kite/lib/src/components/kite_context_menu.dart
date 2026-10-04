@@ -178,8 +178,8 @@ class _MenuItem<T> extends StatelessWidget {
     final foreground = !item.enabled
         ? colors.textDisabled
         : item.destructive
-        ? colors.error
-        : colors.textPrimary;
+            ? colors.error
+            : colors.textPrimary;
 
     return KitePressable(
       onTap: item.enabled ? () => onSelected(item.value) : null,
@@ -192,8 +192,8 @@ class _MenuItem<T> extends StatelessWidget {
           decoration: BoxDecoration(
             color: state.hovered
                 ? item.destructive
-                      ? colors.errorSoft
-                      : colors.muted
+                    ? colors.errorSoft
+                    : colors.muted
                 : Colors.transparent,
             borderRadius: Dimensions.rad8,
           ),

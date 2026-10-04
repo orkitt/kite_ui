@@ -17,12 +17,12 @@ import 'exit_codes.dart';
 
 final class KiteCommandRunner extends CommandRunner<int> {
   KiteCommandRunner({KiteLogger logger = const KiteLogger()})
-    : _logger = logger,
-      super(
-        'kite cli',
-        'Initialize professional Flutter foundations and generate '
-            'features, components, state, API, and database infrastructure.',
-      ) {
+      : _logger = logger,
+        super(
+          'kite cli',
+          'Initialize professional Flutter foundations and generate '
+              'features, components, state, API, and database infrastructure.',
+        ) {
     argParser.addFlag(
       'version',
       abbr: 'v',

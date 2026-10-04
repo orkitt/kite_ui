@@ -125,10 +125,10 @@ class KiteAlert extends StatelessWidget {
   }
 
   IconData get _defaultIcon => switch (variant) {
-    KiteAlertVariant.info => Icons.info_outline_rounded,
-    KiteAlertVariant.success => Icons.check_circle_outline_rounded,
-    KiteAlertVariant.warning => Icons.warning_amber_rounded,
-    KiteAlertVariant.error => Icons.error_outline_rounded,
-    KiteAlertVariant.neutral => Icons.notifications_none_rounded,
-  };
+        KiteAlertVariant.info => Icons.info_outline_rounded,
+        KiteAlertVariant.success => Icons.check_circle_outline_rounded,
+        KiteAlertVariant.warning => Icons.warning_amber_rounded,
+        KiteAlertVariant.error => Icons.error_outline_rounded,
+        KiteAlertVariant.neutral => Icons.notifications_none_rounded,
+      };
 }

@@ -12,6 +12,7 @@ import '../project/kite_config.dart';
 import '../templates/template_store.dart';
 import '../version.dart';
 import 'generation_options.dart';
+
 // usecase
 // PresetGenerator
 // │
@@ -69,13 +70,13 @@ final class PresetGenerator {
 
     for (final templateId in templateIds.toSet()) {
       final templates = await templateStore.resolve(templateId);
-      final generationTemplates = await managedTemplateFilter
-          .excludeInstalledDependencies(
-            projectRoot: project.root,
-            rootTemplateId: templateId,
-            templates: templates,
-            variables: variables,
-          );
+      final generationTemplates =
+          await managedTemplateFilter.excludeInstalledDependencies(
+        projectRoot: project.root,
+        rootTemplateId: templateId,
+        templates: templates,
+        variables: variables,
+      );
       rootPlans.add(
         await planner.buildResolved(
           rootTemplateId: templateId,

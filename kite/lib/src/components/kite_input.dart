@@ -99,8 +99,8 @@ class _KiteInputState extends State<KiteInput> {
     final borderColor = hasError
         ? colors.error
         : _focused
-        ? colors.primary
-        : colors.border;
+            ? colors.primary
+            : colors.border;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,9 +153,8 @@ class _KiteInputState extends State<KiteInput> {
               Expanded(
                 child: TextFormField(
                   controller: widget.controller,
-                  initialValue: widget.controller == null
-                      ? widget.initialValue
-                      : null,
+                  initialValue:
+                      widget.controller == null ? widget.initialValue : null,
                   focusNode: _focusNode,
                   enabled: widget.enabled,
                   readOnly: widget.readOnly,
@@ -228,30 +227,30 @@ class _KiteInputState extends State<KiteInput> {
   }
 
   TextInputType get _keyboardType => switch (widget.type) {
-    KiteInputType.phone => TextInputType.phone,
-    KiteInputType.email => TextInputType.emailAddress,
-    KiteInputType.number => const TextInputType.numberWithOptions(
-      decimal: true,
-    ),
-    _ => TextInputType.text,
-  };
+        KiteInputType.phone => TextInputType.phone,
+        KiteInputType.email => TextInputType.emailAddress,
+        KiteInputType.number => const TextInputType.numberWithOptions(
+            decimal: true,
+          ),
+        _ => TextInputType.text,
+      };
 
   Iterable<String>? get _autofillHints => switch (widget.type) {
-    KiteInputType.password => const [AutofillHints.password],
-    KiteInputType.phone => const [AutofillHints.telephoneNumber],
-    KiteInputType.email => const [AutofillHints.email],
-    _ => null,
-  };
+        KiteInputType.password => const [AutofillHints.password],
+        KiteInputType.phone => const [AutofillHints.telephoneNumber],
+        KiteInputType.email => const [AutofillHints.email],
+        _ => null,
+      };
 
   List<TextInputFormatter>? get _formatters => switch (widget.type) {
-    KiteInputType.phone => [
-      FilteringTextInputFormatter.allow(RegExp(r'[0-9+\- ()]')),
-    ],
-    KiteInputType.number => [
-      FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-    ],
-    _ => null,
-  };
+        KiteInputType.phone => [
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9+\- ()]')),
+          ],
+        KiteInputType.number => [
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+          ],
+        _ => null,
+      };
 }
 
 class _FieldAction extends StatelessWidget {
@@ -340,9 +339,8 @@ class _KiteOtpInputState extends State<KiteOtpInput> {
         return Expanded(
           child: Padding(
             padding: EdgeInsets.only(
-              right: index == widget.length - 1
-                  ? Dimensions.zero
-                  : Dimensions.s8,
+              right:
+                  index == widget.length - 1 ? Dimensions.zero : Dimensions.s8,
             ),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 140),
@@ -355,8 +353,8 @@ class _KiteOtpInputState extends State<KiteOtpInput> {
                     color: focused
                         ? colors.primary
                         : filled
-                        ? colors.borderStrong
-                        : colors.border,
+                            ? colors.borderStrong
+                            : colors.border,
                     width: focused ? 1.5 : 1,
                   ),
                 ),

@@ -39,11 +39,11 @@ class KiteIconButton extends StatelessWidget {
         final background = _background(colors, state);
         final border = state.focused
             ? (variant == KiteIconButtonVariant.danger
-                  ? colors.error
-                  : colors.primary)
+                ? colors.error
+                : colors.primary)
             : variant == KiteIconButtonVariant.outline
-            ? colors.border
-            : Colors.transparent;
+                ? colors.border
+                : Colors.transparent;
 
         return AnimatedContainer(
           duration: const Duration(milliseconds: 140),

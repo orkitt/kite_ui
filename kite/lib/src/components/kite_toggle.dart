@@ -37,8 +37,8 @@ class KiteToggle extends StatelessWidget {
         final foreground = !state.enabled
             ? colors.textDisabled
             : selected
-            ? colors.primary
-            : colors.textSecondary;
+                ? colors.primary
+                : colors.textSecondary;
 
         return AnimatedContainer(
           duration: const Duration(milliseconds: 140),
@@ -50,15 +50,15 @@ class KiteToggle extends StatelessWidget {
             color: selected
                 ? colors.primarySoft
                 : state.hovered
-                ? colors.muted
-                : Colors.transparent,
+                    ? colors.muted
+                    : Colors.transparent,
             shape: Shapes.rounded12.copyWith(
               side: BorderSide(
                 color: state.focused
                     ? colors.primary
                     : selected
-                    ? colors.primarySoft
-                    : colors.borderSoft,
+                        ? colors.primarySoft
+                        : colors.borderSoft,
               ),
             ),
           ),

@@ -62,13 +62,13 @@ class KiteSlider extends StatelessWidget {
           onIncrease: onChanged == null
               ? null
               : () => onChanged!(
-                  (value + (max - min) * .05).clamp(min, max).toDouble(),
-                ),
+                    (value + (max - min) * .05).clamp(min, max).toDouble(),
+                  ),
           onDecrease: onChanged == null
               ? null
               : () => onChanged!(
-                  (value - (max - min) * .05).clamp(min, max).toDouble(),
-                ),
+                    (value - (max - min) * .05).clamp(min, max).toDouble(),
+                  ),
           child: SizedBox(
             height: Dimensions.s32,
             child: LayoutBuilder(
@@ -78,15 +78,15 @@ class KiteSlider extends StatelessWidget {
                   onTapDown: onChanged == null
                       ? null
                       : (details) => _update(
-                          details.localPosition.dx,
-                          constraints.maxWidth,
-                        ),
+                            details.localPosition.dx,
+                            constraints.maxWidth,
+                          ),
                   onHorizontalDragUpdate: onChanged == null
                       ? null
                       : (details) => _update(
-                          details.localPosition.dx,
-                          constraints.maxWidth,
-                        ),
+                            details.localPosition.dx,
+                            constraints.maxWidth,
+                          ),
                   child: _SliderTrack(
                     normalized: normalized,
                     enabled: onChanged != null,

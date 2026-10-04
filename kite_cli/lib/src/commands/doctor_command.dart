@@ -16,10 +16,10 @@ final class DoctorCommand extends Command<int> {
     TemplateStore templateStore = const TemplateStore(),
     ProcessRunner processRunner = const ProcessRunner(),
     KiteLogger logger = const KiteLogger(),
-  }) : _projectDetector = projectDetector,
-       _templateStore = templateStore,
-       _processRunner = processRunner,
-       _logger = logger {
+  })  : _projectDetector = projectDetector,
+        _templateStore = templateStore,
+        _processRunner = processRunner,
+        _logger = logger {
     addProjectPathOption(argParser);
   }
 
@@ -41,9 +41,12 @@ final class DoctorCommand extends Command<int> {
 
     final path = p.normalize(p.absolute(argResults!.option('path')!));
     try {
-      final flutter = await _processRunner.run('flutter', const <String>[
-        '--version',
-      ], workingDirectory: Directory.current.path);
+      final flutter = await _processRunner.run(
+          'flutter',
+          const <String>[
+            '--version',
+          ],
+          workingDirectory: Directory.current.path);
       if (flutter.exitCode == 0) {
         final firstLine = flutter.stdout.toString().split('\n').first.trim();
         _logger.success(firstLine.isEmpty ? 'Flutter available' : firstLine);

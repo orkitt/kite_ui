@@ -80,8 +80,7 @@ final class UpgradeGenerator {
         }
 
         final currentChecksum = await FileChecksum.file(target);
-        final isUnmodified =
-            existingRecord != null &&
+        final isUnmodified = existingRecord != null &&
             currentChecksum == existingRecord.checksum;
         final isAlreadyCurrent =
             currentChecksum == FileChecksum.content(planned.content);
@@ -109,8 +108,7 @@ final class UpgradeGenerator {
         conflictStrategy: ConflictStrategy.overwrite,
         dryRun: dryRun,
       );
-      changedFiles +=
-          result.count(GeneratedFileStatus.created) +
+      changedFiles += result.count(GeneratedFileStatus.created) +
           result.count(GeneratedFileStatus.updated);
 
       if (!dryRun) {

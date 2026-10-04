@@ -259,7 +259,8 @@ dependencies:
     },
   );
 
-  test('sync removes stale generated branch but preserves its feature', () async {
+  test('sync removes stale generated branch but preserves its feature',
+      () async {
     final project = await createShellProject();
     final yaml = File('${project.root.path}/kite.yaml');
     final initial = await yaml.readAsString();

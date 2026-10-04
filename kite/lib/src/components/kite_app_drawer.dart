@@ -89,8 +89,8 @@ class _DrawerDestinationRow extends StatelessWidget {
             color: selected
                 ? colors.primarySoft
                 : state.hovered
-                ? colors.muted
-                : Colors.transparent,
+                    ? colors.muted
+                    : Colors.transparent,
             borderRadius: Dimensions.rad12,
             border: Border.all(
               color: state.focused ? colors.primary : Colors.transparent,

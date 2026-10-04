@@ -141,6 +141,7 @@ final class SyncGenerator {
       );
     }
   }
+
   Future<void> _ensureRouteFeatures({
     required FlutterProject project,
     required KiteConfig config,
@@ -223,5 +224,4 @@ final class SyncGenerator {
       ),
     );
   }
-
 }

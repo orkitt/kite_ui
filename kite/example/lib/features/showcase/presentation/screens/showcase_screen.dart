@@ -585,7 +585,6 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
             value: _volume,
             min: 0,
             max: 100,
-
             onChanged: (value) => setState(() => _volume = value),
           ),
           Dimensions.vBox16,

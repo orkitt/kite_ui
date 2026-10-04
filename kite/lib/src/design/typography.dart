@@ -136,18 +136,18 @@ class KiteTypography extends ThemeExtension<KiteTypography> {
 
   /// Compact section heading.
   TextStyle get sectionSmall => section.copyWith(
-    fontSize: 18,
-    fontWeight: FontWeight.w600,
-    height: 1.30,
-    letterSpacing: -0.15,
-  );
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        height: 1.30,
+        letterSpacing: -0.15,
+      );
 
   /// Supporting title or subtitle.
   TextStyle get subtitle => paragraph.copyWith(
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-    height: 1.40,
-  );
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        height: 1.40,
+      );
 
   /// Strong readable content.
   TextStyle get bodyStrong => body.copyWith(fontWeight: FontWeight.w600);

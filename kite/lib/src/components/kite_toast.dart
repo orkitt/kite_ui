@@ -142,19 +142,19 @@ class _ToastOverlayState extends State<_ToastOverlay>
 
     final (accent, icon) = switch (widget.variant) {
       KiteToastVariant.success => (
-        colors.success,
-        Icons.check_circle_outline_rounded,
-      ),
+          colors.success,
+          Icons.check_circle_outline_rounded,
+        ),
       KiteToastVariant.warning => (colors.warning, Icons.error_outline_rounded),
       KiteToastVariant.error => (
-        colors.error,
-        Icons.remove_circle_outline_rounded,
-      ),
+          colors.error,
+          Icons.remove_circle_outline_rounded,
+        ),
       KiteToastVariant.info => (colors.info, Icons.info_outline_rounded),
       KiteToastVariant.neutral => (
-        colors.primary,
-        Icons.notifications_none_rounded,
-      ),
+          colors.primary,
+          Icons.notifications_none_rounded,
+        ),
     };
 
     return Positioned(
@@ -191,8 +191,7 @@ class _ToastOverlayState extends State<_ToastOverlay>
                           color: colors.card,
                           shape: Shapes.rounded16.copyWith(
                             side: BorderSide(
-                              color:
-                                  colors.borderSoft,
+                              color: colors.borderSoft,
                               width: 1,
                             ),
                           ),
@@ -248,14 +247,14 @@ class _ToastOverlayState extends State<_ToastOverlay>
                                   ],
                                   Text(
                                     widget.message,
-                                    style: context.typography.paragraph
-                                        .copyWith(
-                                          color: widget.title != null
-                                              ? colors.textSecondary
-                                              : colors.textPrimary,
-                                          fontSize: 13,
-                                          height: 1.35,
-                                        ),
+                                    style:
+                                        context.typography.paragraph.copyWith(
+                                      color: widget.title != null
+                                          ? colors.textSecondary
+                                          : colors.textPrimary,
+                                      fontSize: 13,
+                                      height: 1.35,
+                                    ),
                                   ),
                                 ],
                               ),

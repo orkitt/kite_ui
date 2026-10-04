@@ -32,16 +32,16 @@ class KiteSplitLayout extends StatefulWidget {
     this.sidebarScrollable = false,
     this.contentScrollable = true,
     super.key,
-  }) : assert(sidebarWidth > 0, 'sidebarWidth must be greater than zero.'),
-       assert(
-         mediumSidebarWidth > 0,
-         'mediumSidebarWidth must be greater than zero.',
-       ),
-       assert(
-         minContentWidth > 0,
-         'minContentWidth must be greater than zero.',
-       ),
-       assert(gap >= 0, 'gap cannot be negative.');
+  })  : assert(sidebarWidth > 0, 'sidebarWidth must be greater than zero.'),
+        assert(
+          mediumSidebarWidth > 0,
+          'mediumSidebarWidth must be greater than zero.',
+        ),
+        assert(
+          minContentWidth > 0,
+          'minContentWidth must be greater than zero.',
+        ),
+        assert(gap >= 0, 'gap cannot be negative.');
 
   final Widget sidebar;
   final Widget content;
@@ -87,8 +87,7 @@ class _KiteSplitLayoutState extends State<KiteSplitLayout> {
           KiteLayoutSize.expanded => widget.sidebarWidth,
         };
 
-        final hasEnoughWidth =
-            availableWidth >=
+        final hasEnoughWidth = availableWidth >=
             sidebarWidth + widget.gap + widget.minContentWidth;
         final showSidebar =
             layoutSize != KiteLayoutSize.compact && hasEnoughWidth;
@@ -148,15 +147,15 @@ class _KiteSplitLayoutState extends State<KiteSplitLayout> {
 
         final children = switch (widget.sidebarPosition) {
           KiteSidebarPosition.start => <Widget>[
-            sidebar,
-            SizedBox(width: widget.gap),
-            content,
-          ],
+              sidebar,
+              SizedBox(width: widget.gap),
+              content,
+            ],
           KiteSidebarPosition.end => <Widget>[
-            content,
-            SizedBox(width: widget.gap),
-            sidebar,
-          ],
+              content,
+              SizedBox(width: widget.gap),
+              sidebar,
+            ],
         };
 
         return Row(

@@ -17,7 +17,6 @@ abstract final class AppTypography {
       height: 1.25,
       letterSpacing: -0.5,
     ),
-
     section: const TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w600,

@@ -20,10 +20,10 @@ final class ManagedFileRecord {
   final TemplateUpgradePolicy upgradePolicy;
 
   Map<String, Object?> toJson() => <String, Object?>{
-    'path': path,
-    'checksum': checksum,
-    'upgradePolicy': upgradePolicy.name,
-  };
+        'path': path,
+        'checksum': checksum,
+        'upgradePolicy': upgradePolicy.name,
+      };
 
   factory ManagedFileRecord.fromJson(Map<String, Object?> json) {
     return ManagedFileRecord(
@@ -54,13 +54,13 @@ final class GenerationRecord {
   final String generatedAt;
 
   Map<String, Object?> toJson() => <String, Object?>{
-    'id': id,
-    'templateId': templateId,
-    'templateVersion': templateVersion,
-    'variables': variables,
-    'generatedAt': generatedAt,
-    'files': files.map((item) => item.toJson()).toList(growable: false),
-  };
+        'id': id,
+        'templateId': templateId,
+        'templateVersion': templateVersion,
+        'variables': variables,
+        'generatedAt': generatedAt,
+        'files': files.map((item) => item.toJson()).toList(growable: false),
+      };
 
   factory GenerationRecord.fromJson(Map<String, Object?> json) {
     return GenerationRecord(
@@ -90,22 +90,21 @@ final class KiteProjectManifest {
   });
 
   factory KiteProjectManifest.empty() => const KiteProjectManifest(
-    schemaVersion: kiteManifestSchemaVersion,
-    kiteVersion: kiteCliVersion,
-    generations: <GenerationRecord>[],
-  );
+        schemaVersion: kiteManifestSchemaVersion,
+        kiteVersion: kiteCliVersion,
+        generations: <GenerationRecord>[],
+      );
 
   final int schemaVersion;
   final String kiteVersion;
   final List<GenerationRecord> generations;
 
   Map<String, Object?> toJson() => <String, Object?>{
-    'schemaVersion': schemaVersion,
-    'kiteVersion': kiteVersion,
-    'generations': generations
-        .map((item) => item.toJson())
-        .toList(growable: false),
-  };
+        'schemaVersion': schemaVersion,
+        'kiteVersion': kiteVersion,
+        'generations':
+            generations.map((item) => item.toJson()).toList(growable: false),
+      };
 
   factory KiteProjectManifest.fromJson(Map<String, Object?> json) {
     return KiteProjectManifest(
@@ -200,32 +199,28 @@ final class ProjectManifestStore {
   }) async {
     final current = await read(root);
     var changed = false;
-    final generations = current.generations
-        .map((generation) {
-          final files = generation.files
-              .map((file) {
-                if (file.path != relativePath) {
-                  return file;
-                }
-                changed = true;
-                return ManagedFileRecord(
-                  path: file.path,
-                  checksum: checksum,
-                  upgradePolicy: file.upgradePolicy,
-                );
-              })
-              .toList(growable: false);
+    final generations = current.generations.map((generation) {
+      final files = generation.files.map((file) {
+        if (file.path != relativePath) {
+          return file;
+        }
+        changed = true;
+        return ManagedFileRecord(
+          path: file.path,
+          checksum: checksum,
+          upgradePolicy: file.upgradePolicy,
+        );
+      }).toList(growable: false);
 
-          return GenerationRecord(
-            id: generation.id,
-            templateId: generation.templateId,
-            templateVersion: generation.templateVersion,
-            variables: generation.variables,
-            files: files,
-            generatedAt: generation.generatedAt,
-          );
-        })
-        .toList(growable: false);
+      return GenerationRecord(
+        id: generation.id,
+        templateId: generation.templateId,
+        templateVersion: generation.templateVersion,
+        variables: generation.variables,
+        files: files,
+        generatedAt: generation.generatedAt,
+      );
+    }).toList(growable: false);
 
     if (changed) {
       await _write(
