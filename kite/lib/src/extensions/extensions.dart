@@ -21,7 +21,6 @@ export 'string_extensions.dart';
 export 'text_editing_controller_extensions.dart';
 export 'uri_extensions.dart';
 export 'widget_extensions.dart';
-export 'widget_list_extensions.dart';
 
 //core
 export 'num_widget_extensions.dart';

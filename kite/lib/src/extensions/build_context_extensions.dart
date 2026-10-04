@@ -7,32 +7,22 @@ import 'package:flutter/material.dart';
 /// Convenient access to commonly used inherited Flutter properties.
 extension BuildContextExtensions on BuildContext {
   //  For direct material Theme
-  ThemeData get materialTheme => Theme.of(this);
+  ThemeData get mTheme => Theme.of(this);
 
-  ColorScheme get materialColors => materialTheme.colorScheme;
+  ColorScheme get mColors => mTheme.colorScheme;
 
-  TextTheme get materialTextTheme => materialTheme.textTheme;
+  TextTheme get mTextStyle => mTheme.textTheme;
 
-
-  Brightness get brightness => materialTheme.brightness;
-
-  bool get isDarkMode => brightness == Brightness.dark;
-
-  bool get isLightMode => brightness == Brightness.light;
 
   // Screen metrics
   MediaQueryData get mediaQuery => MediaQuery.of(this);
 
   Size get screenSize => MediaQuery.sizeOf(this);
 
-  double get screenWidth => screenSize.width;
+  double get width => screenSize.width;
 
-  double get screenHeight => screenSize.height;
+  double get height => screenSize.height;
 
-  /// Short aliases.
-  double get width => screenWidth;
-
-  double get height => screenHeight;
 
   EdgeInsets get screenPadding => MediaQuery.paddingOf(this);
 

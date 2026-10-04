@@ -25,7 +25,7 @@ class KiteSheet {
       context: context,
       isScrollControlled: isScrollControlled,
       useSafeArea: useSafeArea,
-      backgroundColor: Colors.transparent,
+      backgroundColor: context.colors.background,
       barrierColor: colors.textPrimary.withValues(alpha: .32),
       builder: (sheetContext) {
         final sheetColors = sheetContext.colors;
